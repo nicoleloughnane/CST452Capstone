@@ -5,14 +5,20 @@ app.use(cors());
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
+const authJwt = require('./helpers/jwt');
+const errorHandler = require('./helpers/error-handler');
+
 //for .env file
 //run npm start 
 require('dotenv/config');
 const api = process.env.API_URL;
 
-//middleware - express and morgan
+//middleware - express, morgan, and jwt
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use(authJwt());
+app.use(errorHandler);
+
 
 //routes here
 const usersRoute = require('./routes/user');

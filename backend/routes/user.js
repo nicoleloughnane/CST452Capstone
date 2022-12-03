@@ -1,7 +1,7 @@
 const {User} = require('../models/user');
 const express = require('express');
 const router = express.Router();
-
+const jwt = require('jsonwebtoken');
 
 //get all users
 router.get(`/`, async (req, res) =>{
@@ -38,6 +38,32 @@ router.post('/', async(req, res) => {
      }
      res.send(user);
  
+ })
+
+ //LOGIN an existing user
+ router.post(`/login`, async (req, res) => {
+    const user = await User.findOne({
+        email: req.body.email
+    })
+    const secret = process.env.secret;
+    //email incorrect
+    /* if(!user) {
+        return res.status(400).send('The user was not found');
+    } */
+    if(user && req.body.password === user.password) {
+        const token = jwt.sign( 
+            {
+                userId: user.id
+            },
+            secret,
+            {expiresIn: '1w'}
+        )
+        //success: authenticated user here
+        res.status(200).send({user: user.email, token: token});
+     } else {
+        //email or password incorrect
+        res.status(400).send('email or password incorrect');
+     }
  })
 
  //UPDATE/PUT existing user
