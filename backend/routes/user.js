@@ -1,7 +1,9 @@
 const {User} = require('../models/user');
 const express = require('express');
 const router = express.Router();
+//user authentication
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 //get all users
 router.get(`/`, async (req, res) =>{
@@ -21,11 +23,12 @@ router.get(`/:id`, async (req, res) =>{
       res.status(200).send(user);
  });
 
-//post a new user
-router.post('/', async(req, res) => {
+//REGISTER a new user
+router.post('/register', async(req, res) => {
+    let encryptedPassword = await bcrypt.hashSync(req.body.password);
      let user = new User({
           email: req.body.email,
-          password: req.body.password,
+          password: encryptedPassword,
           firstName: req.body.firstName,
           lastName: req.body.lastName
         
@@ -40,17 +43,19 @@ router.post('/', async(req, res) => {
  
  })
 
+
+
  //LOGIN an existing user
  router.post(`/login`, async (req, res) => {
     const user = await User.findOne({
         email: req.body.email
     })
-    const secret = process.env.secret;
+    const secret = process.env.TOKEN_KEY;
     //email incorrect
     /* if(!user) {
         return res.status(400).send('The user was not found');
     } */
-    if(user && req.body.password === user.password) {
+    if(user && bcrypt.compareSync(req.body.password, user.password)) {
         const token = jwt.sign( 
             {
                 userId: user.id

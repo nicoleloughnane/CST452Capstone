@@ -4,7 +4,8 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     firstName: String,
-    lastName: String
+    lastName: String,
+    token: String
 
 });
 
@@ -19,4 +20,4 @@ userSchema.set('toJSON', {
 });
 
 
-exports.User = mongoose.model('User', userSchema);
+exports.User = mongoose.model('User', userSchema, 'user');
