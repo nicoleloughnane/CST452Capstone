@@ -1,29 +1,13 @@
-import store from '../store';
+import api from './api';
 
-export function isLoggedIn() {
-    const token = localStorage.getItem('token');
-    return token != null;
-}
-
-export function login() {
-    const token = {
-        email : 'ndlock@gmail.com'
+export default {
+    loginUser(userCredentials) {
+        return api().post('api/v1/user/login', userCredentials)
+        .then(response => response.data);
+    },
+    register(userCredentials) {
+        return api().post('api/v1/user/register', userCredentials)
+        .then(response => response.data);
     }
-    setToken(token);
-}
-
-
-function setToken(token) {
-    localStorage.setItem('token', JSON.stringify(token));
-    store.dispatch('authenticateUser');
-}
-
-
-export function getEmail() {
- return 'ndlock@gmail.com'
-}
-
-export function getUserId() {
-  return '123'
 }
 

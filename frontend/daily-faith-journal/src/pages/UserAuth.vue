@@ -11,16 +11,16 @@
             <input type="password" id="password" v-model.trim="password"/>
         </div>
         <p class = "errors" v-if="!validForm">Your email or password was incorrect. Please try again.</p>
-        <default-button>{{submitButton}}</default-button>
-        <h4>Need an account?</h4>
-        <default-button type="button" mode="outline" @click="switchMode">{{switchModeButton}}</default-button>
+        <default-button>Login</default-button>
+          <h4>Need an account?</h4>
+          <default-button link to="/signup" mode="outline">Sign up</default-button>
       
     </form>
   </default-card>
 </template>
 
 <script>
-import * as auth from '../services/UserAuthService';
+//import axios from 'axios';
 export default {
   data() {
     //data to be returned
@@ -31,40 +31,36 @@ export default {
       mode: 'login'
     }
   },
-  computed: {
-    submitButton() {
-      if(this.mode === 'login') {
-        return 'Login'
-      } else {
-        return 'Sign Up'
-      }
-    },
-    switchModeButton() {
-      if(this.mode === 'login') {
-        return 'Sign Up Here'
-      } else {
-        return 'Login Here'
-      }
-    }
-  },
+
   methods: {
     submitForm() {
       this.validForm = true;
-      //if the email is blank, does not have an @ symbol - invalid
-      //to be added: is smaller than _ characters or longer than _ characters
-      //if password is less than 6 characters or to be added - greater than _ characters - invalid
-      if(this.email === '' || !this.email.includes('@') || this.password.length < 6) {
+      //if the email is blank or greater than 40 characters - invalid
+      //if password is less than 6 characters or greater than 30 characters - invalid
+      if(this.email === '' || this.email.length > 40 || this.password.length < 6 || this.password.length > 30) {
         this.validForm = false;
         return;
       }
       //login the user
-      auth.login();
+      
+      let userCredentials = this
+      this.$store.dispatch("login", userCredentials)
+      .then(() => this.$router.replace('/home'))
+      .catch(err => console.log(err));
+
+
+      const formData = {
+                e: this.email,
+                p: this.password
+            };
+          console.log(formData);
       //take user to home page upon login
-      this.$router.replace('/home');
+      //this.$router.replace('/home');
     },
     switchMode() {
       if(this.mode === 'login') {
         this.mode = 'signup';
+        this.$router.replace('/signup');
       } else {
         this.mode = 'login';
       }
