@@ -1,16 +1,51 @@
 import { createStore } from 'vuex';
+import UserAuthService from "@/services/UserAuthService";
 //import api from '../services/api';
-import axios from 'axios';
+//import axios from 'axios';
+//import {authModule} from './UserAuthModule';
 
+const user = JSON.parse(localStorage.getItem('user'));
+const stateOfAuth = user   ? { status: { loggedIn: true }, user }
+: { status: { loggedIn: false }, user: null };
 
-let api = 'http://localhost:3000/api/v1/';
-
+//store starts here
 const store = createStore({
-    state: {
-        status: '',
-        token: localStorage.getItem('token') || '',
-        user: {}
+    modules: {
+      //authModule
     },
+    state: stateOfAuth,
+    actions: {
+      login({commit}, user) {
+          return UserAuthService.loginUser(user).then(
+              user=> {
+              commit('loginSuccess', user);
+              return Promise.resolve(user)
+              },
+              error => {
+                  commit('loginFail');
+                  return Promise.reject(error);
+              }
+          );
+      },
+      //logout here
+  },
+  mutations: {
+      loginSuccess(state, user) {
+          state.status.loggedIn = true;
+          state.user = user;
+        },
+        loginFail(state) {
+          state.status.loggedIn = false;
+          state.user = null;
+        },
+  }
+});
+
+export default store;
+       /* status: '',
+        token: localStorage.getItem('token') || '',
+        user: {} */
+     /*
     mutations: {
         auth_request(state) {
             state.status = 'loading'
@@ -73,8 +108,5 @@ const store = createStore({
     getters: {
         isLoggedIn: state => !!state.token,
         authStatus: state => state.status,
-    }
+    } */
 
-});
-
-export default store;

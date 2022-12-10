@@ -10,7 +10,7 @@
             <label for="password">Password</label>
             <input type="password" id="password" v-model.trim="password"/>
         </div>
-        <p class = "errors" v-if="!validForm">Your email or password was incorrect. Please try again.</p>
+        <p class = "errors" v-if="!validForm || errorMessage !=null">Your email or password was incorrect, or left blank. Please try again.</p>
         <default-button>Login</default-button>
           <h4>Need an account?</h4>
           <default-button link to="/signup" mode="outline">Sign up</default-button>
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-//import axios from 'axios';
 export default {
   data() {
     //data to be returned
@@ -28,10 +27,19 @@ export default {
       email: '',
       password: '',
       validForm: true,
-      mode: 'login'
+      errorMessage: null
     }
   },
-
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
+  },
+  created() {
+    if (this.isLoggedIn) {
+      this.$router.replace("/home");
+    }
+  },
   methods: {
     submitForm() {
       this.validForm = true;
@@ -43,28 +51,30 @@ export default {
       }
       //login the user
       
-      let userCredentials = this
-      this.$store.dispatch("login", userCredentials)
+      let userCredentials = this 
+      /* this.$store.dispatch("login", userCredentials)
       .then(() => this.$router.replace('/home'))
-      .catch(err => console.log(err));
-
-
-      const formData = {
+      .catch(err => console.log(err)); */
+      this.$store.dispatch("login", userCredentials).then(()=> {
+        this.$router.replace("/home");
+      },
+      (error) => {
+        this.errorMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+            console.log(this.errorMessage);
+      })
+      //for testing
+      /* const formData = {
                 e: this.email,
                 p: this.password
             };
-          console.log(formData);
-      //take user to home page upon login
-      //this.$router.replace('/home');
+          console.log(formData); */
+
     },
-    switchMode() {
-      if(this.mode === 'login') {
-        this.mode = 'signup';
-        this.$router.replace('/signup');
-      } else {
-        this.mode = 'login';
-      }
-    }
   }
 
 }
@@ -96,13 +106,13 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border-color: #3d008d;
+  border-color: #775DAB;
   background-color: #faf6ff;
   outline: none;
 }
 
 .errors {
-  font-weight: bold;
+  font-weight:900;
   color: red;
 }
 

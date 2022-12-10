@@ -4,6 +4,7 @@
             <h1><router-link to="/">Daily Faith Journal</router-link></h1>
             <ul>
                 <li><router-link to="/login">Login</router-link></li>
+                <li><router-link to="/login">Logout</router-link></li>
             </ul>
         </nav>
     </header>
@@ -13,7 +14,7 @@
 header {
   width: 100%;
   height: 5rem;
-  background-color: #3d008d;
+  background-color: #775DAB;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,16 +22,18 @@ header {
 
 header a {
   text-decoration: none;
-  color: #f391e3;
+  color: #ffff;
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
 }
 
 a:active,
-a:hover,
+a:hover {
+  border: 1px solid #ffff;
+}
 a.router-link-active {
-  border: 1px solid #f391e3;
+  /*border: 1px solid #f391e3; */
 }
 
 h1 {
