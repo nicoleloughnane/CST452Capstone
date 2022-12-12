@@ -1,29 +1,33 @@
-import store from '../store';
+import api from './api';
 
-export function isLoggedIn() {
-    const token = localStorage.getItem('token');
-    return token != null;
-}
+export default {
+    //login the user, utilize axios to send a POST
+    loginUser(user) {
+        return api().post('/user/login', {
+            email: user.email,
+            password: user.password
+        })
+        .then(response => {
+            if(response.data.accessToken) {
+                localStorage.setItem('user', JSON.stringify(response.data))
+            }
+            return response.data;
+        })
+    },
+    //logout a user, remove from local storage
+    logoutUser() {
+        localStorage.removeItem('user');
+    },
 
-export function login() {
-    const token = {
-        email : 'ndlock@gmail.com'
+    signUpUser(user) {
+        //console.log("in signup user with password of " + user.password);
+        return api().post('/user/register', {
+            email: user.email,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName
+        })
+        .then(response => response.data);
     }
-    setToken(token);
-}
-
-
-function setToken(token) {
-    localStorage.setItem('token', JSON.stringify(token));
-    store.dispatch('authenticateUser');
-}
-
-
-export function getEmail() {
- return 'ndlock@gmail.com'
-}
-
-export function getUserId() {
-  return '123'
 }
 

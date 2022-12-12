@@ -36,8 +36,8 @@ a {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
-  background-color: #3a0061;
-  border: 1px solid #3a0061;
+  background-color: #775DAB;
+  border: 1px solid #775DAB;
   color: white;
   cursor: pointer;
   border-radius: 30px;
@@ -61,8 +61,8 @@ button:active {
 
 .outline {
   background-color: transparent;
-  border-color: #270041;
-  color: #270041;
+  border-color: #775DAB;
+  color: #775DAB;
 }
 
 .flat:hover,

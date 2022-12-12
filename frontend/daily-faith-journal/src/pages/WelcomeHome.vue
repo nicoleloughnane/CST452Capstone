@@ -1,11 +1,19 @@
 <template>
-    <h3>Welcome to Daily Faith Journal!</h3>
-    
+    <img src="../assets/dailyfaithjournallogo.png" class="logo">
+    <h3>Welcome {{loggedInUser}}</h3>
 </template>
 <script>
 export default {
   computed: {
-   
+    loggedInUser() {
+      console.log(this.$store.state.user);
+      return this.$store.state.user;
+    }
+  },
+  mounted() {
+    if(!this.loggedInUser) {
+      this.$router.replace('/login');
+    }
   },
   methods: {
   
@@ -16,5 +24,12 @@ export default {
 <style scoped>
 * {
   text-align: center;
+}
+.logo {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 300px;
 }
 </style>
