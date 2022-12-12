@@ -56,6 +56,7 @@ router.post('/register', async(req, res) => {
         return res.status(400).send('The user was not found');
     } */
     if(user && bcrypt.compareSync(req.body.password, user.password)) {
+        //generate user token using JWT
         const token = jwt.sign( 
             {
                 userId: user.id
@@ -63,6 +64,7 @@ router.post('/register', async(req, res) => {
             secret,
             {expiresIn: '1w'}
         )
+        //console.log(token);
         //success: authenticated user here
         res.status(200).send({user: user.email, token: token});
      } else {

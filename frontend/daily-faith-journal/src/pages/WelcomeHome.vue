@@ -1,6 +1,6 @@
 <template>
     <img src="../assets/dailyfaithjournallogo.png" class="logo">
-    <h3>Welcome {{loggedInUser}}</h3>
+    <h3>Welcome!</h3>
 </template>
 <script>
 export default {
@@ -11,9 +11,9 @@ export default {
     }
   },
   mounted() {
-    if(!this.loggedInUser) {
+   /* if(!this.loggedInUser) {
       this.$router.replace('/login');
-    }
+    } */
   },
   methods: {
   

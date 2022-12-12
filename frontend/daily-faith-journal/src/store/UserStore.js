@@ -11,6 +11,9 @@ const store = createStore({
       //authModule
     },
     state: stateOfAuth,
+    getters: {
+      
+    },
     //actions to login, logout, and register a user
     actions: {
       //login calls the userauth service to process the login of a user

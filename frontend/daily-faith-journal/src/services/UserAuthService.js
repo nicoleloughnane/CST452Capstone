@@ -1,6 +1,10 @@
 import api from './api';
 
 export default {
+    isLoggedIn() {
+        const token = localStorage.getItem('token');
+        return token != null;
+    },
     //login the user, utilize axios to send a POST
     loginUser(user) {
         return api().post('/user/login', {
@@ -10,9 +14,11 @@ export default {
         .then(response => {
             if(response.data.accessToken) {
                 localStorage.setItem('user', JSON.stringify(response.data))
+                console.log("response data" +response.data);
             }
             return response.data;
         })
+     
     },
     //logout a user, remove from local storage
     logoutUser() {

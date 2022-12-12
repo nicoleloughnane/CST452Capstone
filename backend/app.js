@@ -4,8 +4,7 @@ const cors = require('cors');
 app.use(cors());
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
-//const authJwt = require('./helpers/jwt');
+//const authJwt = require('./helpers/jwt')
 //const errorHandler = require('./helpers/error-handler');
 
 //for .env file
