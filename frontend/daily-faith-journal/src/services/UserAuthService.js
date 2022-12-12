@@ -1,5 +1,5 @@
 import api from './api';
-//import axios from 'axios';
+
 export default {
     //login the user, utilize axios to send a POST
     loginUser(user) {
@@ -19,7 +19,8 @@ export default {
         localStorage.removeItem('user');
     },
 
-    register(user) {
+    signUpUser(user) {
+        //console.log("in signup user with password of " + user.password);
         return api().post('/user/register', {
             email: user.email,
             password: user.password,

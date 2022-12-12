@@ -1,6 +1,6 @@
 <template>
     <default-card>
-      <form @submit.prevent="submitForm">
+      <form @submit.prevent="submitForm()">
         <h2>Sign Up</h2>  
           <div class="form-control" :class="{invalid: !email.isValid}">
               <label for="email">Email</label>
@@ -23,10 +23,10 @@
               <p class = "errors" v-if="!lastName.isValid">Last name must not be empty and between 1 and 50 characters</p>
           </div>
           <default-button>Continue</default-button>
-        
-      </form>
-      <h4>Already have an account?</h4>
+          <h4>Already have an account?</h4>
           <default-button link to="/login" mode="outline">Login</default-button>
+      </form>
+  
     </default-card>
   </template>
 
@@ -51,6 +51,17 @@ export default {
         val: '',
         isValid: true
       },
+      errorMessage: null
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
+  },
+  mounted() {
+    if (this.isLoggedIn) {
+      this.$router.replace("/home");
     }
   },
   methods: {
@@ -90,23 +101,26 @@ export default {
         console.log(this.formIsValid)
         return;
       }
-      let userCredentials = this
-      this.$store.dispatch("register", userCredentials)
-      .then(() => this.$router.replace('/login'))
-      .catch(err => console.log(err));
-
-
-      //for testing purposes
-      const formData = {
-                e: this.email.val,
-                p: this.password.val,
-                f: this.firstName.val,
-                l: this.lastName.val
-            };
-          console.log(formData);
-            //send user back to login to login with new account
-          this.$router.push('/login');
-
+      //register the user, calls store from vuex
+      this.$store.dispatch('register', {
+        email: this.email.val,
+        password: this.password.val, 
+        firstName: this.firstName.val,
+        lastName: this.lastName.val
+      }  ).then(()=> {
+        //send user back to login to log in with newly created account
+        this.$router.replace("/login");
+      },
+      //for any errors that may occur
+      (error) => {
+        this.errorMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+            console.log(this.errorMessage);
+      })
 
     },
   }
@@ -140,19 +154,16 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border-color: #3d008d;
+  border-color: #775DAB;
   background-color: #faf6ff;
   outline: none;
 }
 
 .errors {
-  font-weight: bold;
+  font-weight: 900;
   color: red;
 }
 
-.actions {
-  text-align: center;
-}
 h2{
   text-align: center;
 }

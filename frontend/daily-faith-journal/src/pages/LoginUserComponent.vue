@@ -49,15 +49,15 @@ export default {
         this.validForm = false;
         return;
       }
+
       //login the user
-      
-      let userCredentials = this 
-      /* this.$store.dispatch("login", userCredentials)
-      .then(() => this.$router.replace('/home'))
-      .catch(err => console.log(err)); */
+      let userCredentials = this;
+      //calls store from vuex to login
       this.$store.dispatch("login", userCredentials).then(()=> {
+        //send to home upon logging in
         this.$router.replace("/home");
       },
+      //for any errors that may occur
       (error) => {
         this.errorMessage =
             (error.response &&
@@ -67,13 +67,6 @@ export default {
             error.toString();
             console.log(this.errorMessage);
       })
-      //for testing
-      /* const formData = {
-                e: this.email,
-                p: this.password
-            };
-          console.log(formData); */
-
     },
   }
 
@@ -116,9 +109,6 @@ textarea:focus {
   color: red;
 }
 
-.actions {
-  text-align: center;
-}
 h2{
   text-align: center;
 }

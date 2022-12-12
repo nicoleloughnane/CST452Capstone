@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav>
-            <h1><router-link to="/">Daily Faith Journal</router-link></h1>
+            <h1><router-link to="/"><img src="../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
             <ul>
                 <li><router-link to="/login">Login</router-link></li>
                 <li><router-link to="/login">Logout</router-link></li>
@@ -70,5 +70,13 @@ header ul {
 
 li {
   margin: 0 0.5rem;
+}
+
+.logo {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80px;
+  height: 60px;
 }
 </style>
