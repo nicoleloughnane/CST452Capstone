@@ -4,7 +4,7 @@
 </template>
 
 <script>
-  import MyNavbar from './UI/MyNavbar.vue';
+  import MyNavbar from './components/UI/MyNavbar.vue';
 export default {
   components: {
       MyNavbar
@@ -14,8 +14,6 @@ export default {
 
 
 <style>
-/*@import url('https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap'); */
-/*@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300&family=Open+Sans&display=swap');
 * {
 box-sizing: border-box;

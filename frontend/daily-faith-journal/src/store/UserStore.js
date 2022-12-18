@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import UserAuthService from "@/services/UserAuthService";
+import api from '../services/api'
 
 //store starts here
 const store = createStore({
@@ -11,43 +11,50 @@ const store = createStore({
     },
     //actions to login, logout, and register a user
     actions: {
-      //login calls the userauth service to process the login of a user
+      //login 
       login({commit}, user) {
-          return UserAuthService.loginUser(user).then(
-              user=> {
-              commit('setUser', user);
-              return Promise.resolve(user)
-              },
-              error => {
-                  commit('errorOccurred', error);
-                  return Promise.reject(error);
-              }
-          );
+          return api().post('/user/login', {
+            email: user.email,
+            password: user.password
+        })
+        .then(response => {
+              //set user and token to data from the response
+              commit('setUser', response.data.user);
+              commit('setToken', response.data.token)
+              this.state.isLoggedIn = true;
+              return response.data;
+        }) 
+        .catch(error => {
+          commit('errorOccurred', error.message);
+        })
       },
-      //logout calls userauth service to process logout of a user
+      //logout
       logout({commit}) {
-        UserAuthService.logoutUser();
         //clear states of the user with mutations
         commit('setUser', null);
         commit('setToken', null);
+        this.state.isLoggedIn = false;
       },
 
-      //register calls userauth service to process sign up of a new user
+      //register 
       register({commit}, user) {
-        return UserAuthService.signUpUser(user).then(
-          response=> {
-            commit('setUser', user);
-            return Promise.resolve(response.data);
-          },
-          error => {
-            commit('errorOccurred');
-            return Promise.reject(error);
-          }
-        )
+        return api().post('/user/register', {
+          email: user.email,
+          password: user.password,
+          firstName: user.firstName,
+          lastName: user.lastName
+      })
+      .then(response => {
+        commit('setUser', response.data.user);
+        commit('setToken', response.data.token)
+        
+      }).catch(error => {
+        commit('errorOccurred', error.message);
+      });
       }
 
   },
-  //change the state of a user. are they logged in?
+  //change the state: set user and token, notify if error has occurred
   mutations: {
       setUser(state, user) {
           state.user = user;

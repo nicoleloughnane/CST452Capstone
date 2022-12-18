@@ -1,9 +1,9 @@
 <template>
     <header>
         <nav>
-            <h1><router-link to="/"><img src="../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
+            <h1><router-link to="/"><img src="../../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
             <ul>
-                <li v-if="this.$store.state.user != null"><router-link to="/login">Logout</router-link></li>
+                <li v-if="this.$store.state.isLoggedIn"><router-link to="/login">Logout</router-link></li>
             </ul>
         </nav>
     </header>
