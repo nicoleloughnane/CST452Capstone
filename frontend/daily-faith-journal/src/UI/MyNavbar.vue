@@ -3,7 +3,7 @@
         <nav>
             <h1><router-link to="/"><img src="../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
             <ul>
-                <li><router-link to="/login">Logout</router-link></li>
+                <li v-if="this.$store.state.user != null"><router-link to="/login">Logout</router-link></li>
             </ul>
         </nav>
     </header>

@@ -1,18 +1,13 @@
 import { createStore } from 'vuex';
 import UserAuthService from "@/services/UserAuthService";
 
-const user = JSON.parse(localStorage.getItem('user'));
-const stateOfAuth = user   ? { status: { loggedIn: true }, user }
-: { status: { loggedIn: false }, user: null };
-
 //store starts here
 const store = createStore({
-    modules: {
-      //authModule
-    },
-    state: stateOfAuth,
-    getters: {
-      
+    state: {
+      isLoggedIn: false,
+      user: null,
+      token: null,
+      errorOccurred: null
     },
     //actions to login, logout, and register a user
     actions: {
@@ -20,11 +15,11 @@ const store = createStore({
       login({commit}, user) {
           return UserAuthService.loginUser(user).then(
               user=> {
-              commit('loginSuccess', user);
+              commit('setUser', user);
               return Promise.resolve(user)
               },
               error => {
-                  commit('loginFail');
+                  commit('errorOccurred', error);
                   return Promise.reject(error);
               }
           );
@@ -32,17 +27,20 @@ const store = createStore({
       //logout calls userauth service to process logout of a user
       logout({commit}) {
         UserAuthService.logoutUser();
-        commit('logout');
+        //clear states of the user with mutations
+        commit('setUser', null);
+        commit('setToken', null);
       },
+
+      //register calls userauth service to process sign up of a new user
       register({commit}, user) {
-        //console.log("in register in store");
         return UserAuthService.signUpUser(user).then(
           response=> {
-            commit('registerSuccess');
+            commit('setUser', user);
             return Promise.resolve(response.data);
           },
           error => {
-            commit('registerFail');
+            commit('errorOccurred');
             return Promise.reject(error);
           }
         )
@@ -51,25 +49,16 @@ const store = createStore({
   },
   //change the state of a user. are they logged in?
   mutations: {
-      loginSuccess(state, user) {
-          state.status.loggedIn = true;
+      setUser(state, user) {
           state.user = user;
         },
-        loginFail(state) {
-          state.status.loggedIn = false;
-          state.user = null;
+        setToken(state, token) {
+          state.token = token;
         },
-        logout(state) {
-          state.status.loggedIn = false;
-          state.user = null;
-        },
-        registerSuccess(state) {
-          state.status.loggedIn = false;
-        },
-        registerFail(state) {
-          state.status.loggedIn = false;
-        }
-  }
+        errorOccurred(state, error) {
+          state.errorOccurred = error;
+        }     
+  } 
 });
 
 export default store;

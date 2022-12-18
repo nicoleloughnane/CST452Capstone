@@ -1,10 +1,6 @@
 import api from './api';
 
 export default {
-    isLoggedIn() {
-        const token = localStorage.getItem('token');
-        return token != null;
-    },
     //login the user, utilize axios to send a POST
     loginUser(user) {
         return api().post('/user/login', {
@@ -25,8 +21,8 @@ export default {
         localStorage.removeItem('user');
     },
 
+    //register a new user
     signUpUser(user) {
-        //console.log("in signup user with password of " + user.password);
         return api().post('/user/register', {
             email: user.email,
             password: user.password,
