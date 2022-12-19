@@ -11,10 +11,7 @@
           @blur="clearValidity('email')"
         />
         <!--if the form is invalid or the email is already in use, error message is displayed-->
-        <p class="errors" v-if="!email.isValid">Email must not be empty</p>
-        <p class="errors" v-if="errorMessage != null">
-          An account with this email already exists. Please use a new email.
-        </p>
+        <p class="errors" v-if="!email.isValid || errorMessage != null">Email must not be empty or an account with this email already exists</p>
       </div>
       <div class="form-control" :class="{ invalid: !password.isValid }">
         <label for="password">Password</label>
@@ -100,6 +97,7 @@ export default {
     //validate form information
     validateForm() {
       this.formIsValid = true;
+      this.errorMessage = null;
       //email must be between 1 and 40 characters with @ sign
       if (
         !this.email.val.includes("@") ||
@@ -142,7 +140,7 @@ export default {
             if (this.$store.state.errorOccurred != null) {
               //error has occurred, form is invalid
               this.errorMessage = this.$store.state.errorOccurred;
-              this.formIsValid = false;
+              //this.formIsValid = false;
               //console.log("error message: " + this.errorMessage);
               return this.errorMessage;
             }
@@ -151,7 +149,7 @@ export default {
           },
           //for any errors that may occur within the component
           (error) => {
-            this.errorMessage = error;
+            this.errorMessage = error.message;
           }
         );
     },

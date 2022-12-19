@@ -1,4 +1,5 @@
 <template>
+   <div>
   <default-card>
     <form @submit.prevent="submitForm">
       <h2>Login</h2>
@@ -18,7 +19,11 @@
       <h4>Need an account?</h4>
       <default-button link to="/signup" mode="outline">Sign up</default-button>
     </form>
+   <!-- <div class="loading" v-if="formLoading">
+    <p>Logging in...</p> 
+  </div> -->
   </default-card>
+</div>
 </template>
 
 <script>
@@ -30,10 +35,11 @@ export default {
       password: "",
       validForm: true,
       errorMessage: null,
+      formLoading : false
     };
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       this.validForm = true;
       //if the email is blank or greater than 40 characters - invalid
       //if password is less than 6 characters or greater than 30 characters - invalid
@@ -63,9 +69,10 @@ export default {
         },
         //for any errors that may occur within this component
         (error) => {
-          this.errorMessage = error;
+          this.errorMessage = error.message;
         }
       );
+      this.formLoading = true;
     },
   },
 };
