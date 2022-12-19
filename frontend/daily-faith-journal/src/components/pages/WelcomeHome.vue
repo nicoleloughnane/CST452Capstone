@@ -1,19 +1,18 @@
 <template>
-    <img src="../assets/dailyfaithjournallogo.png" class="logo">
-    <h3>Welcome {{loggedInUser}}</h3>
+    <img src="../../assets/dailyfaithjournallogo.png" class="logo">
+    <h3>Welcome!</h3>
 </template>
 <script>
 export default {
   computed: {
-    loggedInUser() {
-      console.log(this.$store.state.user);
-      return this.$store.state.user;
-    }
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
   },
   mounted() {
-    if(!this.loggedInUser) {
+    if(!this.isLoggedIn) {
       this.$router.replace('/login');
-    }
+    } 
   },
   methods: {
   

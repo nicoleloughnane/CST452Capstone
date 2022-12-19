@@ -3,8 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store/UserStore';
 //global components
-import DefaultButton from './UI/DefaultButton.vue';
-import DefaultCard from './UI/DefaultCard.vue';
+import DefaultButton from './components/UI/DefaultButton.vue';
+import DefaultCard from './components/UI/DefaultCard.vue';
 
 const app = createApp(App);
 

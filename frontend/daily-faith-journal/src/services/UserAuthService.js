@@ -10,17 +10,19 @@ export default {
         .then(response => {
             if(response.data.accessToken) {
                 localStorage.setItem('user', JSON.stringify(response.data))
+                console.log("response data" +response.data);
             }
             return response.data;
         })
+     
     },
     //logout a user, remove from local storage
     logoutUser() {
         localStorage.removeItem('user');
     },
 
+    //register a new user
     signUpUser(user) {
-        //console.log("in signup user with password of " + user.password);
         return api().post('/user/register', {
             email: user.email,
             password: user.password,
