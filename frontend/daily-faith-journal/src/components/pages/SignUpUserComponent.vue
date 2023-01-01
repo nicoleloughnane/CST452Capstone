@@ -1,7 +1,7 @@
 <template>
   <default-card>
     <form @submit.prevent="submitForm()">
-      <h2>Sign Up</h2>
+      <h2 style="text-align: center">Sign Up</h2>
       <div class="form-control" :class="{ invalid: !email.isValid }">
         <label for="email">Email</label>
         <input
@@ -49,9 +49,9 @@
           Last name must not be empty
         </p>
       </div>
-      <default-button>Continue</default-button>
-      <h4>Already have an account?</h4>
-      <default-button link to="/login" mode="outline">Login</default-button>
+      <button class = "mybutton">Continue</button>
+      <h4 style="text-align: center">Already have an account?</h4>
+      <router-link to="/login" mode="outline" class="newpagebutton">Login</router-link>
     </form>
   </default-card>
 </template>
@@ -193,7 +193,4 @@ textarea:focus {
   color: red;
 }
 
-h2 {
-  text-align: center;
-}
 </style>

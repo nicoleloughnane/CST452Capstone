@@ -40,9 +40,9 @@ a {
   border: 1px solid #775DAB;
   color: white;
   cursor: pointer;
-  border-radius: 30px;
-  margin-right: 0.5rem;
-  display: inline-block;
+  border-radius: 20px;
+   display: block; 
+  margin: 0 auto; 
 }
 
 a:hover,

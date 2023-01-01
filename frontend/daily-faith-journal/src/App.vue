@@ -26,6 +26,30 @@ html {
 body {
 margin: 0;
 }
-
+.mybutton {
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  background-color: #775DAB;
+  border: 1px solid #775DAB;
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
+   display: block; 
+  margin: 0 auto; 
+  text-align:center;
+}
+.newpagebutton {
+  background-color: transparent;
+  color: #775DAB;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 20px;
+   display: block; 
+  margin: 0 auto; 
+  text-align:center;
+}
 
 </style>

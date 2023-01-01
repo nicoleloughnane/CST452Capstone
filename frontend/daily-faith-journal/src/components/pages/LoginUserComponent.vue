@@ -2,7 +2,7 @@
    <div>
   <default-card>
     <form @submit.prevent="submitForm">
-      <h2>Login</h2>
+      <h2 style="text-align: center">Login</h2>
       <div class="form-control">
         <label for="email">Email</label>
         <input type="email" id="email" v-model.trim="email" />
@@ -15,9 +15,9 @@
       <p class="errors" v-if="!validForm || errorMessage != null">
         Your email or password was incorrect, or left blank. Please try again.
       </p>
-      <default-button>Login</default-button>
-      <h4>Need an account?</h4>
-      <default-button link to="/signup" mode="outline">Sign up</default-button>
+      <button class="mybutton">Login </button>
+      <h4 style="text-align: center">Need an account?</h4>
+      <router-link to="/signup" class="newpagebutton">Sign up</router-link>
     </form>
    <!-- <div class="loading" v-if="formLoading">
     <p>Logging in...</p> 
@@ -90,10 +90,9 @@ form {
 label {
   font-weight: bold;
   margin-bottom: 0.5rem;
-  display: block;
+  display: block; 
 }
 
-input,
 textarea {
   display: block;
   width: 100%;
@@ -102,7 +101,6 @@ textarea {
   padding: 0.15rem;
 }
 
-input:focus,
 textarea:focus {
   border-color: #775dab;
   background-color: #faf6ff;
@@ -114,7 +112,5 @@ textarea:focus {
   color: red;
 }
 
-h2 {
-  text-align: center;
-}
+
 </style>

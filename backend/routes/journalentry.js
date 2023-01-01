@@ -2,7 +2,8 @@
 const { JournalEntry } = require("../models/journalentry");
 const express = require("express");
 const router = express.Router();
-const date = new Date();
+const { DateTime } = require("luxon");
+
 //get all journal entries
 router.get(`/`, async (req, res) => {
   const journalEntryList = await JournalEntry.find();
@@ -23,15 +24,14 @@ router.get(`/:id`, async (req, res) => {
 
 //POST/CREATE a new journal entry
 router.post('/newjournalentry', async(req, res) => {
-    const timeElapsed = Date.now();
-    const today = new Date(timeElapsed);
-    today.toDateString(); 
-    console.log(today);
-    
+    //the date of the journal entry
+    const dt = DateTime.now();
+    const journalEntryDate = dt.month + "/" + dt.day + "/" + dt.year; 
+    console.log("date: " + journalEntryDate);   
     let journalEntry = new JournalEntry({
         title: req.body.title,
         entryBody: req.body.entryBody,
-        entryDate: today
+        entryDate: journalEntryDate
     })
 
     journalEntry = await journalEntry.save();
