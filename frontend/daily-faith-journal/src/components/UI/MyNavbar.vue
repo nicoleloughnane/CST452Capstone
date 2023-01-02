@@ -3,11 +3,35 @@
         <nav>
             <h1><router-link to="/"><img src="../../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
             <ul>
-                <li v-if="this.$store.state.isLoggedIn"><router-link to="/login">Logout</router-link></li>
+                <li v-if="isLoggedIn">
+                  <router-link to="/journalentries">Journal</router-link>
+                </li>
+                <li v-if="isLoggedIn">
+                  <router-link to="/sermonnotes">Sermon Notes</router-link>
+                </li>
+                <li v-if="isLoggedIn">
+                  <router-link @click="logoutUser" to="/login">Logout</router-link>
+                </li>
             </ul>
         </nav>
     </header>
 </template>
+
+<script>
+export default {
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    }
+  },
+    methods: {
+      logoutUser() {
+        this.$store.dispatch('logout')
+      }
+    }
+}
+</script>
+
 
 <style scoped>
 header {
@@ -44,8 +68,6 @@ h1 a {
   margin: 0;
 }
 
-h1 a:hover,
-h1 a:active,
 h1 a.router-link-active {
   border-color: transparent;
 }

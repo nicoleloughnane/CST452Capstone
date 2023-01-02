@@ -4,6 +4,7 @@
     <h2>Welcome!</h2>
     <h4>Today is: {{todayDate}}</h4>
     <router-link to="/journalentries" class="newpagebutton">Journal</router-link>
+    <router-link to="/sermonnotes" class="newpagebutton">Sermon Notes</router-link>
   </div>
 </template>
 <script>

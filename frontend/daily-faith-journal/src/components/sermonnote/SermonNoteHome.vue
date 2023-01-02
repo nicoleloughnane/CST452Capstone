@@ -1,11 +1,7 @@
 <template>
     <section>
-        <h2>Journal Entry</h2>
+        
     </section>
 </template>
 <script>
-
 </script>
-<style>
-
-</style>

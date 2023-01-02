@@ -5,8 +5,8 @@
         <h4>{{entryDate}}</h4>
         <div class="actions">
           <default-button link :to="postDetailsLink">View Details</default-button>
-          <default-button link :to="editPostLink">Edit Post</default-button>
-          <default-button link :to="deletePostLink">Delete Post</default-button>
+          <default-button link :to="editPostLink">Edit</default-button>
+          <default-button link :to="deletePostLink">Delete</default-button>
         </div>
 
     </li>
@@ -18,7 +18,7 @@ export default {
     computed: {
       postDetailsLink() {
         //uses the current path and adds id of specific post to the route
-        return this.$route.path + '/'+ this.id
+        return this.$route.path + '/view/'+ this.id
       },
       editPostLink() {
         //uses the current path and adds id of specific post to the route

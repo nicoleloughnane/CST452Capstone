@@ -1,6 +1,7 @@
 <template>
   <section>
     <h2 style="text-align: center;">Journal Entries</h2>
+    <h4 style="text-align: center;">What is God doing in your life today?</h4>
     <br />
     <div class="controls">
       <router-link to="/create" class="newpagebutton">Add new entry</router-link>
@@ -67,6 +68,8 @@ padding: 0;
 
 }
 .entries {
-
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 </style>
