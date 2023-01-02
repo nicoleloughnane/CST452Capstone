@@ -1,4 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import store from './store/UserStore';
+
 import NotFound from './components/pages/NotFound.vue';
 import UserAuth from './components/pages/LoginUserComponent.vue';
 import WelcomeHome from './components/pages/WelcomeHome.vue';
@@ -19,9 +21,9 @@ const router = createRouter({
     routes: [
         {path: '/home', component: WelcomeHome},
         {path: '/', redirect: '/login'},
-        {path: '/login', component: UserAuth},
-        {path: '/signup', component: SignUpUser},
-        {path: '/journalentries', component: JournalEntryHome},
+        {path: '/login', component: UserAuth, meta: {requiresAuth: false}},
+        {path: '/signup', component: SignUpUser, meta: {requiresAuth: false}},
+        {path: '/journalentries', component: JournalEntryHome, meta: {requiresAuth: true}},
         {path: '/journalentries/create/:id', component: CreateJournalEntry},
         {path: '/journalentries/view/:id', component: ViewJournalEntry},
         {path: '/journalentries/edit/:id', component: EditJournalEntry},
@@ -32,6 +34,15 @@ const router = createRouter({
     ],
 });
 
-
+//global navigation guard
+router.beforeEach(function(to, from, next) {
+    //if this page requires authentication and user is not logged in
+    if(to.meta.requiresAuth && !store.state.isLoggedIn) {
+        //send to login page
+        next('/login');
+    } else {
+        next();
+    }
+})
 
 export default router;
