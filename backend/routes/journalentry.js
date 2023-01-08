@@ -23,7 +23,7 @@ router.get(`/:id`, async (req, res) => {
 });
 
 //POST/CREATE a new journal entry
-router.post('/newjournalentry', async(req, res) => {
+router.post('/', async(req, res) => {
     //the date of the journal entry
     const dt = DateTime.now();
     const journalEntryDate = dt.month + "/" + dt.day + "/" + dt.year; 

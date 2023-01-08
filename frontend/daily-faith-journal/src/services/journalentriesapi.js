@@ -15,4 +15,4 @@ export default {
     deleteJournalEntry(id) {
         return api().delete(`/journalentry/${id}`);
     }
-}
+} 

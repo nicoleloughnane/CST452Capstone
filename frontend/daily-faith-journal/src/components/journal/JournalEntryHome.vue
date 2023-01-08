@@ -4,7 +4,7 @@
     <h4 style="text-align: center;">What is God doing in your life today?</h4>
     <br />
     <div class="controls">
-      <router-link to="/create" class="newpagebutton">Add new entry</router-link>
+      <router-link to="/journalentries/create" class="newpagebutton">Add new entry</router-link>
     </div>
   </section>
     <section>
@@ -24,7 +24,7 @@
 
     </div> 
     <div v-else>
-      There are either no journal entries or our servers are down. 
+      <h3 style="text-align:center">There are either no journal entries or our servers are down.</h3> 
     </div>
     </div>
   </section>

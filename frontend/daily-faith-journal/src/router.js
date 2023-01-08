@@ -24,7 +24,7 @@ const router = createRouter({
         {path: '/login', component: UserAuth, meta: {requiresAuth: false}},
         {path: '/signup', component: SignUpUser, meta: {requiresAuth: false}},
         {path: '/journalentries', component: JournalEntryHome, meta: {requiresAuth: true}},
-        {path: '/journalentries/create/:id', component: CreateJournalEntry},
+        {path: '/journalentries/create', component: CreateJournalEntry},
         {path: '/journalentries/view/:id', component: ViewJournalEntry},
         {path: '/journalentries/edit/:id', component: EditJournalEntry},
         {path: '/journalentries/delete/:id', component: DeleteJournalEntry},

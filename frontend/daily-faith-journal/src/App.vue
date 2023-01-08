@@ -26,6 +26,10 @@ html {
 body {
 margin: 0;
 }
+
+h2 {
+  text-align: center;
+}
 .mybutton {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
