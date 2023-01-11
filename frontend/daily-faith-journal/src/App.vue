@@ -9,6 +9,9 @@ export default {
   components: {
       MyNavbar
   },
+  created() {
+    this.$store.dispatch('tryLogin');
+  },
 }
 </script>
 
