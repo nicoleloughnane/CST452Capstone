@@ -11,6 +11,7 @@ export default {
   },
   created() {
     this.$store.dispatch('tryLogin');
+    this.$store.dispatch('journalentries/getJournalEntries');
   },
 }
 </script>

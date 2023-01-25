@@ -1,5 +1,6 @@
 <template>
     <li>
+       <!-- <h3>{{id}}</h3> -->
         <h3>{{title}}</h3>
         <h4>{{entryBody}}</h4>
         <h4>{{entryDate}}</h4>

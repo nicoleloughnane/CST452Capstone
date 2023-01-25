@@ -18,6 +18,7 @@
         </div>
 
        <div >
+        <router-link to="/journalentries" class="newpagebutton">Go Back</router-link>
         <button class="mybutton">Create</button>
        </div>
        
@@ -26,7 +27,6 @@
     </section>
 </template>
 <script>
-import journalentriesapi from '@/services/journalentriesapi';
      export default {
        data(){
        return {
@@ -40,7 +40,8 @@ import journalentriesapi from '@/services/journalentriesapi';
           val: '',
           isValid: true
         },
-        formIsValid: true
+        formIsValid: true,
+        errorMessage: null,
        }
      },
      methods: {
@@ -50,12 +51,13 @@ import journalentriesapi from '@/services/journalentriesapi';
       //validate form information
       validateForm() {
         this.formIsValid = true;
-        //if it is still left empty, invalid form input
-        if(this.title.val === '') {
+        //title must be between 1 and 25 characters
+        if(this.title.val.length < 1 || this.title.val.length > 25) {
           this.title.isValid = false;
           this.formIsValid = false;
         }
-        if(this.entryBody.val === '') {
+        //entry body must be between 1 and 3,000 characters
+        if(this.entryBody.val.length < 1 || this.entryBody.val.length > 3000) {
           this.entryBody.isValid = false;
           this.formIsValid = false;
         }
@@ -68,25 +70,37 @@ import journalentriesapi from '@/services/journalentriesapi';
         if(!this.formIsValid) {
           return;
         }
-
-        //create the journal entry
-       try{
-        journalentriesapi.createJournalEntry({
-            title: this.title.val,
-            entryBody: this.entryBody.val
-        }) 
-       } catch(error){
-        console.log("error: " + error);
-       }
-
+        //at this point the form should be valid
+        //references journal entries module from vuex store
+      this.$store
+        .dispatch('journalentries/createJournalEntry', {
+          title: this.title.val,
+          entryBody: this.entryBody.val,
+        })
+        .then(
+          () => {
+           /* if (this.$store.state.errorOccurred != null) {
+              //error has occurred, form is invalid
+              this.errorMessage = this.$store.state.errorOccurred;
+              //this.formIsValid = false;
+              //console.log("error message: " + this.errorMessage);
+              return this.errorMessage;
+            } */
+            //send user back to login to log in with newly created account
+           // this.$router.replace("/login");
+           this.$router.push('/journalentries');
+          },
+          //for any errors that may occur within the component
+          (error) => {
+            this.errorMessage = error.message;
+          }
+        );
         //for testing purposes
-        const formData = {
+       /* const formData = {
                 t: this.title.val,
                 pb: this.entryBody.val
             };
-          console.log(formData);
-            //send user back to the list of posts page
-          this.$router.push('/journalentries');
+          console.log(formData); */
       },
       
       

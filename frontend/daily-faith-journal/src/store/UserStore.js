@@ -1,8 +1,12 @@
 import { createStore } from 'vuex';
 import api from '../services/api'
+import JournalEntriesModule from './JournalEntriesModule';
 
 //store starts here
 const store = createStore({
+  modules: {
+    journalentries: JournalEntriesModule
+  },
     state: {
       isLoggedIn: false,
       user: null,
@@ -55,7 +59,7 @@ const store = createStore({
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
         if (token && user) {
-          console.log("I am here in try login, token and user exist")
+          //console.log("I am here in try login, token and user exist")
           commit('setUser', {
             token: token,
             user: user

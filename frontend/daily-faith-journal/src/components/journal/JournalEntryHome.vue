@@ -32,7 +32,6 @@
 </template>
  
 <script>
-import JournalEntriesAPI from '@/services/journalentriesapi';
 import JournalEntryComponent from '../JournalEntryComponent.vue';
 export default {
 components: {
@@ -50,8 +49,8 @@ mounted() {
 },
 methods: {
   async loadEntries() {
-    const response = await JournalEntriesAPI.getJournalEntries();
-    this.entries = response.data;
+    this.$store.dispatch('journalentries/getJournalEntries');
+    this.entries = this.$store.getters['journalentries/getterJournalEntries'];
   }
 }
 }
