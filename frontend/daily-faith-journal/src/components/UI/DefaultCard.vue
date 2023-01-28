@@ -1,19 +1,25 @@
+<!--default card with little customization-->
+<!--referenced from https://tailwind-elements.com/docs/standard/components/cards/-->
 <template>
-    <div class="card">
+    <div class="flex justify-center">
+  <div class="block rounded-2xl shadow-xl bg-white max-w-sm ">
+    <div class="p-6">
+      <h5 class="text-gray-900 font-medium mb-2">
         <slot></slot>
+      </h5>
     </div>
+  </div>
+</div>
 </template>
 
-<style scoped>
-.card {
- /*rounded corners, shadow */
-  border-radius: 12px; 
-  box-shadow: 0 2px 8px #00000042;
-  margin: 2rem auto;
-  max-width: 40rem;
-  /* flexbox */
-  display: flex;  
-  justify-content: center;  
-  align-items: center; 
+<script>
+export default {
+    props: {
+       
+
+    }
 }
+</script>
+<style scoped>
+
 </style>

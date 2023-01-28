@@ -1,74 +1,66 @@
 <template>
     <!--switch between a button and a router link-->
-    <button v-if="!link" :class="mode">
-        <slot></slot>
+    <button v-if="!link" :class="buttonClass">
+        {{ text }}
     </button>
-    <router-link v-else :to="to" :class="mode">
-        <slot></slot>
+    <router-link v-else :to="to" :class="buttonClass">
+      {{ text }}
     </router-link>
 </template>
 
 <script>
 export default {
     props: {
-        mode: {
+      //style of button
+        buttonType: {
             type: String,
             required: false,
-            default: null
+            default: "primary"
         },
+        //if the button is a link
         link: {
             type: Boolean,
             required: false,
             default: false
         },
+        //where the button will link the user to.. default is '/'
         to: {
             type: String,
             required: false,
             default: '/'
+        },
+        //text the button contains
+        text: {
+          type: String,
+          required: true
         }
+    },
+    computed: {
+      buttonClass() {
+        return {
+          [this.buttonType]: true
+        }
+      }
     }
 }
 </script>
 
 <style scoped>
-button,
-a {
-  text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  font: inherit;
-  background-color: #775DAB;
-  border: 1px solid #775DAB;
-  color: white;
-  cursor: pointer;
-  border-radius: 20px;
-   display: block; 
-  margin: 0 auto; 
-}
+ /*below are all styles for the buttons utilizing tailwind and brand colors outlined in tailwind.config.js */
+ button {
+            @apply rounded-lg px-4 py-2 font-medium ;
+        }
+        .primary {
+            @apply text-white bg-brand-darkpurple hover:shadow-pink rounded-lg px-4 py-2 font-medium;
+        }
+        .secondary {
+            @apply bg-white outline outline-brand-gray outline-1 text-brand-gray hover:bg-brand-darkpurple hover:text-white rounded-lg px-4 py-2 font-medium;
+        }
+        .delete {
+            @apply bg-brand-red text-white hover:shadow-cream rounded-lg px-4 py-2 font-medium;
+        }
+        .create {
+            @apply bg-brand-green text-white hover:shadow-cream rounded-lg px-4 py-2 font-medium;
+        }
 
-a:hover,
-a:active,
-button:hover,
-button:active {
-  background-color: #270041;
-  border-color: #270041;
-}
-
-.flat {
-  background-color: transparent;
-  color: #3a0061;
-  border: none;
-}
-
-.outline {
-  background-color: transparent;
-  border-color: #775DAB;
-  color: #775DAB;
-}
-
-.flat:hover,
-.flat:active,
-.outline:hover,
-.outline:active {
-  background-color: #edd2ff;
-}
 </style>

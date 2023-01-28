@@ -2,32 +2,32 @@
    <div>
   <default-card>
     <form @submit.prevent="submitForm">
-      <h2 style="text-align: center">Login</h2>
-      <div class="form-control">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model.trim="email" />
+      <h2 class="text-center text-xl mb-5">Login</h2>
+      <div class="mb-3 xl:w-96">
+        <label for="email" class="form-label text-brand-gray text-l mr-10">Email:</label>
+        <input type="email" id="email" v-model.trim="email" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
       </div>
-      <div class="form-control">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model.trim="password" />
+      <div class="mb-3 xl:w-96">
+        <label for="password" class="form-label text-brand-gray text-l mr-1 ">Password: </label>
+        <input type="password" id="password" v-model.trim="password" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder="*******"/>
       </div>
+      <div class="flex flex-col items-center">
       <!--if the form is invalid or the an error exists, error message is displayed-->
-      <p class="errors" v-if="!validForm || errorMessage != null">
+      <p class="text-brand-red text-md" v-if="!validForm || errorMessage != null">
         Your email or password was incorrect, or left blank. Please try again.
       </p>
-      <button class="mybutton">Login </button>
-      <h4 style="text-align: center">Need an account?</h4>
-      <router-link to="/signup" class="newpagebutton">Sign up</router-link>
+      <default-button text="Login" buttonType="primary" class="mb-6"/>
+      <h4 class="text-center mb-2">Need an account?</h4>
+      <default-button text="Sign Up" buttonType="secondary" link :to="signupLink" />
+    </div>
     </form>
-   <!-- <div class="loading" v-if="formLoading">
-    <p>Logging in...</p> 
-  </div> -->
   </default-card>
 </div>
 </template>
 
 <script>
 export default {
+
   data() {
     //data to be returned
     return {
@@ -35,8 +35,13 @@ export default {
       password: "",
       validForm: true,
       errorMessage: null,
-      formLoading : false
     };
+  },
+  computed: {
+    signupLink() {
+        //take user to the signup page
+        return '/signup'
+      },
   },
   methods: {
     async submitForm() {
@@ -78,7 +83,7 @@ export default {
 };
 </script>
 <style scoped>
-form {
+/* form {
   margin: 1rem;
   padding: 1rem;
 }
@@ -110,7 +115,7 @@ textarea:focus {
 .errors {
   font-weight: 900;
   color: red;
-}
+} */
 
 
 </style>

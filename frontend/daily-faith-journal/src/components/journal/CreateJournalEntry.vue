@@ -27,6 +27,8 @@
     </section>
 </template>
 <script>
+import journalentriesapi from '@/services/journalentriesapi';
+//import api from '../../services/api';
      export default {
        data(){
        return {
@@ -42,6 +44,7 @@
         },
         formIsValid: true,
         errorMessage: null,
+        createResponse: null
        }
      },
      methods: {
@@ -71,36 +74,26 @@
           return;
         }
         //at this point the form should be valid
-        //references journal entries module from vuex store
-      this.$store
-        .dispatch('journalentries/createJournalEntry', {
-          title: this.title.val,
-          entryBody: this.entryBody.val,
-        })
-        .then(
-          () => {
-           /* if (this.$store.state.errorOccurred != null) {
-              //error has occurred, form is invalid
-              this.errorMessage = this.$store.state.errorOccurred;
-              //this.formIsValid = false;
-              //console.log("error message: " + this.errorMessage);
-              return this.errorMessage;
-            } */
-            //send user back to login to log in with newly created account
-           // this.$router.replace("/login");
-           this.$router.push('/journalentries');
-          },
-          //for any errors that may occur within the component
-          (error) => {
-            this.errorMessage = error.message;
-          }
-        );
-        //for testing purposes
-       /* const formData = {
+         const formData = {
                 t: this.title.val,
                 pb: this.entryBody.val
-            };
-          console.log(formData); */
+            }; 
+          console.log('create form data: ' + formData);
+
+        //call journal entries api to create journal entry
+        journalentriesapi.createJournalEntry({
+          title: this.title.val,
+          entryBody: this.entryBody.val
+        }).then(response => {
+          this.createResponse = response.data;
+          console.log('creation response: ' + this.createResponse);
+          this.$router.push('/journalentries');
+        })
+        .catch(error => {
+          this.errorMessage = error.message;
+          console.log('creation failed: ' + this.errorMessage);
+        }) 
+     
       },
       
       

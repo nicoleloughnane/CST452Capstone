@@ -1,18 +1,54 @@
 import api from './api';
 export default {
-    getJournalEntries() {
-        return api().get('/journalentry/');
+    errorOccurred: null,
+
+    //get all journal entries
+    async getJournalEntries() {
+        await api().get(`/journalentry/`) 
+            .then(response => {
+                return response.data
+            }).catch(error => {
+                this.errorOccurred = error.message;
+            })
+        return api().get('/journalentry/'); 
     },
-    getJournalEntryById(id) {
-        return api().get(`/journalentry/${id}`);
+
+    //get a journal entry by its ID
+    async getJournalEntryById(id) {
+        await api().get(`/journalentry/${id}`)
+        .then(response => {
+            return response.data;
+        }).catch(error => {
+            this.errorOccurred = error.message;
+        })
     },
-    createJournalEntry(data) {
-        return api().post('/journalentry/', data);
+
+    //create a journal entry
+    async createJournalEntry(data) {
+        await api().post('/journalentry/', data)
+        .then(response => {
+            return response.data;
+        }).catch(error => {
+            this.errorOccurred = error.message;
+        })
     },
-    updateJournalEntry(id, params) {
-        return api().put(`/journalentry/${id}`, params);
+
+    //update an existing journal entry
+    async updateJournalEntry(id, params) {
+        await api().put(`/journalentry/${id}`, params)
+        .then(response => {
+            return response.data;
+        }).catch(error => {
+            this.errorOccurred = error.message;
+        })
     },
-    deleteJournalEntry(id) {
-        return api().delete(`/journalentry/${id}`);
+    //delete a journal entry
+    async deleteJournalEntry(id) {
+        await api().delete(`/journalentry/${id}`)
+        .then(response => {
+            return response.data;
+        }).catch(error => {
+            this.errorOccurred = error.message;
+        })
     }
 } 
