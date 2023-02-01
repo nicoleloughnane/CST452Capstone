@@ -1,8 +1,10 @@
 <template>
+   <div class="flex flex-col items-center text-center">
+     
+      <h2 class="text-xl mb-5 mt-5">Create Journal Entry</h2>
     <section>
-        <h2>Create Journal Entry</h2>
         <default-card>
-            <form @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm">
         <!--these form controls are for the user to input journal entry information
         v-model binds with data in return statement, trim gets rid of excess whitespace-->
         <div class="form-control" :class="{invalid: !title.isValid}">
@@ -17,18 +19,20 @@
          <p v-if="!entryBody.isValid">Body of entry must not be empty</p>
         </div>
 
-       <div >
-        <router-link to="/journalentries" class="newpagebutton">Go Back</router-link>
-        <button class="mybutton">Create</button>
-       </div>
-       
+       <div class="actions">
+        <default-button link :to="'/journalentries'" text="Go Back" buttonType="Go Back" class="m-2" />
+        <default-button text="Create" class="m-2" buttonType="create" />
+        </div>
     </form>
         </default-card>
-    </section>
+      </section>
+</div>
+
+
 </template>
 <script>
-import journalentriesapi from '@/services/journalentriesapi';
-//import api from '../../services/api';
+import api from '../../services/api';
+
      export default {
        data(){
        return {
@@ -66,8 +70,22 @@ import journalentriesapi from '@/services/journalentriesapi';
         }
 
     },
+    async createJournalEntry(data) {
+      await api().post('/journalentry/', data)
+        .then(response => {
+          console.log('creation success')
+            this.createResponse =  response.data;
+            this.$router.push('/journalentries');
+            
+        }).catch(error => {
+          console.log('creation failed: ' + this.errorMessage);
+            this.errorOccurred = error.message;
+        })
+     
+    },
     //user submits the post creation form
       submitForm() {
+        console.log('form has been submitted ')
         this.validateForm();
         //if invalid, do a return to prevent rest of method from executing
         if(!this.formIsValid) {
@@ -75,25 +93,13 @@ import journalentriesapi from '@/services/journalentriesapi';
         }
         //at this point the form should be valid
          const formData = {
-                t: this.title.val,
-                pb: this.entryBody.val
+                title: this.title.val,
+                entryBody: this.entryBody.val
             }; 
           console.log('create form data: ' + formData);
-
-        //call journal entries api to create journal entry
-        journalentriesapi.createJournalEntry({
-          title: this.title.val,
-          entryBody: this.entryBody.val
-        }).then(response => {
-          this.createResponse = response.data;
-          console.log('creation response: ' + this.createResponse);
-          this.$router.push('/journalentries');
-        })
-        .catch(error => {
-          this.errorMessage = error.message;
-          console.log('creation failed: ' + this.errorMessage);
-        }) 
-     
+          //call journal entries api to create journal entry
+          this.createJournalEntry(formData);
+       
       },
       
       

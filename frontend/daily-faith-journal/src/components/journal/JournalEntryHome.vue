@@ -1,9 +1,12 @@
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center text-center">
+  <!--introductory section for information and button to make new entry-->
+    <section>
     <h2 class="text-xl mb-5 mt-5">Journal Entries</h2>
     <h4 class="text-lg mb-5">What is God doing in your life today?</h4>
-    <default-button text="Create Entry" buttonType="create" link :to="createEntryLink" class="mb-3" />
-
+    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="mb-3" />
+   </section>
+<!--loop through all entries that are pulled from axios loadEntries request in scripts-->
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
@@ -29,7 +32,7 @@
 
         </div>
         <div v-else>
-          <h3>There are either no journal entries or our servers are down.</h3>
+          <h3>There are either no journal entries or our servers are down. Please try again later! </h3>
         </div>
       </div>
     </section>
@@ -42,27 +45,10 @@ import api from '../../services/api';
 export default {
 
   computed: {
-    entryDetailsLink(id) {
-      return () => {
-        console.log('received id', id)
-        //uses the current path and adds id of specific post to the route
-        return this.$route.path + '/view/' + this.id
-      }
-    },
-    editEntryLink() {
-      //uses the current path and adds id of specific post to the route
-      return this.$route.path + '/edit/' + this.id
-    },
-    deleteEntryLink() {
-      //uses the current path and adds id of specific post to the route
-      return this.$route.path + '/delete/' + this.id
-    },
-    createEntryLink() {
-      return this.$route.path + '/create'
-    }
+    
   },
   components: {
-    //JournalEntryComponent
+
   },
 
   data() {
@@ -81,7 +67,7 @@ export default {
         .then(response => {
           this.entries = response.data;
           //this.entries = JSON.stringify(response.data);
-          console.log('entry response: ' + this.entries);
+          console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)

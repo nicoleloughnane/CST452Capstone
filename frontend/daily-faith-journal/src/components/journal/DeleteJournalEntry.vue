@@ -54,6 +54,7 @@ export default {
         .then(response => {
           this.entry = response.data;
           console.log('entry response: ' + JSON.stringify(response.data));
+          this.$router.push('/journalentries');
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)

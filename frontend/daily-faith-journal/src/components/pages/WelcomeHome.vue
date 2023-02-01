@@ -1,10 +1,10 @@
 <template>
   <img src="../../assets/dailyfaithjournallogo.png" class="logo">
   <div class="home">
-    <h2>Welcome!</h2>
-    <h4>Today is: {{todayDate}}</h4>
-    <router-link to="/journalentries" class="newpagebutton">Journal</router-link>
-    <router-link to="/sermonnotes" class="newpagebutton">Sermon Notes</router-link>
+    <h2 class="text-xl m-2">Welcome!</h2>
+    <h4 class="text-base mb-6">Today is: {{todayDate}}</h4>
+    <default-button link :to="'/journalentries'" text="Journal" buttonType="primary" class="m-2" />
+    <default-button link :to="'/sermonnotes'" text="Sermon Notes" buttonType="primary" class="m-2" />
   </div>
 </template>
 <script>

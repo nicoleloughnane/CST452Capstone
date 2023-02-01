@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav>
-            <h1><router-link to="/"><img src="../../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
+            <h1><router-link to="/home"><img src="../../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
             <ul>
                 <li v-if="isLoggedIn">
                   <router-link to="/journalentries">Journal</router-link>

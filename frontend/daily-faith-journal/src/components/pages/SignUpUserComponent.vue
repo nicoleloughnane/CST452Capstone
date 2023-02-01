@@ -1,57 +1,44 @@
 <template>
   <default-card>
     <form @submit.prevent="submitForm()">
-      <h2 style="text-align: center">Sign Up</h2>
-      <div class="form-control" :class="{ invalid: !email.isValid }">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          v-model.trim="email.val"
-          @blur="clearValidity('email')"
-        />
+      <h2 class="text-center text-xl mb-5">Sign Up</h2>
+      <!--Email validation-->
+      <div class="mb-3 xl:w-96" :class="{ invalid: !email.isValid }">
+        <label for="email" class="form-label text-brand-gray text-l mr-10">Email</label>
+        <input type="email" id="email" v-model.trim="email.val" @blur="clearValidity('email')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
         <!--if the form is invalid or the email is already in use, error message is displayed-->
-        <p class="errors" v-if="!email.isValid || errorMessage != null">Email must not be empty or an account with this email already exists</p>
+        <p class="text-brand-red text-md" v-if="!email.isValid || errorMessage != null">Email must not be empty or an account with this email already exists</p>
       </div>
-      <div class="form-control" :class="{ invalid: !password.isValid }">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model.trim="password.val"
-          @blur="clearValidity('password')"
-        />
-        <p class="errors" v-if="!password.isValid">
+      <!--Password validation-->
+      <div class="mb-3 xl:w-96" :class="{ invalid: !password.isValid }">
+        <label for="password" class="form-label text-brand-gray text-l mr-10">Password</label>
+        <input type="password" id="password" v-model.trim="password.val" @blur="clearValidity('password')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="*********"/>
+        <p class="text-brand-red text-md" v-if="!password.isValid">
           Password must not be empty and at least 8 characters
         </p>
       </div>
-      <div class="form-control" :class="{ invalid: !firstName.isValid }">
-        <label for="firstName">First Name</label>
-        <input
-          type="firstName"
-          id="firstName"
-          v-model.trim="firstName.val"
-          @blur="clearValidity('firstName')"
-        />
-        <p class="errors" v-if="!firstName.isValid">
+        <!--First name validation-->
+      <div class="mb-3 xl:w-96" :class="{ invalid: !firstName.isValid }">
+        <label for="firstName" class="form-label text-brand-gray text-l mr-10">First Name</label>
+        <input type="firstName" id="firstName" v-model.trim="firstName.val" @blur="clearValidity('firstName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="John"/>
+        <p class="text-brand-red text-md" v-if="!firstName.isValid">
           First name must not be empty
         </p>
       </div>
-      <div class="form-control" :class="{ invalid: !lastName.isValid }">
-        <label for="lastName">Last Name</label>
-        <input
-          type="lastName"
-          id="lastName"
-          v-model.trim="lastName.val"
-          @blur="clearValidity('lastName')"
-        />
-        <p class="errors" v-if="!lastName.isValid">
+        <!--Last name validation-->
+      <div class="mb-3 xl:w-96" :class="{ invalid: !lastName.isValid }">
+        <label for="lastName" class="form-label text-brand-gray text-l mr-10">Last Name</label>
+        <input type="lastName" id="lastName" v-model.trim="lastName.val" @blur="clearValidity('lastName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="Doe"/>
+        <p class="text-brand-red text-md" v-if="!lastName.isValid">
           Last name must not be empty
         </p>
       </div>
-      <button class = "mybutton">Continue</button>
-      <h4 style="text-align: center">Already have an account?</h4>
-      <router-link to="/login" mode="outline" class="newpagebutton">Login</router-link>
+      <!--Options the user can take: buttons-->
+      <div class="flex flex-col items-center text-center">
+      <default-button text="Continue" buttonType="primary" class="my-4 "/>
+      <h4 class="text-center mb-4">Already have an account?</h4>
+      <default-button text="Go Back" buttonType="secondary" link :to="loginLink" />
+    </div>
     </form>
   </default-card>
 </template>
@@ -84,6 +71,10 @@ export default {
     isLoggedIn() {
       return this.$store.state.isLoggedIn;
     },
+    loginLink() {
+        //take user to the login page
+        return '/login'
+      },
   },
   mounted() {
     if (this.isLoggedIn) {

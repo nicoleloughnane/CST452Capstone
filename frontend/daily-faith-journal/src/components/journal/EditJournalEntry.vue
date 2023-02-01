@@ -9,12 +9,13 @@
          <input type="text" id="title" v-model.trim="entry.title" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder=""/>    
         </div>
 
+          <!--TODO: style properly-->
         <div class="mb-3 xl:w-96" >
         <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Entry Body: </label>
          <textarea id="entryBody" v-model.trim="entry.entryBody" rows="10" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder=""> </textarea>  
         </div>
 
-          <!--TODO: style properly-->
+        
        <div >
         <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class=""/>
         <default-button text="Update" buttonType="primary" class="m-2"/>
@@ -26,7 +27,7 @@
 </template>
 <script>
 import api from '../../services/api';
-import journalentriesapi from '@/services/journalentriesapi';
+//import journalentriesapi from '@/services/journalentriesapi';
      export default {
       //props: ['id', 'title', 'entryBody', 'entryDate', 'entry_prop'],
       computed: {
@@ -67,8 +68,8 @@ import journalentriesapi from '@/services/journalentriesapi';
         });
 
       },
-      async updateEntry() {
-        journalentriesapi.updateJournalEntry( this.entryId, {
+      async updateEntry(formData) {
+       /* journalentriesapi.updateJournalEntry( this.entryId, {
           title: this.entry.title,
           entryBody: this.entry.entryBody
         }).then(response => {
@@ -77,6 +78,15 @@ import journalentriesapi from '@/services/journalentriesapi';
           this.$router.push('/journalentries');
         })
         .catch(error => {
+          this.errorMessage = error.message;
+          console.log('edit failed: ' + this.errorMessage);
+        }) */
+        await api().put(`/journalentry/${this.entryId}`, formData)
+        .then(response => {
+          this.editResponse = response.data;
+          console.log('edit response: ' + JSON.stringify(response.data));
+          this.$router.push('/journalentries');
+        }).catch(error => {
           this.errorMessage = error.message;
           console.log('edit failed: ' + this.errorMessage);
         })
@@ -108,7 +118,11 @@ import journalentriesapi from '@/services/journalentriesapi';
         }
         //at this point the form should be valid
         //call method to update the entry
-        this.updateEntry();
+        const formData = {
+                title: this.entry.title,
+                entryBody: this.entry.entryBody
+            }; 
+        this.updateEntry(formData);
          
       },
      }
