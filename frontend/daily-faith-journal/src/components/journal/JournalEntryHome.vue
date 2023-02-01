@@ -6,12 +6,12 @@
     <h4 class="text-lg mb-5">What is God doing in your life today?</h4>
     <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="mb-3" />
    </section>
-<!--loop through all entries that are pulled from axios loadEntries request in scripts-->
+<!--loop through first 10 entries that are pulled from axios loadEntries request in scripts-->
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
           <ul>
-            <li v-for="entry in entries" :key="entry.id">
+            <li v-for="entry in displayedEntries" :key="entry.id">
 
               <default-card class="m-4">
                 <div class="m-6">
@@ -19,6 +19,7 @@
                   <h4 class="text-base">{{ entry.entryBody }}</h4>
                   <h4 class="text-sm">{{ entry.entryDate }}</h4>
                 </div>
+                <!--actions the user can take: view, edit, or delete-->
                 <div class="actions">
                   <default-button link :to="this.$route.path + '/view/' + entry.id" text="View" buttonType="primary" class="m-2" />
                   <default-button link :to="this.$route.path + '/edit/' + entry.id" text="Edit" class="m-2" />
@@ -36,6 +37,29 @@
         </div>
       </div>
     </section>
+
+    <!--page numbers-->
+    <section>
+      <div class="mx-auto my-8">
+        <div class="flex flex-row flex-nowrap">
+          <p class="flex-grow text-sm"> Page {{ currentPage }}</p>
+        </div>
+      </div>
+      <!--previous page-->
+      <div class="flex items-center justify-center">
+        <router-link v-if="previousPage"
+        :to="{ query: {page: previousPage} }"
+        class="mx-3 my-3 text-sm underline text-brand-darkpurple">
+        Previous
+        </router-link>
+      </div>
+      <!--next page-->
+      <router-link v-if="nextPage"
+        :to="{query: {page: nextPage} }"
+        class="mx-3 my-3 text-sm underline text-brand-darkpurple">
+        Next
+        </router-link>
+    </section>
   </div>
 
 </template>
@@ -43,14 +67,6 @@
 <script>
 import api from '../../services/api';
 export default {
-
-  computed: {
-    
-  },
-  components: {
-
-  },
-
   data() {
     return {
       entries: [],
@@ -58,9 +74,45 @@ export default {
 
     }
   },
+  computed: {
+    //the following methods were written with the assistance of Vue Masterclass on Udemy: section 19: 237, 240-243
+    currentPage() {
+      return Number.parseInt(this.$route.query.page || "1")
+    },
+    previousPage() {
+      const previousPage = this.currentPage - 1;
+      const firstPage = 1;
+      const result  = previousPage >= firstPage ? previousPage: undefined;
+      //console.log('result in previousPage: ' + result)
+      return result;
+    },
+    nextPage() {
+      //ex: 1 + 1 = 2
+      const nextPage = this.currentPage + 1;
+      //ex: 11/10 = 2
+      const lastPage = Math.ceil(this.entries.length / 10);
+      //ex: 2 <= 2 
+      const result = nextPage <= lastPage ? nextPage: undefined;
+      //console.log('result in nextPage: ' + result)
+      return result;
+    },
+    //only display the first 10 entries
+    displayedEntries() {
+
+     const pageNum = this.currentPage;
+
+     //get batch of 10 entries based on existing page number
+     const firstEntryIndex = (pageNum - 1) * 10;
+     const lastEntryIndex = pageNum * 10;
+    return this.entries.slice(firstEntryIndex, lastEntryIndex);
+    },
+
+  },
+  //when component is loaded, call loadEntries
   mounted() {
     this.loadEntries();
   },
+  //load journal entries from api
   methods: {
     async loadEntries() {
       await api().get(`/journalentry/`)

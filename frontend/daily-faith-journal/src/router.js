@@ -18,6 +18,10 @@ import SermonNoteHome from './components/sermonnote/SermonNoteHome.vue';
 
 const router = createRouter({
     history: createWebHistory(),
+    //scroll to the top and left of the screen, smooth scroll
+    scrollBehavior() {
+        return { top: 0, left: 0, behavior: "smooth"}
+    },
     routes: [
         {path: '/home', component: WelcomeHome},
         {path: '/', redirect: '/login'},
