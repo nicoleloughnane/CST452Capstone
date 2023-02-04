@@ -2,32 +2,37 @@
    <div>
   <default-card>
     <form @submit.prevent="submitForm">
-      <h2>Login</h2>
-      <div class="form-control">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model.trim="email" />
+      <h2 class="text-center text-xl mb-5">Login</h2>
+      <!--Email validation-->
+      <div class="mb-3 xl:w-96" :class="{ invalid: !email.isValid }">
+        <label for="email" class="form-label text-brand-gray text-l mr-10">Email:</label>
+        <input type="email" id="email" v-model.trim="email" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
       </div>
-      <div class="form-control">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model.trim="password" />
+      <!--Password validation-->
+      <div class="mb-3 xl:w-96" :class="{ invalid: !password.isValid }">
+        <label for="password" class="form-label text-brand-gray text-l mr-1 ">Password: </label>
+        <input type="password" id="password" v-model.trim="password" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder="*******"/>
       </div>
       <!--if the form is invalid or the an error exists, error message is displayed-->
-      <p class="errors" v-if="!validForm || errorMessage != null">
+      <div class="flex flex-col items-center">
+      <p class="text-brand-red text-md" v-if="!validForm || errorMessage != null">
         Your email or password was incorrect, or left blank. Please try again.
       </p>
-      <default-button>Login</default-button>
-      <h4>Need an account?</h4>
-      <default-button link to="/signup" mode="outline">Sign up</default-button>
+      <!--Options the user can take: buttons-->
+      <div class="flex flex-col items-center text-center">
+      <default-button text="Login" buttonType="primary" class="my-2"/>
+      <h4 class="text-center my-4">Need an account?</h4>
+      <default-button text="Sign Up" buttonType="secondary" class="my-2" link :to="signupLink" />
+    </div>
+    </div>
     </form>
-   <!-- <div class="loading" v-if="formLoading">
-    <p>Logging in...</p> 
-  </div> -->
   </default-card>
 </div>
 </template>
 
 <script>
 export default {
+
   data() {
     //data to be returned
     return {
@@ -35,8 +40,13 @@ export default {
       password: "",
       validForm: true,
       errorMessage: null,
-      formLoading : false
     };
+  },
+  computed: {
+    signupLink() {
+        //take user to the signup page
+        return '/signup'
+      },
   },
   methods: {
     async submitForm() {
@@ -61,7 +71,7 @@ export default {
         () => {
           if (this.$store.state.errorOccurred != null) {
             this.errorMessage = this.$store.state.errorOccurred;
-            //console.log("error message: " + this.errorMessage);
+            console.log("error message: " + this.errorMessage);
             return this.errorMessage;
           }
           //send to home upon logging in
@@ -72,49 +82,10 @@ export default {
           this.errorMessage = error.message;
         }
       );
-      this.formLoading = true;
     },
   },
 };
 </script>
 <style scoped>
-form {
-  margin: 1rem;
-  padding: 1rem;
-}
 
-.form-control {
-  margin: 0.5rem 0;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-input,
-textarea {
-  display: block;
-  width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
-  padding: 0.15rem;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #775dab;
-  background-color: #faf6ff;
-  outline: none;
-}
-
-.errors {
-  font-weight: 900;
-  color: red;
-}
-
-h2 {
-  text-align: center;
-}
 </style>

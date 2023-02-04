@@ -1,8 +1,12 @@
 import { createStore } from 'vuex';
 import api from '../services/api'
+import JournalEntriesModule from './JournalEntriesModule';
 
 //store starts here
 const store = createStore({
+  modules: {
+    journalentries: JournalEntriesModule
+  },
     state: {
       isLoggedIn: false,
       user: null,
@@ -19,9 +23,10 @@ const store = createStore({
         })
         .then(response => {
               //set user and token to data from the response
-              commit('setUser', response.data.user);
-              commit('setToken', response.data.token)
+              commit('setUser', response.data.user, response.data.token);
               this.state.isLoggedIn = true;
+              localStorage.setItem('token', response.data.token);
+              localStorage.setItem('user', response.data.user);
               return response.data;
         }) 
         .catch(error => {
@@ -31,8 +36,7 @@ const store = createStore({
       //logout
       logout({commit}) {
         //clear states of the user with mutations
-        commit('setUser', null);
-        commit('setToken', null);
+        commit('setUser', null, null);
         this.state.isLoggedIn = false;
       },
 
@@ -45,21 +49,30 @@ const store = createStore({
           lastName: user.lastName
       })
       .then(response => {
-        commit('setUser', response.data.user);
-        commit('setToken', response.data.token)
+        commit('setUser', response.data.user, response.data.token);
         
       }).catch(error => {
         commit('errorOccurred', error.message);
       });
+      },
+      tryLogin({commit}) {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        if (token && user) {
+          //console.log("I am here in try login, token and user exist")
+          commit('setUser', {
+            token: token,
+            user: user
+          });
+          this.state.isLoggedIn = true;
+        }
       }
 
   },
   //change the state: set user and token, notify if error has occurred
   mutations: {
-      setUser(state, user) {
+      setUser(state, user, token) {
           state.user = user;
-        },
-        setToken(state, token) {
           state.token = token;
         },
         errorOccurred(state, error) {

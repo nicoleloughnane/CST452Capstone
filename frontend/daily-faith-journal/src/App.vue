@@ -9,18 +9,17 @@ export default {
   components: {
       MyNavbar
   },
+  created() {
+    this.$store.dispatch('tryLogin');
+  },
 }
 </script>
 
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300&family=Open+Sans&display=swap');
+
 * {
 box-sizing: border-box;
-}
-
-html {
-  font-family: 'Libre Franklin', sans-serif;
 }
 
 body {
