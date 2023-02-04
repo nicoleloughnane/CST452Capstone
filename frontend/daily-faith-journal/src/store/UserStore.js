@@ -1,12 +1,9 @@
 import { createStore } from 'vuex';
 import api from '../services/api'
-import JournalEntriesModule from './JournalEntriesModule';
 
 //store starts here
 const store = createStore({
-  modules: {
-    journalentries: JournalEntriesModule
-  },
+
     state: {
       isLoggedIn: false,
       user: null,
