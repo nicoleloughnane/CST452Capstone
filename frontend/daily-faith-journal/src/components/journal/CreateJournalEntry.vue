@@ -2,6 +2,7 @@
    <div class="flex flex-col items-center text-center">
      
       <h2 class="text-xl mb-5 mt-5">Create Journal Entry</h2>
+      <h4 class="text-lg mb-8">What is God doing in your life today?</h4>
     <section>
         <default-card>
         <form @submit.prevent="submitForm">

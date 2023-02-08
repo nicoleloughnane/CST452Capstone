@@ -19,12 +19,14 @@ const store = createStore({
             password: user.password
         })
         .then(response => {
-              //set user and token to data from the response
-              commit('setUser', response.data.user, response.data.token);
-              this.state.isLoggedIn = true;
-              localStorage.setItem('token', response.data.token);
-              localStorage.setItem('user', response.data.user);
-              return response.data;
+          //check if a token has been received 
+          if(response.data.token) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+            commit('setUser', response.data.user, response.data.token);
+            this.state.isLoggedIn = true;
+            console.log('i am here in login action. user is: ' + this.state.user + ' and token is: ' + this.state.token)
+            return response.data;
+          }
         }) 
         .catch(error => {
           commit('errorOccurred', error.message);
@@ -46,7 +48,7 @@ const store = createStore({
           lastName: user.lastName
       })
       .then(response => {
-        commit('setUser', response.data.user, response.data.token);
+        commit('setUser', response.data.user);
         
       }).catch(error => {
         commit('errorOccurred', error.message);
@@ -55,11 +57,11 @@ const store = createStore({
       tryLogin({commit}) {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
-        if (token && user) {
-          //console.log("I am here in try login, token and user exist")
+        if (user && token) {
+          console.log("I am here in try login, user exists")
           commit('setUser', {
-            token: token,
-            user: user
+            user: user,
+            token: token
           });
           this.state.isLoggedIn = true;
         }

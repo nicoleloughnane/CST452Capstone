@@ -1,10 +1,16 @@
 <template>
+  <!--create entry button-->
+  <div class="flex justify-end">
+      <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
+    </div>
   <div class="flex flex-col items-center text-center">
   <!--introductory section for information and button to make new entry-->
     <section>
-    <h2 class="text-xl mb-5 mt-5">Journal Entries</h2>
-    <h4 class="text-lg mb-5">What is God doing in your life today?</h4>
-    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="mb-3" />
+    <h2 class="text-xl mb-16">Journal Entries</h2>
+
+      <!--search for a journal entry-->
+      <my-search-bar/>
+
    </section>
 <!--loop through first 10 entries that are pulled from axios loadEntries request in scripts-->
     <section>
@@ -66,7 +72,11 @@
  
 <script>
 import api from '../../services/api';
+import MySearchBar from '../UI/MySearchBar.vue';
 export default {
+  components: {
+    MySearchBar,
+  },
   data() {
     return {
       entries: [],

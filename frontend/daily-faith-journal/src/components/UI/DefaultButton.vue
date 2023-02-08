@@ -47,20 +47,21 @@ export default {
 
 <style scoped>
  /*below are all styles for the buttons utilizing tailwind and brand colors outlined in tailwind.config.js */
- button {
-            @apply rounded-lg px-4 py-2 font-medium ;
-        }
+
         .primary {
             @apply text-white bg-brand-darkpurple hover:shadow-pink rounded-lg px-4 py-2 font-medium;
         }
         .secondary {
-            @apply bg-white outline outline-brand-gray outline-1 text-brand-gray hover:bg-brand-darkpurple hover:text-white rounded-lg px-4 py-2 font-medium;
+            @apply bg-white outline outline-brand-gray outline-1 text-brand-gray hover:bg-brand-darkpurple rounded-lg  px-4 py-2 hover:text-white font-medium;
         }
         .delete {
             @apply bg-brand-red text-white hover:shadow-cream rounded-lg px-4 py-2 font-medium;
         }
         .create {
             @apply bg-brand-green text-white hover:shadow-cream rounded-lg px-4 py-2 font-medium;
+        }
+        .search {
+          @apply bg-transparent text-blue-500 hover:bg-brand-darkpurple px-2 py-2 hover:text-white font-normal;
         }
 
 </style>
