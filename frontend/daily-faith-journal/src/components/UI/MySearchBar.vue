@@ -1,12 +1,15 @@
-<!--Component made using tailwind css for a search bar and search icon, along with input to enter search query-->
+<!--This is a Component that contains a search form. made using tailwind css for a search bar. search icon from font awesome.-->
+<!--written with the assistance of Vue Masterclass Course on Udemy-->
+<!--FOR FUTURE MILESTONE NOT CURRENTLY BEING USED-->
 <template>
-    <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple">
+    <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple" @submit.prevent="searchForEntry">
         <font-awesome-icon :icon="['fas', 'search']" class="mx-3"/>
 
         <div class="flex flex-1 flex-nowrap h-full text-base font-light">
             <div class="flex h-full flex-1 relative items-center pr-3 mx-3 just">
-                <label class="absolute -top-10 ">Search For An Entry</label>
-                <input type="text" placeholder="keywords" class="w-full text-lg font-normal focus:outline-none "/>
+                <label class="absolute -top-12 ml-12">Search For An Entry</label>
+                <QueryInput 
+                placeholder="keywords" v-model="userEntry"/>
             </div>
         </div>
 
@@ -16,7 +19,21 @@
     </form>
 </template>
 <script>
+import QueryInput from './QueryInput.vue';
     export default {
-        name: "MySearchBar"
+    name: "MySearchBar",
+    components: {
+     QueryInput 
+    },
+    data() {
+        return {
+            userEntry: ""
+        }
+    },
+    methods: {
+     searchForEntry() {
+        this.$router.push('/journalentries/results')
+     }
     }
+}
 </script>

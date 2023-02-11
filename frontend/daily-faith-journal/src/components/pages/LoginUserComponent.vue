@@ -4,19 +4,25 @@
     <form @submit.prevent="submitForm">
       <h2 class="text-center text-xl mb-5">Login</h2>
       <!--Email validation-->
-      <div class="mb-3 xl:w-96" :class="{ invalid: !email.isValid }">
+      <div class="mb-3 xl:w-96">
         <label for="email" class="form-label text-brand-gray text-l mr-10">Email:</label>
         <input type="email" id="email" v-model.trim="email" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
       </div>
       <!--Password validation-->
-      <div class="mb-3 xl:w-96" :class="{ invalid: !password.isValid }">
+      <div class="mb-3 xl:w-96">
         <label for="password" class="form-label text-brand-gray text-l mr-1 ">Password: </label>
         <input type="password" id="password" v-model.trim="password" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder="*******"/>
       </div>
-      <!--if the form is invalid or the an error exists, error message is displayed-->
+      <!--if the form is invalid or the an error exists, error message is displayed accordingly-->
       <div class="flex flex-col items-center">
-      <p class="text-brand-red text-md" v-if="!validForm || errorMessage != null">
-        Your email or password was incorrect, or left blank. Please try again.
+      <p class="text-brand-red text-md" v-if="!validForm">
+       Fields cannot be left blank. Please try again. 
+      </p>
+      <p class="text-brand-red text-md" v-if="errorMessage === 'Request failed with status code 400'">
+        Your email or password was incorrect. Please try again.
+      </p>
+      <p class="text-brand-red text-md" v-if="errorMessage === 'Network Error'">
+        An error has occurred on our end. Please try again later!
       </p>
       <!--Options the user can take: buttons-->
       <div class="flex flex-col items-center text-center">

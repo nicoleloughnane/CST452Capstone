@@ -17,8 +17,9 @@
   <div v-else>
     <h3 class="text-center">An error has occurred</h3>
   </div>
-  <!--TODO: style properly-->
-  <div>
+ 
+
+  <div class="flex justify-center">
   <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class=""/>
   </div>
 </template>

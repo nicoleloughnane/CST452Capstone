@@ -9,7 +9,23 @@
     <h2 class="text-xl mb-16">Journal Entries</h2>
 
       <!--search for a journal entry-->
-      <my-search-bar/>
+      <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple" @submit.prevent="searchForEntry">
+        <font-awesome-icon :icon="['fas', 'search']" class="mx-3"/>
+
+        <div class="flex flex-1 flex-nowrap h-full text-base font-light">
+            <div class="flex h-full flex-1 relative items-center pr-3 mx-3 just">
+                <label class="absolute -top-12 ml-14">Search For An Entry</label>
+                <QueryInput 
+                placeholder="keywords"
+                @handleQuery="updateSearchQuery"/>
+            </div>
+        </div>
+
+    <!--submit the form to search for an entry-->
+    <default-button text="Search" buttonType="search" class="rounded-r-2xl" link :to="this.$route.path + '/results/' + userSearchQuery"/>
+
+
+    </form>
 
    </section>
 <!--loop through first 10 entries that are pulled from axios loadEntries request in scripts-->
@@ -38,10 +54,15 @@
           </ul>
 
         </div>
+        <div v-if="(entries.length === 0)">
+        <h3>No journal entries were found. How about creating one? </h3>
+        </div>
         <div v-else>
-          <h3>There are either no journal entries or our servers are down. Please try again later! </h3>
+          <h3>There is an error on our end. Please try again later! </h3>
         </div>
       </div>
+
+      
     </section>
 
     <!--page numbers-->
@@ -72,19 +93,26 @@
  
 <script>
 import api from '../../services/api';
-import MySearchBar from '../UI/MySearchBar.vue';
+//import MySearchBar from '../UI/MySearchBar.vue';
+import QueryInput from '../UI/QueryInput.vue';
+
 export default {
   components: {
-    MySearchBar,
+    //MySearchBar,
+    QueryInput,
+
   },
   data() {
     return {
       entries: [],
       errorOccurred: null,
+      userSearchQuery: ""
+
 
     }
   },
   computed: {
+
     //the following methods were written with the assistance of Vue Masterclass on Udemy: section 19: 237, 240-243
     currentPage() {
       return Number.parseInt(this.$route.query.page || "1")
@@ -128,14 +156,18 @@ export default {
       await api().get(`/journalentry/`)
         .then(response => {
           this.entries = response.data;
-          //this.entries = JSON.stringify(response.data);
-          console.log('entry response: ' + JSON.stringify(response.data));
+          //console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;
-          console.log('error has occurred: ' + this.errorOccurred)
+          //console.log('error has occurred: ' + this.errorOccurred)
         })
       return api().get('/journalentry/');
-    }
+    },
+    //whenever search query is updated within the text input field, this updates the users search query
+    updateSearchQuery(payload) {
+      this.userSearchQuery = payload;
+      //console.log(payload)
+     }
   }
 }
 </script>

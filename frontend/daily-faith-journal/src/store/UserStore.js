@@ -24,7 +24,7 @@ const store = createStore({
             localStorage.setItem('user', JSON.stringify(response.data));
             commit('setUser', response.data.user, response.data.token);
             this.state.isLoggedIn = true;
-            console.log('i am here in login action. user is: ' + this.state.user + ' and token is: ' + this.state.token)
+            //console.log('i am here in login action. user is: ' + this.state.user + ' and token is: ' + this.state.token)
             return response.data;
           }
         }) 
@@ -58,7 +58,7 @@ const store = createStore({
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
         if (user && token) {
-          console.log("I am here in try login, user exists")
+          //console.log("I am here in try login, user exists")
           commit('setUser', {
             user: user,
             token: token

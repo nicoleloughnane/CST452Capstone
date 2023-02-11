@@ -1,27 +1,29 @@
 <template>
-   <div class="flex flex-col items-center text-center">
+   <div class="flex flex-col items-center">
      
       <h2 class="text-xl mb-5 mt-5">Create Journal Entry</h2>
       <h4 class="text-lg mb-8">What is God doing in your life today?</h4>
     <section>
         <default-card>
-        <form @submit.prevent="submitForm">
         <!--these form controls are for the user to input journal entry information
         v-model binds with data in return statement, trim gets rid of excess whitespace-->
+        <form @submit.prevent="submitForm">
         <div class="form-control" :class="{invalid: !title.isValid}">
-         <label for="title">Title:</label>
-         <input type="text" id="title" v-model.trim="title.val" @blur="clearValidity('title')" />
-         <p v-if="!title.isValid">Title of entry must not be empty</p>
+         <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title:</label>
+         <br/>
+         <input type="text" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" v-model.trim="title.val" @blur="clearValidity('title')" />
+         <p class="text-brand-red text-md" v-if="!title.isValid">Title of entry must not be empty</p>
         </div>
 
         <div class="form-control" :class="{invalid: !entryBody.isValid}">
-         <label for="entryBody">My Entry:</label>
-         <textarea id="entryBody" rows="5" v-model.trim="entryBody.val" @blur="clearValidity('entryBody')"></textarea>
-         <p v-if="!entryBody.isValid">Body of entry must not be empty</p>
+         <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">My Entry:</label>
+         <br/>
+         <textarea id="entryBody" rows="10" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" v-model.trim="entryBody.val" @blur="clearValidity('entryBody')"></textarea>
+         <p class="text-brand-red text-md" v-if="!entryBody.isValid">Body of entry must not be empty</p>
         </div>
 
        <div class="actions">
-        <default-button link :to="'/journalentries'" text="Go Back" buttonType="Go Back" class="m-2" />
+        <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="m-2" />
         <default-button text="Create" class="m-2" buttonType="create" />
         </div>
     </form>
@@ -107,50 +109,3 @@ import api from '../../services/api';
      }
     }
 </script>
-<style scoped>
- .form-control {
-  margin: 0.5rem 0;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-input[type='checkbox'] + label {
-  font-weight: normal;
-  display: inline;
-  margin: 0 0 0 0.5rem;
-}
-
-input,
-textarea {
-  display: block;
-  width: 100%;
-  border: 1px solid #ccc;
-  font: inherit;
-}
-
-input:focus,
-textarea:focus {
-  background-color: #f0e6fd;
-  outline: none;
-  border-color: #3d008d;
-}
-
-h3 {
-  margin: 0.5rem 0;
-  font-size: 1rem;
-}
-p {
-  color:red;
-}
-
-.invalid label {
-  color: red;
-}
-.invalid textarea {
-  border: 1px solid red;
-}
-</style>

@@ -1,17 +1,18 @@
 <template>
   <default-card>
-    <form @submit.prevent="submitForm()">
+    <form @submit.prevent="submitForm">
       <h2 class="text-center text-xl mb-5">Sign Up</h2>
       <!--Email validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !email.isValid }">
-        <label for="email" class="form-label text-brand-gray text-l mr-10">Email</label>
+        <label for="email" class="form-label text-brand-gray text-l mr-14">Email:</label>
         <input type="email" id="email" v-model.trim="email.val" @blur="clearValidity('email')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
+        <!--pending bug: form prevents user from signing in if they use an email that already exists-->
         <!--if the form is invalid or the email is already in use, error message is displayed-->
         <p class="text-brand-red text-md" v-if="!email.isValid || errorMessage != null">Email must not be empty or an account with this email already exists</p>
       </div>
       <!--Password validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !password.isValid }">
-        <label for="password" class="form-label text-brand-gray text-l mr-10">Password</label>
+        <label for="password" class="form-label text-brand-gray text-l mr-6">Password:</label>
         <input type="password" id="password" v-model.trim="password.val" @blur="clearValidity('password')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="*********"/>
         <p class="text-brand-red text-md" v-if="!password.isValid">
           Password must not be empty and at least 8 characters
@@ -19,7 +20,7 @@
       </div>
         <!--First name validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !firstName.isValid }">
-        <label for="firstName" class="form-label text-brand-gray text-l mr-10">First Name</label>
+        <label for="firstName" class="form-label text-brand-gray text-l mr-4">First Name:</label>
         <input type="firstName" id="firstName" v-model.trim="firstName.val" @blur="clearValidity('firstName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="John"/>
         <p class="text-brand-red text-md" v-if="!firstName.isValid">
           First name must not be empty
@@ -27,7 +28,7 @@
       </div>
         <!--Last name validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !lastName.isValid }">
-        <label for="lastName" class="form-label text-brand-gray text-l mr-10">Last Name</label>
+        <label for="lastName" class="form-label text-brand-gray text-l mr-4">Last Name:</label>
         <input type="lastName" id="lastName" v-model.trim="lastName.val" @blur="clearValidity('lastName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="Doe"/>
         <p class="text-brand-red text-md" v-if="!lastName.isValid">
           Last name must not be empty
@@ -77,9 +78,7 @@ export default {
       },
   },
   mounted() {
-    if (this.isLoggedIn) {
-      this.$router.replace("/home");
-    }
+    
   },
   methods: {
     clearValidity(input) {
@@ -90,11 +89,7 @@ export default {
       this.formIsValid = true;
       this.errorMessage = null;
       //email must be between 1 and 40 characters with @ sign
-      if (
-        !this.email.val.includes("@") ||
-        this.email.val.length < 1 ||
-        this.email.val.length > 40
-      ) {
+      if (!this.email.val.includes("@") || this.email.val.length < 1 || this.email.val.length > 40) {
         this.email.isValid = false;
         this.formIsValid = false;
       }
@@ -131,11 +126,11 @@ export default {
             if (this.$store.state.errorOccurred != null) {
               //error has occurred, form is invalid
               this.errorMessage = this.$store.state.errorOccurred;
-              //this.formIsValid = false;
-              //console.log("error message: " + this.errorMessage);
+              console.log("error message: " + this.errorMessage);
               return this.errorMessage;
             }
             //send user back to login to log in with newly created account
+            this.formIsValid = true;
             this.$router.replace("/login");
           },
           //for any errors that may occur within the component
@@ -147,41 +142,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-form {
-  margin: 1rem;
-  padding: 1rem;
-}
-
-.form-control {
-  margin: 0.5rem 0;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-input,
-textarea {
-  display: block;
-  width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
-  padding: 0.15rem;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #775dab;
-  background-color: #faf6ff;
-  outline: none;
-}
-
-.errors {
-  font-weight: 900;
-  color: red;
-}
-
-</style>
