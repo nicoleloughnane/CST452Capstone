@@ -13,7 +13,7 @@ router.get(`/`, async (req, res) => {
   res.send(journalEntryList);
 });
 
-//get all journal entries
+//get journal entry by ID
 router.get(`/:id`, async (req, res) => {
   const journalEntry = await JournalEntry.findById(req.params.id);
   if (!journalEntry) {

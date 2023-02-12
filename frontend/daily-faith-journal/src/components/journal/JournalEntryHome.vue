@@ -1,12 +1,36 @@
+<!--this is the main home page for the journal entries, Read all operation is performed here to pull all entries from database-->
+<!--search functionality is also stored here, for now it will direct user to new page to see search results-->
 <template>
+  <!--create entry button-->
+  <div class="flex justify-end">
+      <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
+    </div>
   <div class="flex flex-col items-center text-center">
   <!--introductory section for information and button to make new entry-->
     <section>
-    <h2 class="text-xl mb-5 mt-5">Journal Entries</h2>
-    <h4 class="text-lg mb-5">What is God doing in your life today?</h4>
-    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="mb-3" />
+    <h2 class="text-xl mb-16">Journal Entries</h2>
+
+      <!--search for a journal entry-->
+      <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple" @submit.prevent="searchForEntry">
+        <font-awesome-icon :icon="['fas', 'search']" class="mx-3"/>
+
+        <div class="flex flex-1 flex-nowrap h-full text-base font-light">
+            <div class="flex h-full flex-1 relative items-center pr-3 mx-3 just">
+                <label class="absolute -top-12 ml-14">Search For An Entry</label>
+                <QueryInput 
+                placeholder="keywords"
+                @handleQuery="updateSearchQuery"/>
+            </div>
+        </div>
+
+    <!--submit the form to search for an entry-->
+    <default-button text="Search" buttonType="search" class="rounded-r-2xl" link :to="this.$route.path + '/results/' + userSearchQuery"/>
+
+    </form>
+
    </section>
-<!--loop through first 10 entries that are pulled from axios loadEntries request in scripts-->
+<!--loop through first 10 entries that are pulled from axios displayedEntries request in scripts-->
+<!--display all entries in a card component with options to view entry further, edit it, or delete it-->
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
@@ -28,12 +52,16 @@
 
               </default-card>
             </li>
-
           </ul>
-
         </div>
-        <div v-else>
-          <h3>There are either no journal entries or our servers are down. Please try again later! </h3>
+
+        <!--if an error has occurred: network-->
+        <div v-if="errorOccurred === 'Network Error'">
+          <h3>There is an error on our end. Please try again later! </h3>
+        </div>
+        <!--else if no entries exist-->
+        <div v-else-if="(entries.length === 0)">
+        <h3>No journal entries were found. How about creating one? </h3>
         </div>
       </div>
     </section>
@@ -61,24 +89,33 @@
         </router-link>
     </section>
   </div>
-
 </template>
  
 <script>
 import api from '../../services/api';
+import QueryInput from '../UI/QueryInput.vue';
+
 export default {
+  components: {
+    QueryInput,
+
+  },
   data() {
     return {
       entries: [],
       errorOccurred: null,
-
+      userSearchQuery: ""
     }
   },
   computed: {
-    //the following methods were written with the assistance of Vue Masterclass on Udemy: section 19: 237, 240-243
+    //the methods for currentPage, previousPage, and nextPage were written with the assistance of Vue Masterclass on Udemy
+    //section 19: 237, 240-243
+
+    //returns the current page or 1
     currentPage() {
       return Number.parseInt(this.$route.query.page || "1")
     },
+    //returns the result of calculation - what the previous page number is if it exists
     previousPage() {
       const previousPage = this.currentPage - 1;
       const firstPage = 1;
@@ -86,6 +123,7 @@ export default {
       //console.log('result in previousPage: ' + result)
       return result;
     },
+    //returns the result of the calculation - what the next page number is if it exists
     nextPage() {
       //ex: 1 + 1 = 2
       const nextPage = this.currentPage + 1;
@@ -96,6 +134,7 @@ export default {
       //console.log('result in nextPage: ' + result)
       return result;
     },
+
     //only display the first 10 entries
     displayedEntries() {
 
@@ -118,17 +157,18 @@ export default {
       await api().get(`/journalentry/`)
         .then(response => {
           this.entries = response.data;
-          //this.entries = JSON.stringify(response.data);
-          console.log('entry response: ' + JSON.stringify(response.data));
+          //console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         })
       return api().get('/journalentry/');
-    }
+    },
+    //whenever search query is updated within the text input field, this updates the users search query
+    updateSearchQuery(payload) {
+      this.userSearchQuery = payload;
+      //console.log(payload)
+     }
   }
 }
 </script>
-
-<style>
-</style>

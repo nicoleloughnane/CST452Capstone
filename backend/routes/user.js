@@ -65,7 +65,7 @@ router.post(`/login`, async (req, res) => {
         userId: user.id,
       },
       secret,
-      { expiresIn: "1w" }
+      { expiresIn: "86400" }
     );
     //success: authenticated user here
     res.status(200).send({ user: user.email, token: token });

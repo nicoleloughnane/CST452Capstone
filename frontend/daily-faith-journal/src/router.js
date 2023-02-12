@@ -7,6 +7,7 @@ import WelcomeHome from './components/pages/WelcomeHome.vue';
 import SignUpUser from './components/pages/SignUpUserComponent.vue';
 //journal entries
 import JournalEntryHome from './components/journal/JournalEntryHome.vue';
+import JournalEntryResults from './components/journal/JournalEntryResults.vue';
 import CreateJournalEntry from './components/journal/CreateJournalEntry.vue';
 import ViewJournalEntry from './components/journal/ViewJournalEntry.vue';
 import EditJournalEntry from './components/journal/EditJournalEntry.vue';
@@ -28,6 +29,7 @@ const router = createRouter({
         {path: '/login', component: UserAuth, meta: {requiresAuth: false}},
         {path: '/signup', component: SignUpUser, meta: {requiresAuth: false}},
         {path: '/journalentries', component: JournalEntryHome, meta: {requiresAuth: true}},
+        {path: '/journalentries/results/:userSearchQuery', component: JournalEntryResults, name: 'JournalEntryResults'},
         {path: '/journalentries/create', component: CreateJournalEntry},
         {path: '/journalentries/view/:id', component: ViewJournalEntry},
         {path: '/journalentries/edit/:id', component: EditJournalEntry},

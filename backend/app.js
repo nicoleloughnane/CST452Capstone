@@ -6,7 +6,7 @@ const cors = require('cors');
 app.use(cors());
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
+const authjwt = require('./middlewares/authjwt');
 //for .env file
 require('dotenv/config');
 const api = process.env.API_URL;
@@ -14,6 +14,7 @@ const api = process.env.API_URL;
 //middleware - express, morgan
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use(authjwt())
 
 //routes here
 const usersRoute = require('./routes/user');

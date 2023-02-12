@@ -1,3 +1,5 @@
+<!--this is the navbar component displayed at the top of every page in the application
+it will conditionally render links based on if the user is logged in or not-->
 <template>
     <header>
         <nav>
@@ -31,8 +33,7 @@ export default {
     }
 }
 </script>
-
-
+<!--i might switch this over to tailwind when time permits-->
 <style scoped>
 header {
   width: 100%;
@@ -55,9 +56,6 @@ a:active,
 a:hover {
   border: 1px solid #ffff;
 }
-a.router-link-active {
-  /*border: 1px solid #f391e3; */
-}
 
 h1 {
   margin: 0;
@@ -66,10 +64,6 @@ h1 {
 h1 a {
   color: white;
   margin: 0;
-}
-
-h1 a.router-link-active {
-  border-color: transparent;
 }
 
 header nav {
