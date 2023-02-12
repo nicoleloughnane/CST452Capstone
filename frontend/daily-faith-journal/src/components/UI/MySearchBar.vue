@@ -1,6 +1,6 @@
+<!--NOT CURRENTLY BEING USED-->
 <!--This is a Component that contains a search form. made using tailwind css for a search bar. search icon from font awesome.-->
 <!--written with the assistance of Vue Masterclass Course on Udemy-->
-<!--FOR FUTURE MILESTONE NOT CURRENTLY BEING USED-->
 <template>
     <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple" @submit.prevent="searchForEntry">
         <font-awesome-icon :icon="['fas', 'search']" class="mx-3"/>

@@ -1,3 +1,5 @@
+<!--this component handles the signup of a new user and will take back to login upon a successful sign up
+if the user ended up here by mistake they can go back to login-->
 <template>
   <default-card>
     <form @submit.prevent="submitForm">
@@ -6,7 +8,7 @@
       <div class="mb-3 xl:w-96" :class="{ invalid: !email.isValid }">
         <label for="email" class="form-label text-brand-gray text-l mr-14">Email:</label>
         <input type="email" id="email" v-model.trim="email.val" @blur="clearValidity('email')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
-        <!--pending bug: form prevents user from signing in if they use an email that already exists-->
+        <!--PENDING BUG: form prevents user from signing in if they use an email that already exists-->
         <!--if the form is invalid or the email is already in use, error message is displayed-->
         <p class="text-brand-red text-md" v-if="!email.isValid || errorMessage != null">Email must not be empty or an account with this email already exists</p>
       </div>

@@ -1,3 +1,5 @@
+<!--this component handles the login of an existing user and will take to home page upon successful login
+user can also click link to signup if they do not have an account-->
 <template>
    <div>
   <default-card>
@@ -24,7 +26,7 @@
       <p class="text-brand-red text-md" v-if="errorMessage === 'Network Error'">
         An error has occurred on our end. Please try again later!
       </p>
-      <!--Options the user can take: buttons-->
+      <!--Actions the user can take: login or sign up-->
       <div class="flex flex-col items-center text-center">
       <default-button text="Login" buttonType="primary" class="my-2"/>
       <h4 class="text-center my-4">Need an account?</h4>
@@ -92,6 +94,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-
-</style>

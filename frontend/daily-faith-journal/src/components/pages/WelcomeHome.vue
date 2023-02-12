@@ -1,3 +1,4 @@
+<!--this is the main home page that user is taken to once they have logged in-->
 <template>
   <img src="../../assets/dailyfaithjournallogo.png" class="logo">
   <div class="home">

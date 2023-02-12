@@ -1,3 +1,5 @@
+<!--this is a button component that can perform an action upon being clicked and/or take the user to a new page
+it also will look different based on what buttonType is passed in as a prop. default is primary-->
 <template>
     <!--switch between a button and a router link-->
     <button v-if="!link" :class="buttonClass">

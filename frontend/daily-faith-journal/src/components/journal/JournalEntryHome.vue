@@ -1,3 +1,5 @@
+<!--this is the main home page for the journal entries, Read all operation is performed here to pull all entries from database-->
+<!--search functionality is also stored here, for now it will direct user to new page to see search results-->
 <template>
   <!--create entry button-->
   <div class="flex justify-end">
@@ -24,11 +26,11 @@
     <!--submit the form to search for an entry-->
     <default-button text="Search" buttonType="search" class="rounded-r-2xl" link :to="this.$route.path + '/results/' + userSearchQuery"/>
 
-
     </form>
 
    </section>
-<!--loop through first 10 entries that are pulled from axios loadEntries request in scripts-->
+<!--loop through first 10 entries that are pulled from axios displayedEntries request in scripts-->
+<!--display all entries in a card component with options to view entry further, edit it, or delete it-->
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
@@ -50,19 +52,18 @@
 
               </default-card>
             </li>
-
           </ul>
+        </div>
 
-        </div>
-        <div v-if="(entries.length === 0)">
-        <h3>No journal entries were found. How about creating one? </h3>
-        </div>
-        <div v-else>
+        <!--if an error has occurred: network-->
+        <div v-if="errorOccurred === 'Network Error'">
           <h3>There is an error on our end. Please try again later! </h3>
         </div>
+        <!--else if no entries exist-->
+        <div v-else-if="(entries.length === 0)">
+        <h3>No journal entries were found. How about creating one? </h3>
+        </div>
       </div>
-
-      
     </section>
 
     <!--page numbers-->
@@ -88,17 +89,14 @@
         </router-link>
     </section>
   </div>
-
 </template>
  
 <script>
 import api from '../../services/api';
-//import MySearchBar from '../UI/MySearchBar.vue';
 import QueryInput from '../UI/QueryInput.vue';
 
 export default {
   components: {
-    //MySearchBar,
     QueryInput,
 
   },
@@ -107,16 +105,17 @@ export default {
       entries: [],
       errorOccurred: null,
       userSearchQuery: ""
-
-
     }
   },
   computed: {
+    //the methods for currentPage, previousPage, and nextPage were written with the assistance of Vue Masterclass on Udemy
+    //section 19: 237, 240-243
 
-    //the following methods were written with the assistance of Vue Masterclass on Udemy: section 19: 237, 240-243
+    //returns the current page or 1
     currentPage() {
       return Number.parseInt(this.$route.query.page || "1")
     },
+    //returns the result of calculation - what the previous page number is if it exists
     previousPage() {
       const previousPage = this.currentPage - 1;
       const firstPage = 1;
@@ -124,6 +123,7 @@ export default {
       //console.log('result in previousPage: ' + result)
       return result;
     },
+    //returns the result of the calculation - what the next page number is if it exists
     nextPage() {
       //ex: 1 + 1 = 2
       const nextPage = this.currentPage + 1;
@@ -134,6 +134,7 @@ export default {
       //console.log('result in nextPage: ' + result)
       return result;
     },
+
     //only display the first 10 entries
     displayedEntries() {
 
@@ -159,7 +160,7 @@ export default {
           //console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;
-          //console.log('error has occurred: ' + this.errorOccurred)
+          console.log('error has occurred: ' + this.errorOccurred)
         })
       return api().get('/journalentry/');
     },
@@ -171,6 +172,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>
