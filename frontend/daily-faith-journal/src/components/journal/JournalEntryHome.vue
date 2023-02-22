@@ -3,8 +3,7 @@
 <template>
   <!--create entry button-->
   <div class="flex justify-end">
-    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'"
-      class="my-3 mx-3" />
+    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
   </div>
   <div class="flex flex-col items-center text-center">
     <!--introductory section with title and search bar-->
@@ -35,27 +34,9 @@
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
-          <ul>
-            <li v-for="entry in displayedEntries" :key="entry.id">
 
-              <default-card class="m-4">
-                <div class="m-6">
-                  <h3 class="text-xl">{{ entry.title }}</h3>
-                  <h4 class="text-base">{{ entry.entryBody }}</h4>
-                  <h4 class="text-sm">{{ entry.entryDate }}</h4>
-                </div>
-                <!--actions the user can take: view, edit, or delete-->
-                <div class="actions">
-                  <default-button link :to="this.$route.path + '/view/' + entry.id" text="View" buttonType="primary"
-                    class="m-2" />
-                  <default-button link :to="this.$route.path + '/edit/' + entry.id" text="Edit" class="m-2" />
-                  <default-button link :to="this.$route.path + '/delete/' + entry.id" text="Delete" buttonType="delete"
-                    class="m-2" />
-                </div>
+          <journal-card v-for="entry in displayedEntries" :key="entry.id" :entry="entry" class="m-4" />
 
-              </default-card>
-            </li>
-          </ul>
         </div>
 
         <!--if an error has occurred: network-->
@@ -95,10 +76,12 @@
 <script>
 import api from '../../services/api';
 import QueryInput from '../UI/QueryInput.vue';
+import JournalCard from './JournalCard.vue';
 
 export default {
   components: {
     QueryInput,
+    JournalCard
 
   },
   data() {
