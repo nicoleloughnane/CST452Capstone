@@ -10,6 +10,8 @@ import DefaultCard from "./components/UI/DefaultCard.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faPencilSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const app = createApp(App);
 
@@ -19,8 +21,9 @@ app.use(store);
 app.component("default-button", DefaultButton);
 app.component("default-card", DefaultCard);
 
-//add search icon
-library.add(faSearch);
+//add icons to library
+library.add(faSearch, faPencilSquare, faTrash);
+
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 app.mount("#app");

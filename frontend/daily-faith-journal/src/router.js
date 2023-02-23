@@ -29,7 +29,7 @@ const router = createRouter({
         {path: '/login', component: UserAuth, meta: {requiresAuth: false}},
         {path: '/signup', component: SignUpUser, meta: {requiresAuth: false}},
         {path: '/journalentries', component: JournalEntryHome, meta: {requiresAuth: true}},
-        {path: '/journalentries/results/:userSearchQuery', component: JournalEntryResults, name: 'JournalEntryResults'},
+        {path: '/journalentries/:userSearchQuery', component: JournalEntryResults, name: 'JournalEntryResults'},
         {path: '/journalentries/create', component: CreateJournalEntry},
         {path: '/journalentries/view/:id', component: ViewJournalEntry},
         {path: '/journalentries/edit/:id', component: EditJournalEntry},

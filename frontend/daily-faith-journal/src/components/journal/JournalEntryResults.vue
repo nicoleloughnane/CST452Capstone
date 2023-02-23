@@ -1,8 +1,11 @@
 <!--display results of the users search-->
 <template>
   <div class="flex flex-col items-center text-center">
-    <h2 class="text-xl mb-16 mt-6">Search Results</h2>
-
+    <h2 class="text-xl mb-4 mt-6">Search Results</h2>
+    <!--go back to the main journal home-->
+    <div class="flex justify-center mb-4">
+      <default-button text="Go Back" buttonType="secondary" link :to="'/journalentries'" />
+    </div>
     <section>
       <div class="entries">
         <!--if entries exist-->
@@ -11,21 +14,22 @@
           <ul>
             <li v-for="entry in filteredEntries" :key="entry.id">
 
-              <default-card class="m-4">
-                <div class="m-6">
-                  <h3 class="text-xl">{{ entry.title }}</h3>
-                  <h4 class="text-base">{{ entry.entryBody }}</h4>
-                  <h4 class="text-sm">{{ entry.entryDate }}</h4>
-                </div>
-                <!--actions the user can take: view, edit, or delete-->
-                <div class="actions">
-                  <default-button link :to="'/journalentries/view/' + entry.id" text="View" buttonType="primary"
-                    class="m-2" />
-                  <default-button link :to="'/journalentries/edit/' + entry.id" text="Edit" class="m-2" />
-                  <default-button link :to="'/journalentries/delete/' + entry.id" text="Delete" buttonType="delete"
-                    class="m-2" />
-                </div>
-              </default-card>
+                <default-card class="m-4">
+                  <div class="flex justify-end">
+                      <router-link :to="`/journalentries/edit/${entry.id}`"> <font-awesome-icon icon="fa-pencil-square"
+                          class="text-3xl mr-6" /> </router-link>
+                      <router-link :to="`/journalentries/delete/${entry.id}`"> <font-awesome-icon icon="fa-trash"
+                          class="text-3xl mr-2" /> </router-link>
+                    </div>
+                    <div class="card cursor-pointer" @click="this.$router.push(this.$route.path + '/view/' + entry.id)">
+                  <div class="m-6">
+                    <h3 class="text-xl font-bold mb-4">{{ entry.title }}</h3>
+                    <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
+                    <h4 class="text-base">{{ entry.entryBody }}</h4>
+                  </div>
+                  </div>
+                </default-card>
+    
             </li>
           </ul>
         </div>
@@ -37,10 +41,6 @@
         <div v-else-if="(filteredEntries.length === 0)">
           <h3>0 entries found for your search of '{{ userSearchQuery }}'</h3>
         </div>
-      </div>
-      <!--go back to the main journal home-->
-      <div class="flex justify-center my-8">
-        <default-button text="Go Back" buttonType="secondary" link :to="'/journalentries'" />
       </div>
     </section>
   </div>

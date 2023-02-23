@@ -24,13 +24,13 @@
 
         <!--submit the form to search for an entry-->
         <default-button text="Search" buttonType="search" class="rounded-r-2xl" link
-          :to="this.$route.path + '/results/' + userSearchQuery" />
+          :to="this.$route.path + '/' + userSearchQuery" />
 
       </form>
 
     </section>
     <!--loop through first 10 entries that are pulled from axios displayedEntries request in scripts-->
-    <!--display all entries in a card component with options to view entry further, edit it, or delete it-->
+    <!--display all entries in a journal card component with options to view entry further, edit it, or delete it-->
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
@@ -74,6 +74,7 @@
 </template>
  
 <script>
+
 import api from '../../services/api';
 import QueryInput from '../UI/QueryInput.vue';
 import JournalCard from './JournalCard.vue';
@@ -81,7 +82,8 @@ import JournalCard from './JournalCard.vue';
 export default {
   components: {
     QueryInput,
-    JournalCard
+    JournalCard,
+   
 
   },
   data() {
@@ -121,14 +123,17 @@ export default {
 
     //only display the first 10 entries
     displayedEntries() {
-
       const pageNum = this.currentPage;
-
       //get batch of 10 entries based on existing page number
       const firstEntryIndex = (pageNum - 1) * 10;
       const lastEntryIndex = pageNum * 10;
       return this.entries.slice(firstEntryIndex, lastEntryIndex);
     },
+
+    
+    // viewDetailsPage() {
+    //   router.push(this.$route.path + '/view/' + entry.id);
+    // }
 
   },
   //when component is loaded, call loadEntries

@@ -3,16 +3,14 @@
   <h2 class="text-xl mb-5 mt-5 text-center">Journal Entry</h2>
   <div v-if="(!!entry)">
     <default-card class="flex text-center m-4">
+      <div class="flex justify-end">
+          <router-link :to="`/journalentries/edit/${entry.id}`"> <font-awesome-icon icon="fa-pencil-square" class="text-3xl mr-6" /> </router-link>
+          <router-link :to="`/journalentries/delete/${entry.id}`"> <font-awesome-icon icon="fa-trash" class="text-3xl " /> </router-link>
+        </div>
       <div class="m-6">
         <h3 class="text-xl mb-4 font-bold">{{ entry.title }}</h3>
         <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
         <h4 class="text-base">{{ entry.entryBody }}</h4>
-      </div>
-
-      <!--actions the user can take: edit, or delete-->
-      <div>
-        <default-button link :to="'/journalentries/edit/' + entry.id" text="Edit" class="m-2" />
-        <default-button link :to="'/journalentries/delete/' + entry.id" text="Delete" buttonType="delete" class="m-2" />
       </div>
     </default-card>
   </div>

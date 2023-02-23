@@ -3,22 +3,23 @@
     <div class="block rounded-2xl shadow-xl bg-white w-4/5">
       <div class="p-6 text-center">
         <div class="m-4">
-          <!--Entry properties-->
+          <div class="flex justify-end">
+          <router-link :to="`${this.$route.path}/edit/${entry.id}`"> <font-awesome-icon icon="fa-pencil-square" class="text-3xl mr-6" /> </router-link>
+          <router-link :to="`${this.$route.path}/delete/${entry.id}`"> <font-awesome-icon icon="fa-trash" class="text-3xl mr-2" /> </router-link>
+        </div>
+          <!--this allows the card to be clickable to view the details of a specific entry-->
+        <div class="card cursor-pointer" @click="this.$router.push(this.$route.path + '/view/' + entry.id)">
+              <!--Entry properties-->
           <h3 class="text-xl font-bold mb-4">{{ entry.title }}</h3>
           <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
           <h4 class="text-base">{{ entry.entryBody }}</h4>
         </div>
-
-        <div class="actions">
-          <default-button link :to="this.$route.path + '/view/' + entry.id" text="View" buttonType="primary"
-            class="m-2" />
-          <default-button link :to="this.$route.path + '/edit/' + entry.id" text="Edit" class="m-2" />
-          <default-button link :to="this.$route.path + '/delete/' + entry.id" text="Delete" buttonType="delete"
-            class="m-2" />
         </div>
+
       </div>
     </div>
   </div>
+
 </template>
 <script>
 
