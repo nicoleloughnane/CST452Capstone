@@ -130,11 +130,6 @@ export default {
       return this.entries.slice(firstEntryIndex, lastEntryIndex);
     },
 
-    
-    // viewDetailsPage() {
-    //   router.push(this.$route.path + '/view/' + entry.id);
-    // }
-
   },
   //when component is loaded, call loadEntries
   mounted() {
