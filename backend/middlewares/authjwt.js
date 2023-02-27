@@ -6,6 +6,7 @@ const expressJwt = require("express-jwt");
 function authjwt() {
   const secret = process.env.TOKEN_KEY;
   const api = process.env.API_URL;
+  
 
   return expressJwt({
     secret,
@@ -18,6 +19,10 @@ function authjwt() {
       },
       {
         url: /\/api\/v1\/sermonnote(.*)/,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+      },
+      {
+        url: /\/api\/v1\/user(.*)/,
         methods: ["GET", "POST", "PUT", "DELETE"],
       },
       `${api}/user/login`,

@@ -107,7 +107,8 @@ export default {
       //at this point the form should be valid
       const formData = {
         title: this.title.val,
-        entryBody: this.entryBody.val
+        entryBody: this.entryBody.val,
+        userId: this.$store.state.userId
       };
       //call journal entries api to create journal entry
       this.createJournalEntry(formData);

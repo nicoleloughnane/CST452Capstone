@@ -9,15 +9,7 @@ const userSchema = new mongoose.Schema({
 
 });
 
-//change _id to id to make more user friendly
-userSchema.virtual('id').get(function() {
-    return this._id.toHexString();
-});
 
-//enable virtuals
-userSchema.set('toJSON', {
-    virtuals: true,
-});
 
 
 exports.User = mongoose.model('User', userSchema, 'user');

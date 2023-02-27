@@ -3,6 +3,7 @@ const { JournalEntry } = require("../models/journalentry");
 const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
+const mongoose = require('mongoose');
 
 //get all journal entries
 router.get(`/`, async (req, res) => {
@@ -13,8 +14,19 @@ router.get(`/`, async (req, res) => {
   res.send(journalEntryList);
 });
 
+//get journal entries for specific user
+router.get(`/byUserId/:id`, async (req, res) => {
+  const userID = req.params.id;
+  console.log("in get journal entries byUserId. userID is: " + userID);
+  const journalEntryList = await JournalEntry.find({user: mongoose.Types.ObjectId(userID)});
+  if (!journalEntryList) {
+    res.status(500).json({ success: false });
+  }
+  res.send(journalEntryList);
+});
+
 //get journal entry by ID
-router.get(`/:id`, async (req, res) => {
+router.get(`/byEntryId/:id`, async (req, res) => {
   const journalEntry = await JournalEntry.findById(req.params.id);
   if (!journalEntry) {
     res.status(500).json({ message: "Journal entry with the given ID not found" });
@@ -22,18 +34,22 @@ router.get(`/:id`, async (req, res) => {
   res.status(200).send(journalEntry);
 });
 
-//POST/CREATE a new journal entry
-router.post('/', async(req, res) => {
+//POST/CREATE a new journal entry with user ID
+router.post('/create/:id', async(req, res) => {
     //the date of the journal entry
     const dt = DateTime.now();
     const journalEntryDate = dt.month + "/" + dt.day + "/" + dt.year; 
-    console.log("date: " + journalEntryDate);   
+    const userID = req.params.id;
+    console.log("in post new journal entry userID: " + userID);
+    const user =  mongoose.Types.ObjectId(userID);
+    console.log("in post new journal entry USER: " + user);
+
     let journalEntry = new JournalEntry({
+        user: user,
         title: req.body.title,
         entryBody: req.body.entryBody,
         entryDate: journalEntryDate
     })
-
     journalEntry = await journalEntry.save();
 
     if(!journalEntry) {

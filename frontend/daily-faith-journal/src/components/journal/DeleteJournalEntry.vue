@@ -43,7 +43,7 @@ export default {
   methods: {
     //get one entry by its ID
     async loadEntry() {
-      await api().get(`/journalentry/${this.entryId}`)
+      await api().get(`/journalentry/byEntryId/${this.entryId}`)
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));
@@ -55,7 +55,7 @@ export default {
     },
     //called when the user presses delete button, confirming they want to delete
     async deleteEntry() {
-      await api().delete(`/journalentry/${this.entryId}`)
+      await api().delete(`/journalentry/byEntryId/${this.entryId}`)
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));

@@ -138,15 +138,17 @@ export default {
   //load journal entries from api
   methods: {
     async loadEntries() {
-      await api().get(`/journalentry/`)
+      const userID = this.$store.state.userId;
+      console.log('in load entries, userID: ' + userID);
+      await api().get(`/journalentry/byUserId/${userID}`)
         .then(response => {
           this.entries = response.data;
-          //console.log('entry response: ' + JSON.stringify(response.data));
+         // console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         })
-      return api().get('/journalentry/');
+     // return api().get(`/journalentry/byUserId/${userID}`);
     },
     //whenever search query is updated within the text input field, this updates the users search query
     updateSearchQuery(payload) {
