@@ -1,4 +1,4 @@
-<!--This component handles updating and existing journal entry-->
+<!--This component handles updating an existing journal entry-->
 <template>
   <section>
     <h2 class="text-center text-xl my-10">Edit Journal Entry</h2>
@@ -44,9 +44,10 @@ export default {
   data() {
     return {
       formIsValid: true,
-      entryId: this.$route.params.id,
+      entryId: this.$route.params._id,
       errorOccurred: null,
-      entry: []
+      entry: [],
+      userID : this.$store.state.userId
     }
   },
   //when component is loaded, call loadEntry
@@ -56,7 +57,7 @@ export default {
   methods: {
     //get one entry by its ID
     async loadEntry() {
-      await api().get(`/journalentry/${this.entryId}`)
+      await api().get(`/journalentry/byEntryId/${this.userID}/${this.entryId}`)
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));
@@ -64,11 +65,10 @@ export default {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         });
-
     },
     //submitForm calls updateEntry if the form is valid
     async updateEntry(formData) {
-      await api().put(`/journalentry/${this.entryId}`, formData)
+      await api().put(`/journalentry/update/${this.userID}/${this.entryId}`, formData)
         .then(response => {
           this.editResponse = response.data;
           //console.log('edit response: ' + JSON.stringify(response.data));

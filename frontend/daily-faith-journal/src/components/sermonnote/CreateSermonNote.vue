@@ -8,8 +8,8 @@
       <default-card>
         <!--on form submit, calls submitForm method, located in scripts-->
         <form @submit.prevent="submitForm">
-          <!--these form controls are for the user to input journal entry information
-        v-model binds with data in return statement, trim gets rid of excess whitespace-->
+        <!--these form controls are for the user to input journal entry information
+          v-model binds with data in return statement, trim gets rid of excess whitespace-->
 
           <!--Title-->
           <div class="form-control" :class="{ invalid: !title.isValid }">
@@ -20,14 +20,23 @@
             <p class="text-brand-red text-md" v-if="!title.isValid">Title of entry must not be empty</p>
           </div>
 
+          <!--Pastor Name-->
+          <div class="form-control" :class="{ invalid: !pastor.isValid }">
+            <label for="pastor" class="form-label text-brand-gray text-l mr-1 ">Pastor:</label>
+            <br />
+            <input type="text" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2"
+              v-model.trim="pastor.val" @blur="clearValidity('pastor')" />
+            <p class="text-brand-red text-md" v-if="!pastor.isValid">Pastor name must not be empty</p>
+          </div>
+
           <!--Entry Body-->
           <div class="form-control" :class="{ invalid: !entryBody.isValid }">
-            <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">My Entry:</label>
+            <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Notes:</label>
             <br />
             <textarea id="entryBody" rows="10"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2"
-              v-model.trim="entryBody.val" @blur="clearValidity('entryBody')"></textarea>
-            <p class="text-brand-red text-md" v-if="!entryBody.isValid">Body of entry must not be empty</p>
+              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" v-model.trim="entryBody.val"
+              @blur="clearValidity('entryBody')"></textarea>
+            <p class="text-brand-red text-md" v-if="!entryBody.isValid">This must not be empty</p>
           </div>
 
           <!--Actions for user to take - go back or submit the form-->
@@ -84,8 +93,8 @@ export default {
         this.entryBody.isValid = false;
         this.formIsValid = false;
       }
-      //pastor must be between 1 and 25 characters
-      if (this.pastor.val.length < 1 || this.pastor.val.length > 25) {
+      //pastor must not be greater than 25 characters if user decides to enter
+      if (this.pastor.val.length > 25) {
         this.pastor.isValid = false;
         this.formIsValid = false;
       }
@@ -97,7 +106,7 @@ export default {
         .then(response => {
           //console.log('creation success')
           this.createResponse = response.data;
-          this.$router.push('/journalentries');
+          this.$router.push('/sermonnotes');
 
         }).catch(error => {
           //console.log('creation failed: ' + this.errorMessage);
@@ -107,7 +116,7 @@ export default {
     },
     //user submits the entry creation form
     submitForm() {
-      //console.log('form has been submitted ')
+      console.log('form has been submitted ')
       this.validateForm();
       //if invalid, do a return to prevent rest of method from executing
       if (!this.formIsValid) {

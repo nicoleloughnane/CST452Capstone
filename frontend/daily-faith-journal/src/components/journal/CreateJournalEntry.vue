@@ -59,7 +59,8 @@ export default {
       },
       formIsValid: true,
       errorMessage: null,
-      createResponse: null
+      createResponse: null,
+      userID : this.$store.state.userId
     }
   },
   methods: {
@@ -84,15 +85,15 @@ export default {
     },
     //called by the submitForm method to attempt a creation of an entry
     async createJournalEntry(data) {
-      await api().post('/journalentry/', data)
+      await api().post(`/journalentry/create/${this.userID}`, data)
         .then(response => {
+          this.createResponse = response;
           //console.log('creation success')
-          this.createResponse = response.data;
           this.$router.push('/journalentries');
 
         }).catch(error => {
-          //console.log('creation failed: ' + this.errorMessage);
           this.errorOccurred = error.message;
+          console.log('error has occurred: ' + this.errorOccurred)
         })
 
     },

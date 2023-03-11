@@ -29,9 +29,10 @@ import api from '../../services/api';
 export default {
   data() {
     return {
-      entryId: this.$route.params.id,
+      entryId: this.$route.params._id,
       errorOccurred: null,
-      entry: []
+      entry: [],
+      userID : this.$store.state.userId
     }
   },
   //when component is loaded, call loadEntry
@@ -41,7 +42,7 @@ export default {
   methods: {
     //called upon the form load
     async loadEntry() {
-      await api().get(`/journalentry/${this.entryId}`)
+      await api().get(`/journalentry/byEntryId/${this.userID}/${this.entryId}`)
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));
