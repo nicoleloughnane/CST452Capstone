@@ -24,7 +24,7 @@ router.get(`/getByUserId/:id`, async (req, res) => {
     }
 
   const userID = req.params.id;
-  console.log("in get journal entries byUserId. userID is: " + userID);
+  //console.log("in get journal entries byUserId. userID is: " + userID);
   const journalEntryList = await JournalEntry.find({user: mongoose.Types.ObjectId(userID)});
   if (!journalEntryList) {
     res.status(500).json({ success: false });
@@ -98,9 +98,7 @@ router.post('/create/:id', async(req, res) => {
   if(!user) {
     return res.status(500).json({ message: "Journal entry with the given ID cannot be found because user account was unable to be located" });
   }
-    //const user =  mongoose.Types.ObjectId(userID);
-    //console.log("in post new journal entry USER is: " + user);
-
+   
     let journalEntry = new JournalEntry({
         user: user,
         title: req.body.title,

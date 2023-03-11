@@ -2,6 +2,10 @@
 //by a user
 const mongoose = require("mongoose");
 const sermonnoteSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+},
   title: String,
   entryBody: String,
   entryDate: String,
