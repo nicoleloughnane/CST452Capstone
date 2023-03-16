@@ -90,7 +90,7 @@ router.put(`/update/:userId/:entryId`, async (req, res) => {
 router.post('/create/:id', async(req, res) => {
     //the date of the journal entry
     const dt = DateTime.now();
-    const journalEntryDate = dt.month + "/" + dt.day + "/" + dt.year; 
+    const journalEntryDate = dt.toLocaleString(DateTime.DATE_FULL);
     const userID = req.params.id;
     //console.log("in post new journal entry userID: " + userID);
     //see if user exists

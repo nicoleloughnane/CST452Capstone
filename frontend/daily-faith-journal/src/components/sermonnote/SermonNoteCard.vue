@@ -4,11 +4,11 @@
       <div class="p-6 text-center">
         <div class="m-4">
           <div class="flex justify-end">
-          <router-link :to="`${this.$route.path}/edit/${entry._id}`"> <font-awesome-icon icon="fa-pencil-square" class="text-3xl mr-6" /> </router-link>
-          <router-link :to="`${this.$route.path}/delete/${entry._id}`"> <font-awesome-icon icon="fa-trash" class="text-3xl mr-2" /> </router-link>
+          <router-link :to="`/sermonnotes/edit/${entry._id}`"> <font-awesome-icon icon="fa-pencil-square" class="text-3xl mr-6" /> </router-link>
+          <router-link :to="`/sermonnotes/delete/${entry._id}`"> <font-awesome-icon icon="fa-trash" class="text-3xl mr-2" /> </router-link>
         </div>
           <!--this allows the card to be clickable to view the details of a specific entry-->
-        <div class="card cursor-pointer" @click="this.$router.push(this.$route.path + '/view/' + entry._id)">
+        <div class="card cursor-pointer" @click="this.$router.push('/sermonnotes/view/' + entry._id)">
               <!--Entry properties-->
               <h4 hidden>{{ entry._id }}</h4>
           <h3 class="text-xl font-bold mb-4">{{ entry.title }}</h3>

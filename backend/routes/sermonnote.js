@@ -73,7 +73,7 @@ router.get(`/byEntryId/:userId/:entryId`, async (req, res) => {
 router.post('/create/:id', async(req, res) => {
   //the date of the sermon note
   const dt = DateTime.now();
-  const sermonNoteDate = dt.month + "/" + dt.day + "/" + dt.year; 
+  const sermonNoteDate = dt.toLocaleString(DateTime.DATE_FULL);
   const userID = req.params.id;
   //console.log("in post new sermon note userID: " + userID);
   //see if user exists

@@ -8,39 +8,28 @@
     </div>
     <section>
       <div class="entries">
-        <!--if entries exist-->
+        <!--if entries were found-->
         <div v-if="(filteredEntries.length > 0)">
           <h3>{{ filteredEntries.length }} results were found from your search of '{{ userSearchQuery }}'</h3>
-          <ul>
-            <li v-for="entry in filteredEntries" :key="entry.id">
-
-                <default-card class="m-4">
-                  <div class="flex justify-end">
-                      <router-link :to="`/journalentries/edit/${entry.id}`"> <font-awesome-icon icon="fa-pencil-square"
-                          class="text-3xl mr-6" /> </router-link>
-                      <router-link :to="`/journalentries/delete/${entry.id}`"> <font-awesome-icon icon="fa-trash"
-                          class="text-3xl mr-2" /> </router-link>
-                    </div>
-                    <div class="card cursor-pointer" @click="this.$router.push(this.$route.path + '/view/' + entry.id)">
-                  <div class="m-6">
-                    <h3 class="text-xl font-bold mb-4">{{ entry.title }}</h3>
-                    <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
-                    <h4 class="text-base">{{ entry.entryBody }}</h4>
-                  </div>
-                  </div>
-                </default-card>
-    
-            </li>
-          </ul>
+          <journal-card v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="m-4" />
         </div>
+
+         <!--if an entry is not found based on the users search term-->
+         <div v-else-if="(filteredEntries.length === 0)">
+          <h3>0 entries found for your search of '{{ userSearchQuery }}'</h3>
+        </div>
+
         <!--if an error has occurred: network-->
         <div v-if="errorOccurred === 'Network Error'">
           <h3>There is an error on our end. Please try again later! </h3>
         </div>
-        <!--if an entry is not found based on the users search term-->
-        <div v-else-if="(filteredEntries.length === 0)">
-          <h3>0 entries found for your search of '{{ userSearchQuery }}'</h3>
+
+        <!--else if no entries exist-->
+        <div v-else-if="(entries.length === 0)">
+          <h3>No journal entries were found. How about creating one? </h3>
         </div>
+
+       
       </div>
     </section>
   </div>
@@ -48,8 +37,13 @@
 
 <script>
 import api from '../../services/api';
+import JournalCard from './JournalCard.vue';
+
 export default {
   name: "JournalEntryResults",
+  components: {
+    JournalCard,
+  },
   data() {
     return {
       entries: [],
@@ -69,11 +63,13 @@ export default {
         api().get(`/journalentry/getByUserId/${this.userID}`)
         .then(response => {
           this.entries = response.data;
-         // console.log('entry response: ' + JSON.stringify(response.data));
          //filter the entries based on search term
          this.filteredEntries = this.entries.filter(entry => {
-            return entry.title.toLowerCase().includes(this.userSearchQuery.toLowerCase() || entry.entryBody.toLowerCase().includes(this.userSearchQuery.toLowerCase()));
+            return entry.title.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
+             entry.entryBody.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
+             entry.entryDate.toLowerCase().includes(this.userSearchQuery.toLowerCase())
           })
+          //console.log('filtered entries: ' + JSON.stringify(this.filteredEntries))
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
