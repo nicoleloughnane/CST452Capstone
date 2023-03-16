@@ -72,7 +72,8 @@ export default {
       },
       formIsValid: true,
       errorMessage: null,
-      createResponse: null
+      createResponse: null,
+      userID: this.$store.state.userId
     }
   },
   methods: {
@@ -102,7 +103,7 @@ export default {
     },
     //called by the submitForm method to attempt a creation of an entry
     async createSermonNote(data) {
-      await api().post('/sermonnote/', data)
+      await api().post(`/sermonnote/create/${this.userID}`, data)
         .then(response => {
           //console.log('creation success')
           this.createResponse = response.data;
@@ -116,7 +117,7 @@ export default {
     },
     //user submits the entry creation form
     submitForm() {
-      console.log('form has been submitted ')
+      //console.log('form has been submitted ')
       this.validateForm();
       //if invalid, do a return to prevent rest of method from executing
       if (!this.formIsValid) {
@@ -128,7 +129,7 @@ export default {
         entryBody: this.entryBody.val,
         pastor: this.pastor.val,
       };
-      //call journal entries api to create journal entry
+      //call sermon notes api to create sermon note
       this.createSermonNote(formData);
     },
   }

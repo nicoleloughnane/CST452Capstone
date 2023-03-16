@@ -1,5 +1,6 @@
 //this is the route for journal entries to support basic CRUD operations
 const { SermonNote } = require("../models/sermonnote");
+const { User } = require('../models/user');
 const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
@@ -34,7 +35,7 @@ router.get(`/getByUserId/:id`, async (req, res) => {
     }
 
   const userID = req.params.id;
-  console.log("in get sermon notes byUserId. userID is: " + userID);
+  //console.log("in get sermon notes byUserId. userID is: " + userID);
   const sermonNoteList = await SermonNote.find({user: mongoose.Types.ObjectId(userID)});
   if (!sermonNoteList) {
     res.status(500).json({ success: false });
@@ -52,6 +53,7 @@ router.get(`/byEntryId/:userId/:entryId`, async (req, res) => {
   //parameters
   const userID = req.params.userId;
   const entryID = req.params.entryId;
+  //console.log('in get sermon note entry, entry id is ' + this.entryId + 'userId is ' + this.userID);
 
   //see if user exists
   const user = await User.findById(userID);
@@ -84,7 +86,7 @@ if(!user) {
       user: user,
       title: req.body.title,
       entryBody: req.body.entryBody,
-      entryDate: journalEntryDate,
+      entryDate: sermonNoteDate,
       pastor: req.body.pastor
   })
   sermonNote = await sermonNote.save();

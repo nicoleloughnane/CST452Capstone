@@ -91,7 +91,7 @@ export default {
       entries: [],
       errorOccurred: null,
       userSearchQuery: "",
-      userID: this.$store.state.userId
+      userID: this.$store.state.userId 
     }
   },
   computed: {
@@ -139,7 +139,7 @@ export default {
   //load journal entries from api
   methods: {
     async loadEntries() {
-      console.log('in Journal Entry Home, load entries, userID: ' + this.userID);
+      //console.log('in Journal Entry Home, load entries, userID: ' + this.userID); 
       await api().get(`/journalentry/getByUserId/${this.userID}`)
         .then(response => {
           this.entries = response.data;

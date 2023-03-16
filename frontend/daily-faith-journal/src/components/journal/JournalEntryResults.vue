@@ -55,7 +55,8 @@ export default {
       entries: [],
       filteredEntries: [],
       userSearchQuery: this.$route.params.userSearchQuery,
-      errorOccurred: null
+      errorOccurred: null,
+      userID: this.$store.state.userId 
     }
   },
   mounted() {
@@ -65,11 +66,12 @@ export default {
     //called upon the form load.
     loadFilteredEntries() {
       //get all journal entries
-      api().get(`/journalentry/`)
+        api().get(`/journalentry/getByUserId/${this.userID}`)
         .then(response => {
           this.entries = response.data;
-          //filter the entries based on search term
-          this.filteredEntries = this.entries.filter(entry => {
+         // console.log('entry response: ' + JSON.stringify(response.data));
+         //filter the entries based on search term
+         this.filteredEntries = this.entries.filter(entry => {
             return entry.title.toLowerCase().includes(this.userSearchQuery.toLowerCase() || entry.entryBody.toLowerCase().includes(this.userSearchQuery.toLowerCase()));
           })
         }).catch(error => {
@@ -77,7 +79,7 @@ export default {
           console.log('error has occurred: ' + this.errorOccurred)
         })
 
-    }
+    } 
   }
 }
 

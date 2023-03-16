@@ -35,7 +35,7 @@
       <div class="entries">
         <div v-if="(entries.length > 0)">
 
-          <sermon-note-card v-for="entry in displayedEntries" :key="entry.id" :entry="entry" class="m-4" />
+          <sermon-note-card v-for="entry in displayedEntries" :key="entry._id" :entry="entry" class="m-4" />
 
         </div>
 
@@ -90,7 +90,8 @@ export default {
     return {
       entries: [],
       errorOccurred: null,
-      userSearchQuery: ""
+      userSearchQuery: "",
+      userID: this.$store.state.userId
     }
   },
   computed: {
@@ -138,7 +139,7 @@ export default {
   //load journal entries from api
   methods: {
     async loadEntries() {
-      await api().get(`/sermonnote/`)
+      await api().get(`/sermonnote/getByUserId/${this.userID}`)
         .then(response => {
           this.entries = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));
@@ -146,7 +147,6 @@ export default {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         })
-      return api().get('/sermonnote/');
     },
     //whenever search query is updated within the text input field, this updates the users search query
     updateSearchQuery(payload) {
