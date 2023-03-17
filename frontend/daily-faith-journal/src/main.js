@@ -12,6 +12,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faPencilSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const app = createApp(App);
 
@@ -22,7 +23,7 @@ app.component("default-button", DefaultButton);
 app.component("default-card", DefaultCard);
 
 //add icons to library
-library.add(faSearch, faPencilSquare, faTrash);
+library.add(faSearch, faPencilSquare, faTrash, faBars);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 

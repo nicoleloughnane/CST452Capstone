@@ -1,22 +1,71 @@
 <!--this is the navbar component displayed at the top of every page in the application
-it will conditionally render links based on if the user is logged in or not-->
+it will conditionally render links based on if the user is logged in or not
+also contains a mobile menu that will conditionally render-->
 <template>
-    <header>
-        <nav>
-            <h1><router-link to="/home"><img src="../../assets/dailyfaithjournallogowhitetext.png" class="logo"></router-link></h1>
-            <ul>
-                <li v-if="isLoggedIn">
-                  <router-link to="/journalentries">Journal</router-link>
-                </li>
-                <li v-if="isLoggedIn">
-                  <router-link to="/sermonnotes">Sermon Notes</router-link>
-                </li>
-                <li v-if="isLoggedIn">
-                  <router-link @click="logoutUser" to="/login">Logout</router-link>
-                </li>
-            </ul>
-        </nav>
-    </header>
+  <!--navbar, referenced styling and responsiveness from https://www.section.io/engineering-education/creating-a-responsive-navigation-bar-using-tailwind-css-and-javascript/-->
+  <nav class="bg-brand-darkpurple shadow-lg">
+
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between">
+        <div class="flex space-x-7">
+          <!-- Website Logo -->
+          <div class="flex items-center py-4 px-2">
+            <router-link to="/home"><img src="../../assets/dailyfaithjournallogowhitetext.png"
+                class="logo mr-2"></router-link>
+          </div>
+          <!-- Primary Navbar items -->
+          <div class="hidden md:flex items-center space-x-1">
+
+            <div v-if="isLoggedIn" class="py-4 px-2 text-brand-cream border-b-4 border-brand-cream font-normal ">
+              <router-link to="/journalentries">Journal</router-link>
+            </div>
+
+            <div v-if="isLoggedIn"
+              class="py-4 px-2 font-normal hover:text-brand-cream transition duration-300">
+              <router-link to="/sermonnotes">Sermon Notes</router-link>
+            </div>
+
+            <div v-if="isLoggedIn"
+              class="py-4 px-2 font-normal hover:text-brand-cream transition duration-300">
+              <router-link @click="logoutUser" to="/login">Logout</router-link>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu button and contents -->
+<div class="md:hidden flex items-center">
+  <button @click="mobileMenuOpen = !mobileMenuOpen">
+  <font-awesome-icon :icon="['fas', 'bars']" class="text-3xl ml-6 mb-4 text-brand-cream" />
+</button>
+</div>
+    <div v-if="mobileMenuOpen">
+      <ul>
+        <li class="active">
+          <div v-if="isLoggedIn" class="block text-sm px-2 py-4 text-brand-cream bg-brand-darkpurple font-normal">
+            <router-link to="/home">Home</router-link>
+          </div>
+        </li>
+        <li> 
+          <div v-if="isLoggedIn" class="block text-sm px-2 py-4 hover:text-brand-cream transition duration-300">
+            <router-link to="/journalentries">Journal</router-link>
+           </div>
+        </li>
+        <li> 
+          <div v-if="isLoggedIn" class="block text-sm px-2 py-4 hover:text-brand-cream transition duration-300">
+            <router-link to="/sermonnotes">Sermon Notes</router-link>
+          </div>
+        </li>
+        <li>
+          <div v-if="isLoggedIn" class="block text-sm px-2 py-4 hover:text-brand-cream transition duration-300">
+            <router-link @click="logoutUser" to="/login">Logout</router-link>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -26,72 +75,31 @@ export default {
       return this.$store.state.isLoggedIn;
     }
   },
-    methods: {
-      logoutUser() {
-        this.$store.dispatch('logout')
-      }
+  data() {
+    return {
+      mobileMenuOpen: false
     }
+  },
+  methods: {
+    logoutUser() {
+      this.$store.dispatch('logout')
+    },
+
+  }
 }
 </script>
-<!--i might switch this over to tailwind when time permits-->
+
 <style scoped>
-header {
-  width: 100%;
-  height: 5rem;
-  background-color: #775DAB;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-header a {
-  text-decoration: none;
-  color: #ffff;
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid transparent;
-}
-
-a:active,
-a:hover {
-  border: 1px solid #ffff;
-}
-
-h1 {
-  margin: 0;
-}
-
-h1 a {
-  color: white;
-  margin: 0;
-}
-
-header nav {
-  width: 90%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-li {
-  margin: 0 0.5rem;
+/*logo disappears once mobile menu appears*/
+@media screen and (max-width:768px) {
+  .logo {
+ display: none;
+  }
 }
 
 .logo {
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
   width: 80px;
   height: 60px;
+
 }
 </style>
