@@ -8,7 +8,7 @@
   <div class="flex flex-col items-center text-center">
     <!--introductory section with title and search bar-->
     <section>
-      <h2 class="text-xl mb-16">Journal Entries</h2>
+      <h2 class="text-xl mb-6">Journal Entries</h2>
 
       <!--search for a journal entry-->
       <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple"
@@ -16,8 +16,7 @@
         <font-awesome-icon :icon="['fas', 'search']" class="mx-3" />
 
         <div class="flex flex-1 flex-nowrap h-full text-base font-light">
-          <div class="flex h-full flex-1 relative items-center pr-3 mx-3 just">
-            <label class="absolute -top-12 ml-14">Search For An Entry</label>
+          <div class="flex h-full flex-1 relative items-center pr-3 mx-3 ">
             <QueryInput placeholder="keywords" @handleQuery="updateSearchQuery" />
           </div>
         </div>
@@ -34,8 +33,11 @@
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
-
+          <div class="px-10 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
           <journal-card v-for="entry in displayedEntries" :key="entry._id" :entry="entry" class="m-4" />
+          </div>
+          </div>
 
         </div>
 

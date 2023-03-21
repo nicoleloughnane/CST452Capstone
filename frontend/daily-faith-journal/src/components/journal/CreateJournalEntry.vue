@@ -8,9 +8,17 @@
       <default-card>
         <!--on form submit, calls submitForm method, located in scripts-->
         <form @submit.prevent="submitForm">
+          <!--select a mood: optional-->
+          <!--TODO: best user experience: user clicks from a list of emojis - look on font awesome for them
+          user clicks a check box, invisible to user but way for me to assign a value clicked programmatically 
+          moods: happy, sad, content, angry, inspired 
+         -->
+          <div class="mood">
+
+          </div>
+          
           <!--these form controls are for the user to input journal entry information
         v-model binds with data in return statement, trim gets rid of excess whitespace-->
-
           <!--Title-->
           <div class="form-control" :class="{ invalid: !title.isValid }">
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title:</label>
@@ -56,6 +64,9 @@ export default {
       entryBody: {
         val: '',
         isValid: true
+      },
+      mood: {
+        val: '',
       },
       formIsValid: true,
       errorMessage: null,
@@ -105,11 +116,17 @@ export default {
       if (!this.formIsValid) {
         return;
       }
+
+      //TODO
+      //some sort of if statement
+      //if {emote} was checked, this.mood.val === {emote}
+
       //at this point the form should be valid
       const formData = {
         title: this.title.val,
         entryBody: this.entryBody.val,
-        userId: this.$store.state.userId
+        userId: this.$store.state.userId,
+        mood: this.mood.val
       };
       //call journal entries api to create journal entry
       this.createJournalEntry(formData);

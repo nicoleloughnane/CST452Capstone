@@ -75,7 +75,8 @@ router.put(`/update/:userId/:entryId`, async (req, res) => {
     {
       title: req.body.title,
       entryBody: req.body.entryBody,
-      entryDate : req.body.entryDate
+      entryDate: req.body.entryDate,
+      mood: req.body.mood
     },
     { new: true }
   );
@@ -103,7 +104,8 @@ router.post('/create/:id', async(req, res) => {
         user: user,
         title: req.body.title,
         entryBody: req.body.entryBody,
-        entryDate: journalEntryDate
+        entryDate: journalEntryDate,
+        mood: req.body.mood
     })
     journalEntry = await journalEntry.save();
 

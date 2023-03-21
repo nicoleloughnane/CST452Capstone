@@ -11,7 +11,11 @@
         <!--if entries were found-->
         <div v-if="(filteredEntries.length > 0)">
           <h3>{{ filteredEntries.length }} results were found from your search of '{{ userSearchQuery }}'</h3>
+          <div class="px-10 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
           <journal-card v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="m-4" />
+          </div>
+          </div>
         </div>
 
          <!--if an entry is not found based on the users search term-->

@@ -8,7 +8,7 @@
   <div class="flex flex-col items-center text-center">
     <!--introductory section with title and search bar-->
     <section>
-      <h2 class="text-xl mb-16">Sermon Notes</h2>
+      <h2 class="text-xl mb-6">Sermon Notes</h2>
 
       <!--search for sermon note-->
       <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple"
@@ -16,8 +16,8 @@
         <font-awesome-icon :icon="['fas', 'search']" class="mx-3" />
 
         <div class="flex flex-1 flex-nowrap h-full text-base font-light">
-          <div class="flex h-full flex-1 relative items-center pr-3 mx-3 just">
-            <label class="absolute -top-12 ml-10">Search For Sermon Note</label>
+          <div class="flex h-full flex-1 relative items-center pr-3 mx-3">
+
             <QueryInput placeholder="keywords" @handleQuery="updateSearchQuery" />
           </div>
         </div>
@@ -32,11 +32,13 @@
     <!--loop through first 10 entries that are pulled from axios displayedEntries request in scripts-->
     <!--display all entries in a sermon note card component with options to view further, edit it, or delete it-->
     <section>
-      <div class="entries">
+
         <div v-if="(entries.length > 0)">
-
+          <div class="px-10 py-20">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
           <sermon-note-card v-for="entry in displayedEntries" :key="entry._id" :entry="entry" class="m-4" />
-
+            </div>
+        </div>
         </div>
 
         <!--if an error has occurred: network-->
@@ -47,7 +49,7 @@
         <div v-else-if="(entries.length === 0)">
           <h3>No sermon notes were found. How about creating one? </h3>
         </div>
-      </div>
+
     </section>
 
     <!--page numbers-->

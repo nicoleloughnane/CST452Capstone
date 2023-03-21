@@ -8,7 +8,8 @@ const journalSchema = new mongoose.Schema({
     },
     title: String,
     entryBody: String,
-    entryDate: String
+    entryDate: String,
+    mood: String
 
 });
 
