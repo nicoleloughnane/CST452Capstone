@@ -5,10 +5,10 @@ also contains a mobile menu that will conditionally render-->
   <!--navbar, referenced styling and responsiveness from https://www.section.io/engineering-education/creating-a-responsive-navigation-bar-using-tailwind-css-and-javascript/-->
   <nav class="bg-brand-darkpurple shadow-lg">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="flex justify-between">
-        <div class="flex space-x-7">
+      <div class="flex justify-between w-full">
+        <div class="flex space-x-7 ">
           <!-- Website Logo -->
-          <div class="flex items-center py-4 px-2">
+          <div class="flex py-4 px-2">
             <router-link to="/home"
               ><img
                 src="../../assets/dailyfaithjournallogowhitetext.png"
@@ -16,24 +16,24 @@ also contains a mobile menu that will conditionally render-->
             /></router-link>
           </div>
           <!-- Navbar router links -->
-          <div class="hidden md:flex items-center space-x-1">
+          <div class="hidden md:flex items-center">
             <div
               v-if="isLoggedIn"
-              class="navlink py-4 px-2 font-normal"
+              class="navlink py-4 px-2 font-normal" 
             >
               <router-link to="/journalentries">Journal</router-link>
             </div>
 
             <div
               v-if="isLoggedIn"
-              class="navlink py-4 px-2 font-normal hover:text-brand-cream transition duration-300"
+              class="navlink py-4 px-2 font-normal hover:text-brand-cream transition duration-300 " 
             >
               <router-link to="/sermonnotes">Sermon Notes</router-link>
             </div>
 
             <div
               v-if="isLoggedIn"
-              class="navlink py-4 px-2 font-normal hover:text-brand-cream transition duration-300"
+              class="navlink py-4 px-2 font-normal hover:text-brand-cream transition duration-300 justify-end" 
             >
               <router-link @click="logoutUser" to="/login">Logout</router-link>
             </div>
@@ -45,14 +45,12 @@ also contains a mobile menu that will conditionally render-->
     <!-- Mobile menu button and contents -->
     <div class="md:hidden flex items-center">
       <button @click="mobileMenuOpen = !mobileMenuOpen">
-        <font-awesome-icon
-          :icon="['fas', 'bars']"
-          class="text-3xl ml-6 mb-4 text-brand-cream"
-        />
+        <Icon icon="octicon:three-bars-16" width="32" height="32" class="text-brand-cream mx-3 mb-3" />
       </button>
     </div>
     <div v-if="mobileMenuOpen">
       <ul>
+        
         <li class="active">
           <div
             v-if="isLoggedIn"
@@ -61,6 +59,7 @@ also contains a mobile menu that will conditionally render-->
             <router-link to="/home">Home</router-link>
           </div>
         </li>
+        <div class="justify-between">
         <li>
           <div
             v-if="isLoggedIn"
@@ -77,6 +76,7 @@ also contains a mobile menu that will conditionally render-->
             <router-link to="/sermonnotes">Sermon Notes</router-link>
           </div>
         </li>
+      </div>
         <li>
           <div
             v-if="isLoggedIn"
@@ -91,7 +91,11 @@ also contains a mobile menu that will conditionally render-->
 </template>
 
 <script>
+import { Icon } from '@iconify/vue';
 export default {
+  components: {
+    Icon
+  },
   computed: {
     isLoggedIn() {
       return this.$store.state.isLoggedIn;

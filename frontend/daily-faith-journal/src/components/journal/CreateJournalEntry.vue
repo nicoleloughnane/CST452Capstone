@@ -9,16 +9,36 @@
         <!--on form submit, calls submitForm method, located in scripts-->
         <form @submit.prevent="submitForm">
           <!--select a mood: optional-->
-          <!--TODO: best user experience: user clicks from a list of emojis - look on font awesome for them
-          user clicks a check box, invisible to user but way for me to assign a value clicked programmatically 
-          moods: happy, sad, content, angry, inspired 
-         -->
+        <!--moods: happy, content, okay, upset, sad, or distressed
+           -->
           <div class="mood">
+            <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
+            <br />
+            <div>
+              <input type="radio" id="happy" name="emotionradio" value="happy" @change="onChange($event)" >
+              <label for="happy">Happy</label>
+              <br />
+              <input type="radio" id="content" name="emotionradio" value="content" @change="onChange($event)">
+              <label for="content">Content</label>
+              <br />
+              <input type="radio" id="okay" name="emotionradio" value="okay" @change="onChange($event)">
+              <label for="okay">Okay</label>
+              <br />
+              <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)" >
+              <label for="upset">Upset</label>
+              <br />
+              <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)">
+              <label for="sad">Sad</label>
+              <br />
+              <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)">
+              <label for="distressed">Distressed</label>
+              <br />
+            </div>
 
           </div>
-          
-          <!--these form controls are for the user to input journal entry information
-        v-model binds with data in return statement, trim gets rid of excess whitespace-->
+
+        <!--these form controls are for the user to input journal entry information
+          v-model binds with data in return statement, trim gets rid of excess whitespace-->
           <!--Title-->
           <div class="form-control" :class="{ invalid: !title.isValid }">
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title:</label>
@@ -33,8 +53,8 @@
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">My Entry:</label>
             <br />
             <textarea id="entryBody" rows="10"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2"
-              v-model.trim="entryBody.val" @blur="clearValidity('entryBody')"></textarea>
+              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" v-model.trim="entryBody.val"
+              @blur="clearValidity('entryBody')"></textarea>
             <p class="text-brand-red text-md" v-if="!entryBody.isValid">Body of entry must not be empty</p>
           </div>
 
@@ -71,7 +91,7 @@ export default {
       formIsValid: true,
       errorMessage: null,
       createResponse: null,
-      userID : this.$store.state.userId
+      userID: this.$store.state.userId
     }
   },
   methods: {
@@ -94,6 +114,11 @@ export default {
       }
 
     },
+    onChange(event) {
+      var emotion = event.target.value;
+      this.mood.val = emotion;
+
+},
     //called by the submitForm method to attempt a creation of an entry
     async createJournalEntry(data) {
       await api().post(`/journalentry/create/${this.userID}`, data)
@@ -116,10 +141,6 @@ export default {
       if (!this.formIsValid) {
         return;
       }
-
-      //TODO
-      //some sort of if statement
-      //if {emote} was checked, this.mood.val === {emote}
 
       //at this point the form should be valid
       const formData = {

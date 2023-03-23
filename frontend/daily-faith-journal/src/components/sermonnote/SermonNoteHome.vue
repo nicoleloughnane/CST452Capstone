@@ -13,7 +13,7 @@
       <!--search for sermon note-->
       <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple"
         @submit.prevent="searchForEntry">
-        <font-awesome-icon :icon="['fas', 'search']" class="mx-3" />
+        <Icon icon="ic:round-search" width="24" height="24" class="mx-3 my-3"/>
 
         <div class="flex flex-1 flex-nowrap h-full text-base font-light">
           <div class="flex h-full flex-1 relative items-center pr-3 mx-3">
@@ -76,7 +76,7 @@
 </template>
  
 <script>
-
+import { Icon } from '@iconify/vue';
 import api from '../../services/api';
 import QueryInput from '../UI/QueryInput.vue';
 import SermonNoteCard from './SermonNoteCard.vue';
@@ -85,7 +85,7 @@ export default {
   components: {
     QueryInput,
     SermonNoteCard,
-   
+    Icon
 
   },
   data() {
