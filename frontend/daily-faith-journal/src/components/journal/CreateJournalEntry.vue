@@ -14,28 +14,32 @@
           <div class="mood">
             <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
             <br />
-            <div>
+            <div class="flex">
+              <!--happy-->
               <input type="radio" id="happy" name="emotionradio" value="happy" @change="onChange($event)" >
-              <label for="happy">Happy</label>
-              <br />
+              <label for="happy"><Icon icon="tabler:mood-happy" width="32" height="32" class="text-brand-darkpurple" /></label>
+              <!--content-->
               <input type="radio" id="content" name="emotionradio" value="content" @change="onChange($event)">
-              <label for="content">Content</label>
-              <br />
+              <label for="content"><Icon icon="tabler:mood-smile" width="32" height="32" class="text-brand-darkpurple" /></label>
+              <!--okay-->
               <input type="radio" id="okay" name="emotionradio" value="okay" @change="onChange($event)">
-              <label for="okay">Okay</label>
-              <br />
-              <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)" >
-              <label for="upset">Upset</label>
-              <br />
-              <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)">
-              <label for="sad">Sad</label>
-              <br />
-              <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)">
-              <label for="distressed">Distressed</label>
-              <br />
+              <label for="okay"><Icon icon="uil:meh" width="32" height="32" class="text-brand-darkpurple" /></label>
             </div>
-
+            <br/>
+            <div class="flex">
+              <!--upset-->
+              <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)" >
+              <label for="upset"><Icon icon="tabler:mood-sad-squint" width="32" height="32" class="text-brand-darkpurple"/></label>
+              <!--sad-->
+              <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)">
+              <label for="sad"><Icon icon="tabler:mood-sad" width="32" height="32" class="text-brand-darkpurple" /></label>
+              <!--distressed-->
+              <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)">
+              <label for="distressed"><Icon icon="tabler:mood-cry" width="32" height="32" class="text-brand-darkpurple"/></label>
+            </div>
+           
           </div>
+          <br/>
 
         <!--these form controls are for the user to input journal entry information
           v-model binds with data in return statement, trim gets rid of excess whitespace-->
@@ -47,7 +51,7 @@
               v-model.trim="title.val" @blur="clearValidity('title')" />
             <p class="text-brand-red text-md" v-if="!title.isValid">Title of entry must not be empty</p>
           </div>
-
+          <br/>
           <!--Entry Body-->
           <div class="form-control" :class="{ invalid: !entryBody.isValid }">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">My Entry:</label>
@@ -71,8 +75,11 @@
 
 <script>
 import api from '../../services/api';
-
+import { Icon } from '@iconify/vue';
 export default {
+  components:{
+    Icon
+  },
   data() {
     return {
       //values are set to empty initially 

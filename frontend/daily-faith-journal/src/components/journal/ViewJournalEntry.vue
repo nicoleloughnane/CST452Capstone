@@ -1,32 +1,29 @@
 <!--displays just one journal entry-->
 <template>
-  <h2 class="text-xl mb-5 mt-5 text-center">Journal Entry</h2>
-  <div v-if="(!!entry)">
-    <default-card class="flex text-center m-4">
-      <div class="flex justify-end">
-          <router-link :to="`/journalentries/edit/${entry.id}`"> <font-awesome-icon icon="fa-pencil-square" class="text-3xl mr-6" /> </router-link>
-          <router-link :to="`/journalentries/delete/${entry.id}`"> <font-awesome-icon icon="fa-trash" class="text-3xl " /> </router-link>
-        </div>
-      <div class="m-6">
-        <h3 class="text-xl mb-4 font-bold">{{ entry.title }}</h3>
-        <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
-        <h4 class="text-base">{{ entry.entryBody }}</h4>
-      </div>
-    </default-card>
-  </div>
+    <div class="flex flex-col items-center text-center">
+      <h2 class="text-xl my-5 ">Journal Entry</h2>
+    <div v-if="(!!entry)">
+      <JournalCard :key="entry._id" :entry="entry" class="" />
+    </div>
+    
   <div v-else>
     <h3 class="text-center">An error has occurred</h3>
   </div>
 
+
   <!--let user go back to home page-->
-  <div class="flex justify-center">
-    <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="" />
+    <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="mt-3" />
+
   </div>
 </template>
 
 <script>
 import api from '../../services/api';
+import JournalCard from './JournalCard.vue';
 export default {
+  components: {
+    JournalCard
+  },
   data() {
     return {
       entryId: this.$route.params._id,

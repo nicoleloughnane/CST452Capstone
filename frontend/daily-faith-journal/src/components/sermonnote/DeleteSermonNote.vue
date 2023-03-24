@@ -1,7 +1,7 @@
 <!--This component handles the deletion of an existing sermon note-->
 <template>
     <section>
-      <div class="flex flex-col items-center text-center">
+     <!-- <div class="flex flex-col items-center text-center">
       <h2 class="text-xl mb-5 mt-5 ">Delete Sermon Note</h2>
       <h3 class="text-lg mb-5  ">Are you sure you want to delete?</h3>
       <sermon-note-card :key="entry._id" :entry="entry" class="" />
@@ -9,8 +9,10 @@
       <div class="flex justify-center mt-6">
       <default-button link :to="'/sermonnotes'" text="Go Back" buttonType="secondary" class="m-2" />
       <default-button text="Delete" buttonType="delete" class="m-2" @click="deleteEntry" />
-    </div>
-     <!-- <div class="flex flex-col items-center text-center">
+    </div> -->
+      <div class="flex flex-col items-center text-center">
+        <h2 class="text-xl mb-5 mt-5 ">Delete Sermon Note</h2>
+      <h3 class="text-lg mb-5  ">Are you sure you want to delete?</h3>
         <div v-if="(!!entry)">
           <default-card class="m-4">
             <div class="m-6">
@@ -29,17 +31,17 @@
         <div v-else>
           <h3 class="text-center">An error has occurred</h3>
         </div>
-      </div> -->
+      </div> 
     </section>
   </template>
   
   <script>
   import api from '../../services/api';
-  import SermonNoteCard from './SermonNoteCard.vue';
+  //import SermonNoteCard from './SermonNoteCard.vue';
 
   export default {
     components: {
-      SermonNoteCard
+      //SermonNoteCard
     },
     data() {
       return {

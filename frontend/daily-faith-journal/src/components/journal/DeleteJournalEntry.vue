@@ -8,8 +8,9 @@
         <default-card class="m-4">
           <div class="m-6">
             <h3 class="text-xl">{{ entry.title }}</h3>
-            <h4 class="text-base">{{ entry.entryBody }}</h4>
             <h4 class="text-sm">{{ entry.entryDate }}</h4>
+            <h4 class="text-base">{{ entry.entryBody }}</h4>
+
           </div>
           <div>
             <!--actions the user can take - go back or confirm the deletion of the entry-->

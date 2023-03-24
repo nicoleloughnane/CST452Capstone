@@ -16,13 +16,13 @@
               <Icon icon="uil:meh" width="42" height="42" class="text-brand-darkpurple" />
             </div>
             <div v-else-if="entry.mood == 'upset'">
-              <Icon icon="tabler:mood-sad-squint" width="42" height="42" />
+              <Icon icon="tabler:mood-sad-squint" width="42" height="42" class="text-brand-darkpurple" />
             </div>
             <div v-else-if="entry.mood == 'sad'">
               <Icon icon="tabler:mood-sad" width="42" height="42" class="text-brand-darkpurple" />
             </div>
             <div v-else-if="entry.mood == 'distressed'">
-              <Icon icon="tabler:mood-cry" width="42" height="42" />
+              <Icon icon="tabler:mood-cry" width="42" height="42" class="text-brand-darkpurple"/>
             </div>
             <!--edit and delete icons-->
             <div class="flex ml-auto">
