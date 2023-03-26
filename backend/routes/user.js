@@ -33,7 +33,7 @@ router.post("/register", async (req, res) => {
   });
   //if a user has been found
   if (findUserIfExists != null) {
-    return res.status(400).send("A user with that email already exists");
+    return res.status(409).send("A user with that email already exists");
   }
   //this is a new user
   else {

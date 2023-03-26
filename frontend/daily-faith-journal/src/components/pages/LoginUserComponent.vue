@@ -59,6 +59,7 @@ export default {
   methods: {
     async submitForm() {
       this.validForm = true;
+      this.errorMessage = null;
       //if the email is blank or greater than 40 characters - invalid
       //if password is less than 6 characters or greater than 30 characters - invalid
       if (
@@ -70,12 +71,18 @@ export default {
         this.validForm = false;
         return;
       }
-
+ 
       //user credentials
-      let userCredentials = this;
+      //let userCredentials = this;
+      //at this point the form should be valid
+      const formData = {
+        email: this.email,
+        password: this.password,
+      };
+      console.log('in submit form, formData is: ' + JSON.stringify(formData));
 
       //calls store from vuex to login
-      this.$store.dispatch("login", userCredentials).then(
+      this.$store.dispatch("login", formData).then(
         () => {
           if (this.$store.state.errorOccurred != null) {
             this.errorMessage = this.$store.state.errorOccurred;
@@ -85,10 +92,6 @@ export default {
           //send to home upon logging in
           this.$router.replace("/home");
         },
-        //for any errors that may occur within this component
-        (error) => {
-          this.errorMessage = error.message;
-        }
       );
     },
   },
