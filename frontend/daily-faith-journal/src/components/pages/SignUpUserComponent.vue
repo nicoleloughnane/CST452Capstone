@@ -91,6 +91,7 @@ export default {
     },
     //validate form information
     validateForm() {
+      //reset to defaults
       this.validForm = true;
       this.errorMessage = null;
       this.emailExists = false;
@@ -132,14 +133,14 @@ export default {
             if (this.$store.state.errorOccurred != null) {
               //error has occurred, form is invalid
               this.errorMessage = this.$store.state.errorOccurred;
+              //check if the error is an account with this email already existing
               if(this.errorMessage.includes('409')) {
                 this.formIsValid = false;
                 this.emailExists = true;
-                //console.log("error message is conflict");
               }
               return this.errorMessage;
             }
-            //send user back to login to log in with newly created account
+            //at this point the form should be valid: send user back to login to log in with newly created account
             this.formIsValid = true;
             this.$router.replace("/login");
           },

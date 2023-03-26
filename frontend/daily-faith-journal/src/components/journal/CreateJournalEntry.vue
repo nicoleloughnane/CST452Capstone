@@ -9,8 +9,7 @@
         <!--on form submit, calls submitForm method, located in scripts-->
         <form @submit.prevent="submitForm">
           <!--select a mood: optional-->
-        <!--moods: happy, content, okay, upset, sad, or distressed
-           -->
+        <!--moods: happy, content, okay, upset, sad, or distressed-->
           <div class="mood">
             <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
             <br />
