@@ -7,9 +7,11 @@
       <div v-if="(!!entry)">
         <default-card class="m-4">
           <div class="m-6">
-            <h3 class="text-xl">{{ entry.title }}</h3>
+            <h3 class="text-xl font-bold mb-4">{{ entry.title }}</h3>
+            <h4 hidden>{{ entry._id }}</h4>
+            <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
             <h4 class="text-base">{{ entry.entryBody }}</h4>
-            <h4 class="text-sm">{{ entry.entryDate }}</h4>
+
           </div>
           <div>
             <!--actions the user can take - go back or confirm the deletion of the entry-->
@@ -30,9 +32,10 @@ import api from '../../services/api';
 export default {
   data() {
     return {
-      entryId: this.$route.params.id,
+      entryId: this.$route.params._id,
       errorOccurred: null,
-      entry: []
+      entry: [],
+      userID : this.$store.state.userId
 
     }
   },
@@ -43,7 +46,7 @@ export default {
   methods: {
     //get one entry by its ID
     async loadEntry() {
-      await api().get(`/journalentry/${this.entryId}`)
+      await api().get(`/journalentry/byEntryId/${this.userID}/${this.entryId}`)
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));
@@ -51,11 +54,10 @@ export default {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         });
-
     },
     //called when the user presses delete button, confirming they want to delete
     async deleteEntry() {
-      await api().delete(`/journalentry/${this.entryId}`)
+      await api().delete(`/journalentry/delete/${this.entryId}`)
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));

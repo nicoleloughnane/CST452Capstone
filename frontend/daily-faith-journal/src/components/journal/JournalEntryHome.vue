@@ -3,56 +3,42 @@
 <template>
   <!--create entry button-->
   <div class="flex justify-end">
-      <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
-    </div>
+    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
+  </div>
   <div class="flex flex-col items-center text-center">
-  <!--introductory section for information and button to make new entry-->
+    <!--introductory section with title and search bar-->
     <section>
-    <h2 class="text-xl mb-16">Journal Entries</h2>
+      <h2 class="text-xl mb-6">Journal Entries</h2>
 
       <!--search for a journal entry-->
-      <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple" @submit.prevent="searchForEntry">
-        <font-awesome-icon :icon="['fas', 'search']" class="mx-3"/>
+      <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple"
+        @submit.prevent="searchForEntry">
+        <Icon icon="ic:round-search" width="24" height="24" class="mx-3 my-3"/>
 
         <div class="flex flex-1 flex-nowrap h-full text-base font-light">
-            <div class="flex h-full flex-1 relative items-center pr-3 mx-3 just">
-                <label class="absolute -top-12 ml-14">Search For An Entry</label>
-                <QueryInput 
-                placeholder="keywords"
-                @handleQuery="updateSearchQuery"/>
-            </div>
+          <div class="flex h-full flex-1 relative items-center pr-3 mx-3 ">
+            <QueryInput placeholder="keywords" @handleQuery="updateSearchQuery" />
+          </div>
         </div>
 
-    <!--submit the form to search for an entry-->
-    <default-button text="Search" buttonType="search" class="rounded-r-2xl" link :to="this.$route.path + '/results/' + userSearchQuery"/>
+        <!--submit the form to search for an entry-->
+        <default-button text="Search" buttonType="search" class="rounded-r-2xl" link
+          :to="this.$route.path + '/' + userSearchQuery" />
 
-    </form>
+      </form>
 
-   </section>
-<!--loop through first 10 entries that are pulled from axios displayedEntries request in scripts-->
-<!--display all entries in a card component with options to view entry further, edit it, or delete it-->
+    </section>
+    <!--loop through first 10 entries that are pulled from axios displayedEntries request in scripts-->
+    <!--display all entries in a journal card component with options to view entry further, edit it, or delete it-->
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
-          <ul>
-            <li v-for="entry in displayedEntries" :key="entry.id">
+          <div class="px-10 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
+          <journal-card v-for="entry in displayedEntries" :key="entry._id" :entry="entry" class="m-4" />
+          </div>
+          </div>
 
-              <default-card class="m-4">
-                <div class="m-6">
-                  <h3 class="text-xl">{{ entry.title }}</h3>
-                  <h4 class="text-base">{{ entry.entryBody }}</h4>
-                  <h4 class="text-sm">{{ entry.entryDate }}</h4>
-                </div>
-                <!--actions the user can take: view, edit, or delete-->
-                <div class="actions">
-                  <default-button link :to="this.$route.path + '/view/' + entry.id" text="View" buttonType="primary" class="m-2" />
-                  <default-button link :to="this.$route.path + '/edit/' + entry.id" text="Edit" class="m-2" />
-                  <default-button link :to="this.$route.path + '/delete/' + entry.id" text="Delete" buttonType="delete" class="m-2" />
-                </div>
-
-              </default-card>
-            </li>
-          </ul>
         </div>
 
         <!--if an error has occurred: network-->
@@ -61,7 +47,7 @@
         </div>
         <!--else if no entries exist-->
         <div v-else-if="(entries.length === 0)">
-        <h3>No journal entries were found. How about creating one? </h3>
+          <h3>No journal entries were found. How about creating one? </h3>
         </div>
       </div>
     </section>
@@ -75,36 +61,40 @@
       </div>
       <!--previous page-->
       <div class="flex items-center justify-center">
-        <router-link v-if="previousPage"
-        :to="{ query: {page: previousPage} }"
-        class="mx-3 my-3 text-sm underline text-brand-darkpurple">
-        Previous
+        <router-link v-if="previousPage" :to="{ query: { page: previousPage } }"
+          class="mx-3 my-3 text-sm underline text-brand-darkpurple">
+          Previous
         </router-link>
       </div>
       <!--next page-->
-      <router-link v-if="nextPage"
-        :to="{query: {page: nextPage} }"
+      <router-link v-if="nextPage" :to="{ query: { page: nextPage } }"
         class="mx-3 my-3 text-sm underline text-brand-darkpurple">
         Next
-        </router-link>
+      </router-link>
     </section>
   </div>
 </template>
  
 <script>
+import { Icon } from '@iconify/vue';
 import api from '../../services/api';
 import QueryInput from '../UI/QueryInput.vue';
+import JournalCard from './JournalCard.vue';
 
 export default {
   components: {
     QueryInput,
+    JournalCard,
+    Icon
+   
 
   },
   data() {
     return {
       entries: [],
       errorOccurred: null,
-      userSearchQuery: ""
+      userSearchQuery: "",
+      userID: this.$store.state.userId 
     }
   },
   computed: {
@@ -119,7 +109,7 @@ export default {
     previousPage() {
       const previousPage = this.currentPage - 1;
       const firstPage = 1;
-      const result  = previousPage >= firstPage ? previousPage: undefined;
+      const result = previousPage >= firstPage ? previousPage : undefined;
       //console.log('result in previousPage: ' + result)
       return result;
     },
@@ -130,20 +120,18 @@ export default {
       //ex: 11/10 = 2
       const lastPage = Math.ceil(this.entries.length / 10);
       //ex: 2 <= 2 
-      const result = nextPage <= lastPage ? nextPage: undefined;
+      const result = nextPage <= lastPage ? nextPage : undefined;
       //console.log('result in nextPage: ' + result)
       return result;
     },
 
     //only display the first 10 entries
     displayedEntries() {
-
-     const pageNum = this.currentPage;
-
-     //get batch of 10 entries based on existing page number
-     const firstEntryIndex = (pageNum - 1) * 10;
-     const lastEntryIndex = pageNum * 10;
-    return this.entries.slice(firstEntryIndex, lastEntryIndex);
+      const pageNum = this.currentPage;
+      //get batch of 10 entries based on existing page number
+      const firstEntryIndex = (pageNum - 1) * 10;
+      const lastEntryIndex = pageNum * 10;
+      return this.entries.slice(firstEntryIndex, lastEntryIndex);
     },
 
   },
@@ -154,21 +142,21 @@ export default {
   //load journal entries from api
   methods: {
     async loadEntries() {
-      await api().get(`/journalentry/`)
+      //console.log('in Journal Entry Home, load entries, userID: ' + this.userID); 
+      await api().get(`/journalentry/getByUserId/${this.userID}`)
         .then(response => {
           this.entries = response.data;
-          //console.log('entry response: ' + JSON.stringify(response.data));
+         // console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         })
-      return api().get('/journalentry/');
     },
     //whenever search query is updated within the text input field, this updates the users search query
     updateSearchQuery(payload) {
       this.userSearchQuery = payload;
       //console.log(payload)
-     }
+    }
   }
 }
 </script>

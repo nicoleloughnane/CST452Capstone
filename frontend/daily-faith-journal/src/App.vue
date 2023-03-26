@@ -4,11 +4,12 @@
 </template>
 
 <script>
-  import MyNavbar from './components/UI/MyNavbar.vue';
+import MyNavbar from './components/UI/MyNavbar.vue';
 export default {
   components: {
-      MyNavbar
+    MyNavbar
   },
+  //tryLogin in the vuex user store, ensures user is not logged out if page is refreshed
   created() {
     this.$store.dispatch('tryLogin');
   },
@@ -17,14 +18,11 @@ export default {
 
 
 <style>
-
 * {
-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-margin: 0;
+  margin: 0;
 }
-
-
 </style>

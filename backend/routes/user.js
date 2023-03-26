@@ -5,7 +5,9 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-//get all users
+
+
+//get all users 
 router.get(`/`, async (req, res) => {
   const userList = await User.find();
   if (!userList) {
@@ -14,7 +16,7 @@ router.get(`/`, async (req, res) => {
   res.send(userList);
 });
 
-//get all users
+//get user by ID
 router.get(`/:id`, async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) {
@@ -65,10 +67,11 @@ router.post(`/login`, async (req, res) => {
         userId: user.id,
       },
       secret,
-      { expiresIn: "86400" }
+      { expiresIn: "1h" }
     );
+    //console.log('in login: token: ' + token + ' userId is: ' + user.id);
     //success: authenticated user here
-    res.status(200).send({ user: user.email, token: token });
+    res.status(200).send({ user: user.email, token: token, userId: user.id });
   } else {
     //email or password incorrect
     res.status(400).send("email or password incorrect");

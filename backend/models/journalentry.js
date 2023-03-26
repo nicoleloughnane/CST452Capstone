@@ -2,21 +2,17 @@
 //by a user
 const mongoose = require('mongoose');
 const journalSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+    },
     title: String,
     entryBody: String,
-    entryDate: String
+    entryDate: String,
+    mood: String
 
 });
 
-//change _id to id to make more user friendly
-journalSchema.virtual('id').get(function() {
-    return this._id.toHexString();
-});
-
-//enable virtuals
-journalSchema.set('toJSON', {
-    virtuals: true,
-});
 
 
 exports.JournalEntry = mongoose.model('JournalEntry', journalSchema, 'journalentry');

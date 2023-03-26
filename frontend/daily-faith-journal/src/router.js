@@ -14,8 +14,11 @@ import EditJournalEntry from './components/journal/EditJournalEntry.vue';
 import DeleteJournalEntry from './components/journal/DeleteJournalEntry.vue';
 //sermon notes
 import SermonNoteHome from './components/sermonnote/SermonNoteHome.vue';
-
-
+import SermonNoteResults from './components/sermonnote/SermonNoteResults.vue';
+import CreateSermonNote from './components/sermonnote/CreateSermonNote.vue';
+import DeleteSermonNote from './components/sermonnote/DeleteSermonNote.vue';
+import EditSermonNote from './components/sermonnote/EditSermonNote.vue';
+import ViewSermonNote from './components/sermonnote/ViewSermonNote.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -24,17 +27,26 @@ const router = createRouter({
         return { top: 0, left: 0, behavior: "smooth"}
     },
     routes: [
+        //users
         {path: '/home', component: WelcomeHome},
         {path: '/', redirect: '/login'},
         {path: '/login', component: UserAuth, meta: {requiresAuth: false}},
         {path: '/signup', component: SignUpUser, meta: {requiresAuth: false}},
+        //journal entries
         {path: '/journalentries', component: JournalEntryHome, meta: {requiresAuth: true}},
-        {path: '/journalentries/results/:userSearchQuery', component: JournalEntryResults, name: 'JournalEntryResults'},
+        {path: '/journalentries/:userSearchQuery', component: JournalEntryResults, name: 'JournalEntryResults'},
         {path: '/journalentries/create', component: CreateJournalEntry},
-        {path: '/journalentries/view/:id', component: ViewJournalEntry},
-        {path: '/journalentries/edit/:id', component: EditJournalEntry},
-        {path: '/journalentries/delete/:id', component: DeleteJournalEntry},
+        {path: '/journalentries/view/:_id', component: ViewJournalEntry},
+        {path: '/journalentries/edit/:_id', component: EditJournalEntry},
+        {path: '/journalentries/delete/:_id', component: DeleteJournalEntry},
+        //sermon notes
         {path: '/sermonnotes', component: SermonNoteHome},
+        {path: '/sermonnotes/:userSearchQuery', component: SermonNoteResults, name: 'SermonNoteResults'},
+        {path: '/sermonnotes/create', component: CreateSermonNote},
+        {path: '/sermonnotes/view/:id', component: ViewSermonNote},
+        {path: '/sermonnotes/edit/:id', component: EditSermonNote},
+        {path: '/sermonnotes/delete/:id', component: DeleteSermonNote},
+        
         //invalid route
         {path: '/:notFound(.*)', component: NotFound},
     ],
