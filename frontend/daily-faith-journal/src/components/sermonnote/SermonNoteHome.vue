@@ -54,23 +54,24 @@
 
     <!--page numbers-->
     <section>
-      <div class="mx-auto my-8">
+      <div class="mx-auto mt-3">
         <div class="flex flex-row flex-nowrap">
           <p class="flex-grow text-sm"> Page {{ currentPage }}</p>
         </div>
       </div>
       <!--previous page-->
-      <div class="flex items-center justify-center">
+      <div class="flex items-center justify-center mt-3 mb-6">
         <router-link v-if="previousPage" :to="{ query: { page: previousPage } }"
-          class="mx-3 my-3 text-sm underline text-brand-darkpurple">
+          class="text-sm underline text-brand-darkpurple">
           Previous
         </router-link>
-      </div>
+      
       <!--next page-->
       <router-link v-if="nextPage" :to="{ query: { page: nextPage } }"
-        class="mx-3 my-3 text-sm underline text-brand-darkpurple">
+        class="text-sm underline text-brand-darkpurple">
         Next
       </router-link>
+    </div>
     </section>
   </div>
 </template>

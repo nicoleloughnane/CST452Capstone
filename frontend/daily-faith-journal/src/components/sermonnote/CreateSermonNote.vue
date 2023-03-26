@@ -26,7 +26,7 @@
             <br />
             <input type="text" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2"
               v-model.trim="pastor.val" @blur="clearValidity('pastor')" />
-            <p class="text-brand-red text-md" v-if="!pastor.isValid">Pastor name must not be empty</p>
+            <p class="text-brand-red text-md" v-if="!pastor.isValid">Pastor name must not be more than 25 characters</p>
           </div>
 
           <!--Entry Body-->
@@ -36,12 +36,12 @@
             <textarea id="entryBody" rows="10"
               class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" v-model.trim="entryBody.val"
               @blur="clearValidity('entryBody')"></textarea>
-            <p class="text-brand-red text-md" v-if="!entryBody.isValid">This must not be empty</p>
+            <p class="text-brand-red text-md" v-if="!entryBody.isValid">Notes must not be empty</p>
           </div>
 
           <!--Actions for user to take - go back or submit the form-->
           <div class="actions">
-            <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="m-2" />
+            <default-button link :to="'/sermonnotes'" text="Go Back" buttonType="secondary" class="m-2" />
             <default-button text="Create" class="m-2" buttonType="create" />
           </div>
         </form>
