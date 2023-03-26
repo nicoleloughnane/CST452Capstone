@@ -8,9 +8,10 @@ if the user ended up here by mistake they can go back to login-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !email.isValid }">
         <label for="email" class="form-label text-brand-gray text-l mr-14">Email:</label>
         <input type="email" id="email" v-model.trim="email.val" @blur="clearValidity('email')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
-        <!--PENDING BUG: form prevents user from signing in if they use an email that already exists-->
+
         <!--if the form is invalid or the email is already in use, error message is displayed-->
-        <p class="text-brand-red text-md" v-if="!email.isValid || errorMessage != null">Email must not be empty or an account with this email already exists</p>
+        <p class="text-brand-red text-md" v-if="!email.isValid">Email must not be empty</p>
+        <p class="text-brand-red text-md" v-if="emailExists && email.isValid">An account with this email already exists</p>
       </div>
       <!--Password validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !password.isValid }">
@@ -68,6 +69,8 @@ export default {
         isValid: true,
       },
       errorMessage: null,
+      validForm: true,
+      emailExists : false,
     };
   },
   computed: {
@@ -88,27 +91,29 @@ export default {
     },
     //validate form information
     validateForm() {
-      this.formIsValid = true;
+      //reset to defaults
+      this.validForm = true;
       this.errorMessage = null;
+      this.emailExists = false;
       //email must be between 1 and 40 characters with @ sign
       if (!this.email.val.includes("@") || this.email.val.length < 1 || this.email.val.length > 40) {
         this.email.isValid = false;
-        this.formIsValid = false;
+        this.validForm = false;
       }
       //password must be between 8 and 30 characters
       if (this.password.val.length < 8 || this.password.val.length > 30) {
         this.password.isValid = false;
-        this.formIsValid = false;
+        this.validForm = false;
       }
       //first name must be between 1 and 50 characters
       if (this.firstName.val.length < 1 || this.firstName.val.length > 50) {
         this.firstName.isValid = false;
-        this.formIsValid = false;
+        this.validForm = false;
       }
       //last name must be between 1 and 50 characters
       if (this.lastName.val.length < 1 || this.lastName.val.length > 50) {
         this.lastName.isValid = false;
-        this.formIsValid = false;
+        this.validForm = false;
       }
     },
     //called upon form submit, calls validateForm
@@ -128,10 +133,14 @@ export default {
             if (this.$store.state.errorOccurred != null) {
               //error has occurred, form is invalid
               this.errorMessage = this.$store.state.errorOccurred;
-              console.log("error message: " + this.errorMessage);
+              //check if the error is an account with this email already existing
+              if(this.errorMessage.includes('409')) {
+                this.formIsValid = false;
+                this.emailExists = true;
+              }
               return this.errorMessage;
             }
-            //send user back to login to log in with newly created account
+            //at this point the form should be valid: send user back to login to log in with newly created account
             this.formIsValid = true;
             this.$router.replace("/login");
           },

@@ -14,6 +14,7 @@ const store = createStore({
   actions: {
     //login
     login({ commit }, user) {
+      this.state.errorOccurred = null;
       return api()
         .post("/user/login", {
           email: user.email,
@@ -27,14 +28,14 @@ const store = createStore({
             commit("setToken", response.data.token);
             commit("setUserId", response.data.userId);
             this.state.isLoggedIn = true;
-            console.log(
+           /* console.log(
               "i am here in login action. user is: " +
                 this.state.user +
                 " and token is: " +
                 this.state.token +
                 " and ID is: " +
                 this.state.userId
-            );
+            ); */
             return response.data;
           }
         })
@@ -45,14 +46,16 @@ const store = createStore({
     //logout
     logout({ commit }) {
       //clear states of the user with mutations
+      this.state.isLoggedIn = false;
       commit("setUser", null);
       commit("setToken", null);
       commit("setUserId", null);
-      this.state.isLoggedIn = false;
+      
     },
 
     //register
     register({ commit }, user) {
+      this.state.errorOccurred = null;
       return api()
         .post("/user/register", {
           email: user.email,
@@ -79,20 +82,12 @@ const store = createStore({
           " token: " +
           token
       );
-      if (localStorage.getItem("user")) {
-        console.log(
-          "I am here in try login, the user exists and user is: " +
-            user +
-            " userId: " +
-            userId +
-            " token: " +
-            token
-        );
+      if (user !== null) {
         commit("setUser", user);
         commit("setToken", token);
         commit("setUserId", userId);
         console.log(
-          "state store data is: " +
+          "not null state store data is: " +
             this.state.user +
             " userId: " +
             this.state.userId +
@@ -102,7 +97,8 @@ const store = createStore({
         this.state.isLoggedIn = true;
       } else if(user === null){
         console.log("i am here in try login, user is not signed in");
-      }
+        this.state.isLoggedIn = false;
+      } 
     },
   },
   //change the state: set user and token, notify if error has occurred
