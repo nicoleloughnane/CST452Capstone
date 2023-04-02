@@ -1,28 +1,29 @@
 <template>
-  <div class="flex justify-center">
-    <div class="block rounded-2xl shadow-xl bg-white w-full">
-      <div class="p-6 text-center">
-        <div class="m-4"> 
-          <div class="flex justify-end">
-          <router-link :to="`/sermonnotes/edit/${entry._id}`"> <Icon icon="material-symbols:edit-square-outline" class=" mr-6 text-brand-darkpurple" width="32"
+    <div class="block rounded-2xl shadow-xl bg-white w-full text-center">
+          <div class="card-header">
+ 
+            <h3 class="text-xl font-medium mt-4 mb-4 text-white text-center grow ml-24">{{ entry.title }}</h3>
+
+            <div class="header-icons">
+          <router-link :to="`/sermonnotes/edit/${entry._id}`"> <Icon icon="material-symbols:edit-square-outline" class=" mr-6 text-white" width="32"
                   height="30" /> </router-link>
-          <router-link :to="`/sermonnotes/delete/${entry._id}`"> <Icon icon="ion:trash-outline" width="32" height="32" class=" text-brand-darkpurple" /> </router-link>
-     
+          <router-link :to="`/sermonnotes/delete/${entry._id}`"> <Icon icon="ion:trash-outline" width="32" height="32" class=" mr-4 text-white" /> </router-link>
         </div>
+        </div>
+        
           <!--this allows the card to be clickable to view the details of a specific entry-->
-        <div class="card cursor-pointer" @click="this.$router.push('/sermonnotes/view/' + entry._id)">
+        <div class="card cursor-pointer p-6" @click="this.$router.push('/sermonnotes/view/' + entry._id)">
               <!--Entry properties-->
-              <h4 hidden>{{ entry._id }}</h4>
-          <h3 class="text-xl font-bold mb-4 mt-2">{{ entry.title }}</h3>
+          <h4 hidden>{{ entry._id }}</h4>
           <h4 class="text-sm mb-4">{{ entry.pastor }}</h4>
           <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
           <h4 class="text-base">{{ entry.entryBody }}</h4>
         </div>
-        </div>
 
-      </div>
+
+
     </div>
-  </div>
+
 
 </template>
 <script>
@@ -44,4 +45,24 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .card-header {
+    display: flex;
+    border-radius: 16px;
+    background-color: #775DAB;
+    justify-content: space-between; 
+    align-items: center;
+    
+  }
+
+  .card-title {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .header-icons {
+    display:flex;
+  }
+</style>
 

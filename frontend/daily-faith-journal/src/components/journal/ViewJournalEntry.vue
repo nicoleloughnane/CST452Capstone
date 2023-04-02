@@ -1,13 +1,13 @@
 <!--displays just one journal entry-->
 <template>
-    <div class="flex flex-col items-center text-center">
+    <div class="flex flex-col items-center text-center pl-72 pr-72">
       <h2 class="text-xl my-5 ">Journal Entry</h2>
     <div v-if="(!!entry)">
-      <JournalCard :key="entry._id" :entry="entry" class="" />
+      <JournalCard :key="entry._id" :entry="entry" />
     </div>
     
   <div v-else>
-    <h3 class="text-center">An error has occurred</h3>
+    <h3 >An error has occurred</h3>
   </div>
 
 

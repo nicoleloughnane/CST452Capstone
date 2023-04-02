@@ -2,8 +2,7 @@
 <template>
   <div class="flex flex-col items-center">
 
-    <h2 class="text-xl mb-5 mt-5">Create Journal Entry</h2>
-    <h4 class="text-lg mb-8">What is God doing in your life today?</h4>
+    <h2 class="text-xl my-10">Create Journal Entry</h2>
     <section>
       <default-card>
         <!--on form submit, calls submitForm method, located in scripts-->
@@ -124,8 +123,7 @@ export default {
     onChange(event) {
       var emotion = event.target.value;
       this.mood.val = emotion;
-
-},
+    },
     //called by the submitForm method to attempt a creation of an entry
     async createJournalEntry(data) {
       await api().post(`/journalentry/create/${this.userID}`, data)
