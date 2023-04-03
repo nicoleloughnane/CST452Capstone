@@ -1,17 +1,19 @@
 <!--displays just one sermon note-->
 <template>
-    <h2 class="text-xl mb-5 mt-5 text-center">Sermon Note</h2>
+  <div class="flex flex-col items-center text-center ">
+    <h2 class="text-xl my-5">Sermon Note</h2>
     <div v-if="(!!entry)">
-      <SermonNoteCard :key="entry._id" :entry="entry" class="" />
+      <SermonNoteCard :key="entry._id" :entry="entry"/>
     </div>
     <div v-else>
-      <h3 class="text-center">An error has occurred</h3>
+      <h3 >An error has occurred</h3>
     </div>
   
     <!--let user go back to home page-->
-    <div class="flex justify-center">
+
       <default-button link :to="'/sermonnotes'" text="Go Back" buttonType="secondary" class="mt-3"  />
-    </div>
+
+  </div>
   </template>
   
   <script>

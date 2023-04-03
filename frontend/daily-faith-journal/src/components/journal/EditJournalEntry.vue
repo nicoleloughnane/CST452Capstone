@@ -1,21 +1,90 @@
 <!--This component handles updating an existing journal entry-->
 <template>
-  <section>
-    <h2 class="text-center text-xl my-10">Edit Journal Entry</h2>
+    <div class="flex flex-col items-center">
+    <h2 class="text-xl my-10">Edit Journal Entry</h2>
+    <section>
     <default-card>
       <!--on form submit, calls submitForm method, located in scripts-->
       <form @submit.prevent="submitForm">
-        <!--these form controls are for the user to update journal entry information
-        v-model binds with data in return statement, trim gets rid of excess whitespace-->
-        <div class="flex flex-col items-center text-center">
-          <div class="mb-3 xl:w-96">
+        <!--these form controls are for the user to update journal entry information -->
+        <div class="mood">
+            <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
+            <br />
+            <div class="flex flex-row">
+              <!--happy-->
+              <div v-if="entry.mood == 'happy'">
+              <input type="radio" id="happy" name="emotionradio" value="happy" @change="onChange($event)" checked >
+              <label for="happy"><Icon icon="tabler:mood-happy" width="32" height="32" class="text-brand-darkpurple" /></label>
+              </div>
+              <div v-else>
+                <input type="radio" id="happy" name="emotionradio" value="happy" @change="onChange($event)" >
+              <label for="happy"><Icon icon="tabler:mood-happy" width="32" height="32" class="text-brand-darkpurple" /></label>
+              </div>
+
+              <!--content-->
+              <div v-if="entry.mood == 'content'">
+              <input type="radio" id="content" name="emotionradio" value="content" @change="onChange($event)" checked>
+              <label for="content"><Icon icon="tabler:mood-smile" width="32" height="32" class="text-brand-darkpurple" /></label>
+              </div>
+              <div v-else>
+                <input type="radio" id="content" name="emotionradio" value="content" @change="onChange($event)">
+              <label for="content"><Icon icon="tabler:mood-smile" width="32" height="32" class="text-brand-darkpurple" /></label>
+              </div>
+
+              <div v-if="entry.mood == 'okay'">
+              <!--okay-->
+              <input type="radio" id="okay" name="emotionradio" value="okay" @change="onChange($event)" checked>
+              <label for="okay"><Icon icon="uil:meh" width="32" height="32" class="text-brand-darkpurple" /></label>
+            </div>
+            <div v-else>
+              <input type="radio" id="okay" name="emotionradio" value="okay" @change="onChange($event)">
+              <label for="okay"><Icon icon="uil:meh" width="32" height="32" class="text-brand-darkpurple" /></label>
+            </div>
+            </div>
+            <br/>
+            <div class="flex">
+              <!--upset-->
+              <div v-if="entry.mood == 'upset'">
+              <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)" checked >
+              <label for="upset"><Icon icon="tabler:mood-sad-squint" width="32" height="32" class="text-brand-darkpurple"/></label>
+            </div>
+            <div v-else>
+              <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)"  >
+              <label for="upset"><Icon icon="tabler:mood-sad-squint" width="32" height="32" class="text-brand-darkpurple"/></label>
+            </div>
+              <!--sad-->
+              <div v-if="entry.mood == 'sad'">
+              <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)" checked>
+              <label for="sad"><Icon icon="tabler:mood-sad" width="32" height="32" class="text-brand-darkpurple" /></label>
+            </div>
+            <div v-else>
+              <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)">
+              <label for="sad"><Icon icon="tabler:mood-sad" width="32" height="32" class="text-brand-darkpurple" /></label>
+            </div>
+              <!--distressed-->
+              <div v-if="entry.mood == 'distressed'">
+              <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)" checked>
+              <label for="distressed"><Icon icon="tabler:mood-cry" width="32" height="32" class="text-brand-darkpurple"/></label>
+            </div>
+            <div v-else>
+              <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)">
+              <label for="distressed"><Icon icon="tabler:mood-cry" width="32" height="32" class="text-brand-darkpurple"/></label>
+            </div>
+            </div>
+           
+          </div>
+          <br/>
+          
+      <!--v-model binds with data in return statement, trim gets rid of excess whitespace-->
+
+          <div class="mb-3">
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title: </label>
             <br />
             <input type="text" id="title" v-model.trim="entry.title"
               class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder="" />
           </div>
 
-          <div class="mb-3 xl:w-96">
+          <div class="mb-3 ">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Entry Body: </label>
             <br />
             <textarea id="entryBody" v-model.trim="entry.entryBody" rows="10"
@@ -31,22 +100,30 @@
             <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="m-2" />
             <default-button text="Update" buttonType="primary" class="m-2 ml-4" />
           </div>
-        </div>
+
       </form>
     </default-card>
 
   </section>
+</div>
 </template>
 
 <script>
 import api from '../../services/api';
+import { Icon } from '@iconify/vue';
 export default {
+  components:{
+    Icon
+  },
   data() {
     return {
       formIsValid: true,
       entryId: this.$route.params._id,
       errorOccurred: null,
       entry: [],
+      mood: {
+        val: '',
+      },
       userID : this.$store.state.userId
     }
   },
@@ -78,10 +155,10 @@ export default {
           console.log('edit failed: ' + this.errorMessage);
         })
     },
-    //this is not currently in use
-    /*clearValidity(input) {
-      this[input].isValid = true;
-    }, */
+    onChange(event) {
+      var emotion = event.target.value;
+      this.mood.val = emotion;
+    },
 
     //validate form information
     validateForm() {
@@ -106,7 +183,8 @@ export default {
       //at this point the form should be valid
       const formData = {
         title: this.entry.title,
-        entryBody: this.entry.entryBody
+        entryBody: this.entry.entryBody,
+        mood: this.mood.val
       };
       //call method to update the entry
       this.updateEntry(formData);
