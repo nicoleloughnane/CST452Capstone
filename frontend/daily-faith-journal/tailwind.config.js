@@ -14,13 +14,8 @@ module.exports = {
       colors: {
         //brand color palette (tailwind makes classes for these)
         "brand-darkpurple": "#775DAB",
-        "brand-darkpurple-2": "#270041",
-        "brand-lightpurple": "#EDD2FF",
-        "brand-lightpink": "#FFE6FF",
         "brand-background": "#F1F1F1",
         "brand-cream": "#F3EFE0",
-        "brand-gray": "#1E1E1E",
-        "brand-black": "#222222",
         "brand-green": "#30BA91",
         "brand-red": "#BA3049",
       },
