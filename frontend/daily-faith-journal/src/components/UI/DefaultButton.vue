@@ -56,7 +56,7 @@ export default {
             @apply text-white bg-brand-darkpurple hover:shadow-pink rounded-lg px-4 py-2 font-medium;
         }
         .secondary {
-            @apply bg-white outline outline-brand-gray outline-1 text-brand-gray hover:bg-brand-darkpurple rounded-lg  px-4 py-2 hover:text-white font-medium;
+            @apply bg-white outline outline-brand-darkgray outline-1 text-brand-darkgray hover:bg-brand-darkpurple rounded-lg  px-4 py-2 hover:text-white font-medium;
         }
         .delete {
             @apply bg-brand-red text-white hover:shadow-cream rounded-lg px-4 py-2 font-medium;

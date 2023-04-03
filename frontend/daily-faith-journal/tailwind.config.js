@@ -18,6 +18,7 @@ module.exports = {
         "brand-cream": "#F3EFE0",
         "brand-green": "#30BA91",
         "brand-red": "#BA3049",
+        "brand-darkgray": "#1E1E1E",
       },
       //box shadow
       boxShadow: {
