@@ -1,7 +1,7 @@
 <!--this component handles the user input and assigns it to value-->
 <template>
     <!--two way data binding: user inputs their search query here-->
-    <input type="text" :value="value" class="w-full text-lg font-normal focus:outline-none bg-brand-background" @input="handleQuery" />
+    <input type="text" :value="value" class="w-full text-lg font-normal focus:outline-none bg-brand-background " @input="handleQuery" />
 </template>
 
 <script>
