@@ -11,7 +11,7 @@
       <h2 class="text-xl mb-6">Journal Entries</h2>
 
       <!--search for a journal entry-->
-      <form class="flex h-10 w-full mb-6 items-center rounded-2xl border border-solid border-brand-darkpurple"
+      <form class="flex h-10 w-full mb-6 items-center rounded-2xl border-2 border-solid border-brand-darkpurple"
         @submit.prevent="searchForEntry">
         <Icon icon="ic:round-search" width="24" height="24" class="mx-3 my-3"/>
 

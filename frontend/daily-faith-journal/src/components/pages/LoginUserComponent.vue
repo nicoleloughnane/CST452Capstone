@@ -79,7 +79,7 @@ export default {
         email: this.email,
         password: this.password,
       };
-      console.log('in submit form, formData is: ' + JSON.stringify(formData));
+      //console.log('in submit form, formData is: ' + JSON.stringify(formData));
 
       //calls store from vuex to login
       this.$store.dispatch("login", formData).then(
