@@ -14,7 +14,7 @@ const store = createStore({
   actions: {
     //login
     login({ commit }, user) {
-      this.state.errorOccurred = null;
+      commit("errorOccurred", null);
       return api()
         .post("/user/login", {
           email: user.email,
@@ -23,19 +23,19 @@ const store = createStore({
         .then((response) => {
           //check if a token has been received
           if (response.data.token) {
-            //console.log("in login JSON response data is " + JSON.stringify(response.data));
+            console.log("in login JSON response data is " + JSON.stringify(response.data));
             commit("setUser", response.data.user);
             commit("setToken", response.data.token);
             commit("setUserId", response.data.userId);
-            this.state.isLoggedIn = true;
-           /* console.log(
+            commit("setIsLoggedIn", true);
+            console.log(
               "i am here in login action. user is: " +
                 this.state.user +
                 " and token is: " +
                 this.state.token +
                 " and ID is: " +
                 this.state.userId
-            ); */
+            ); 
             return response.data;
           }
         })
@@ -46,10 +46,9 @@ const store = createStore({
     //logout
     logout({ commit }) {
       //clear states of the user with mutations
-      this.state.isLoggedIn = false;
-      commit("setUser", null);
-      commit("setToken", null);
-      commit("setUserId", null);
+      commit("setIsLoggedIn", false);
+      commit("setIsLoggedOut");
+
       
     },
 
@@ -86,6 +85,7 @@ const store = createStore({
         commit("setUser", user);
         commit("setToken", token);
         commit("setUserId", userId);
+
         console.log(
           "not null state store data is: " +
             this.state.user +
@@ -94,10 +94,10 @@ const store = createStore({
             " token: " +
             this.state.token
         );
-        this.state.isLoggedIn = true;
+        commit("setIsLoggedIn", true);
       } else if(user === null){
         console.log("i am here in try login, user is not signed in");
-        this.state.isLoggedIn = false;
+        commit("setIsLoggedIn", false);
       } 
     },
   },
@@ -106,14 +106,23 @@ const store = createStore({
     setUser(state, user) {
       state.user = user;
       localStorage.setItem("user", user);
+
     },
     setToken(state, token) {
       state.token = token;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", token)
     },
     setUserId(state, userId) {
       state.userId = userId;
       localStorage.setItem("userId", userId);
+    },
+    setIsLoggedIn(state, loggedIn) {
+      state.isLoggedIn = loggedIn;
+    },
+    setIsLoggedOut() {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
     },
     errorOccurred(state, error) {
       state.errorOccurred = error;
