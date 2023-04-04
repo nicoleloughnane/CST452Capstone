@@ -1,10 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import store from './store/UserStore';
 
+//pages
 import NotFound from './components/pages/NotFound.vue';
 import UserAuth from './components/pages/LoginUserComponent.vue';
 import WelcomeHome from './components/pages/WelcomeHome.vue';
 import SignUpUser from './components/pages/SignUpUserComponent.vue';
+import HelpCenter from './components/pages/HelpCenter.vue';
 //journal entries
 import JournalEntryHome from './components/journal/JournalEntryHome.vue';
 import JournalEntryResults from './components/journal/JournalEntryResults.vue';
@@ -27,11 +29,14 @@ const router = createRouter({
         return { top: 0, left: 0, behavior: "smooth"}
     },
     routes: [
-        //users
+        //pages
         {path: '/home', component: WelcomeHome},
         {path: '/', redirect: '/login'},
         {path: '/login', component: UserAuth, meta: {requiresAuth: false}},
         {path: '/signup', component: SignUpUser, meta: {requiresAuth: false}},
+        {path: '/help', component: HelpCenter, meta: {requiresAuth: true}},
+        //invalid route
+        {path: '/:notFound(.*)', component: NotFound},
         //journal entries
         {path: '/journalentries', component: JournalEntryHome, meta: {requiresAuth: true}},
         {path: '/journalentries/:userSearchQuery', component: JournalEntryResults, name: 'JournalEntryResults'},
@@ -47,8 +52,6 @@ const router = createRouter({
         {path: '/sermonnotes/edit/:id', component: EditSermonNote},
         {path: '/sermonnotes/delete/:id', component: DeleteSermonNote},
         
-        //invalid route
-        {path: '/:notFound(.*)', component: NotFound},
     ],
 });
 
