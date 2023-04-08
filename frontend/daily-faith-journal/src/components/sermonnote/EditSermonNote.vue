@@ -54,7 +54,8 @@ export default {
       entryId: this.$route.params.id,
       errorOccurred: null,
       entry: [],
-      userID: this.$store.state.userId
+      userID: this.$store.state.userId,
+      userToken: this.$store.state.token
 
     }
   },
@@ -65,7 +66,11 @@ export default {
   methods: {
     //get one entry by its ID
     async loadEntry() {
-      await api().get(`/sermonnote/byEntryId/${this.userID}/${this.entryId}`)
+      await api().get(`/sermonnote/byEntryId/${this.userID}/${this.entryId}`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));
@@ -77,7 +82,11 @@ export default {
     },
     //submitForm calls updateEntry if the form is valid
     async updateEntry(formData) {
-      await api().put(`/sermonnote/update/${this.userID}/${this.entryId}`, formData)
+      await api().put(`/sermonnote/update/${this.userID}/${this.entryId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
         .then(response => {
           this.editResponse = response.data;
           //console.log('edit response: ' + JSON.stringify(response.data));
@@ -87,10 +96,6 @@ export default {
           console.log('edit failed: ' + this.errorMessage);
         })
     },
-    //this is not currently in use
-    /*clearValidity(input) {
-      this[input].isValid = true;
-    }, */
 
     //validate form information
     validateForm() {

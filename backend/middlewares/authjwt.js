@@ -13,20 +13,11 @@ function authjwt() {
     algorithms: ["HS256"],
   }).unless({
     path: [
-      {
-        url: /\/api\/v1\/journalentry(.*)/,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-      },
-      {
-        url: /\/api\/v1\/sermonnote(.*)/,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-      },
-      {
-        url: /\/api\/v1\/user(.*)/,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-      },
+      //do not require a valid JWT token as users need to be able to login and register
       `${api}/user/login`,
       `${api}/user/register`,
+      `${api}/`,
+      
     ],
   });
 }

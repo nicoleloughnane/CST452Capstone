@@ -96,7 +96,8 @@ export default {
       formIsValid: true,
       errorMessage: null,
       createResponse: null,
-      userID: this.$store.state.userId
+      userID: this.$store.state.userId,
+      userToken: this.$store.state.token
     }
   },
   methods: {
@@ -125,7 +126,11 @@ export default {
     },
     //called by the submitForm method to attempt a creation of an entry
     async createJournalEntry(data) {
-      await api().post(`/journalentry/create/${this.userID}`, data)
+      await api().post(`/journalentry/create/${this.userID}`, data, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
         .then(response => {
           this.createResponse = response;
           //console.log('creation success')

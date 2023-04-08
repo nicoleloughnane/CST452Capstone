@@ -94,7 +94,8 @@ export default {
       entries: [],
       errorOccurred: null,
       userSearchQuery: "",
-      userID: this.$store.state.userId
+      userID: this.$store.state.userId,
+      userToken: this.$store.state.token
     }
   },
   computed: {
@@ -142,7 +143,11 @@ export default {
   //load journal entries from api
   methods: {
     async loadEntries() {
-      await api().get(`/sermonnote/getByUserId/${this.userID}`)
+      await api().get(`/sermonnote/getByUserId/${this.userID}`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
         .then(response => {
           this.entries = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));

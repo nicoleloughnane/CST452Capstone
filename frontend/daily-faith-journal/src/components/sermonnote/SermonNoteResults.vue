@@ -48,7 +48,8 @@ export default {
       filteredEntries: [],
       userSearchQuery: this.$route.params.userSearchQuery,
       errorOccurred: null,
-      userID: this.$store.state.userId
+      userID: this.$store.state.userId,
+      userToken: this.$store.state.token
     }
   },
   mounted() {
@@ -58,7 +59,11 @@ export default {
     //called upon the form load.
     loadFilteredEntries() {
       //get all sermon notes
-      api().get(`/sermonnote/getByUserId/${this.userID}`)
+      api().get(`/sermonnote/getByUserId/${this.userID}`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
         .then(response => {
           this.entries = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));

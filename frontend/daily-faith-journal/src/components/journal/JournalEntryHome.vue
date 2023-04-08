@@ -94,7 +94,8 @@ export default {
       entries: [],
       errorOccurred: null,
       userSearchQuery: "",
-      userID: this.$store.state.userId 
+      userID: this.$store.state.userId, 
+      userToken: this.$store.state.token
     }
   },
   computed: {
@@ -143,7 +144,11 @@ export default {
   methods: {
     async loadEntries() {
       //console.log('in Journal Entry Home, load entries, userID: ' + this.userID); 
-      await api().get(`/journalentry/getByUserId/${this.userID}`)
+      await api().get(`/journalentry/getByUserId/${this.userID}`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
         .then(response => {
           this.entries = response.data;
          // console.log('entry response: ' + JSON.stringify(response.data));
