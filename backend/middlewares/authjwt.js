@@ -11,6 +11,12 @@ function authjwt() {
   return expressJwt({
     secret,
     algorithms: ["HS256"],
+    getToken: function (req) {
+      if (req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {
+        return req.headers.authorization.split(" ")[1];
+      }
+      return null;
+    },
   }).unless({
     path: [
       //do not require a valid JWT token as users need to be able to login and register

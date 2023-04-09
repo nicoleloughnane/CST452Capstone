@@ -2,10 +2,15 @@
 <template>
   <img src="../../assets/dailyfaithjournallogo.png" class="logo">
   <div class="home">
-    <h2 class="text-xl m-2">Welcome!</h2>
-    <h4 class="text-base mb-6">Today is: {{todayDate}}</h4>
+    <h2 class="text-xl m-2 font-medium">Welcome!</h2>
+    <h4 class="text-base mb-2">Today is: </h4>
+    <h4 class="text-base mb-6">{{todayDate}} </h4>
+
     <default-button link :to="'/journalentries'" text="Journal" buttonType="primary" class="m-2" />
     <default-button link :to="'/sermonnotes'" text="Sermon Notes" buttonType="primary" class="m-2" />
+
+    <h4 class="text-base my-6">Need help?</h4>
+    <default-button link :to="'/help'" text="Help Center" buttonType="primary" class="m-2" />
   </div>
 </template>
 <script>
