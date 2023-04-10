@@ -6,10 +6,14 @@ const cors = require("cors");
 app.use(cors());
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+//jwt
 const authjwt = require("./middlewares/authjwt");
 //for .env file
 require("dotenv/config");
 const api = process.env.API_URL;
+var log4js = require("log4js");
+var logger = log4js.getLogger();
+logger.level = "info" || "error";
 
 //middleware - express, morgan
 app.use(express.json());
@@ -33,14 +37,17 @@ mongoose
     dbName: "backendv1",
   })
   .then(() => {
-    console.log("Database connection is ready");
+    //console.log("Database connection is ready");
+    logger.info("Database connection established");
+    
   })
   .catch((err) => {
-    console.log(err);
+    //console.log(err);
+    logger.error("error connecting to database: " + err);
   });
 
-//running on localhost port 3000
+//running on localhost 
 app.listen(3000, () => {
-  console.log(api);
-  console.log("server is running at http://localhost:3000");
+  //console.log(api);
+  console.log("server is running locally");
 });
