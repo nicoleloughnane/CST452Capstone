@@ -1,19 +1,19 @@
 <!--this component handles the login of an existing user and will take to home page upon successful login
 user can also click link to signup if they do not have an account-->
 <template>
-   <div>
+   <div class="mt-6">
   <default-card>
     <form @submit.prevent="submitForm">
       <h2 class="text-center text-xl mb-5">Login</h2>
       <!--Email validation-->
       <div class="mb-3 xl:w-96">
         <label for="email" class="form-label text-brand-gray text-l mr-10">Email:</label>
-        <input type="email" id="email" v-model.trim="email" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
+        <input type="email" id="email" v-model.trim="email" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4 px-2 " placeholder="johndoe@gmail.com" />
       </div>
       <!--Password validation-->
       <div class="mb-3 xl:w-96">
         <label for="password" class="form-label text-brand-gray text-l mr-1 ">Password: </label>
-        <input type="password" id="password" v-model.trim="password" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder="*******"/>
+        <input type="password" id="password" v-model.trim="password" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4 px-2" placeholder="*******"/>
       </div>
       <!--if the form is invalid or the an error exists, error message is displayed accordingly-->
       <div class="flex flex-col items-center">
@@ -97,3 +97,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+</style>

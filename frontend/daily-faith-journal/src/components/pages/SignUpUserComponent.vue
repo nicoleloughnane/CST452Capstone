@@ -1,13 +1,14 @@
 <!--this component handles the signup of a new user and will take back to login upon a successful sign up
 if the user ended up here by mistake they can go back to login-->
 <template>
+  <div class="mt-6">
   <default-card>
     <form @submit.prevent="submitForm">
       <h2 class="text-center text-xl mb-5">Sign Up</h2>
       <!--Email validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !email.isValid }">
         <label for="email" class="form-label text-brand-gray text-l mr-14">Email:</label>
-        <input type="email" id="email" v-model.trim="email.val" @blur="clearValidity('email')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="johndoe@gmail.com"/>
+        <input type="email" id="email" v-model.trim="email.val" @blur="clearValidity('email')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4 px-2" placeholder="johndoe@gmail.com"/>
 
         <!--if the form is invalid or the email is already in use, error message is displayed-->
         <p class="text-brand-red text-md" v-if="!email.isValid">Email must not be empty</p>
@@ -16,7 +17,7 @@ if the user ended up here by mistake they can go back to login-->
       <!--Password validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !password.isValid }">
         <label for="password" class="form-label text-brand-gray text-l mr-6">Password:</label>
-        <input type="password" id="password" v-model.trim="password.val" @blur="clearValidity('password')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="*********"/>
+        <input type="password" id="password" v-model.trim="password.val" @blur="clearValidity('password')" class= "form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4 px-2" placeholder="*********"/>
         <p class="text-brand-red text-md" v-if="!password.isValid">
           Password must not be empty and at least 8 characters
         </p>
@@ -24,7 +25,7 @@ if the user ended up here by mistake they can go back to login-->
         <!--First name validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !firstName.isValid }">
         <label for="firstName" class="form-label text-brand-gray text-l mr-4">First Name:</label>
-        <input type="firstName" id="firstName" v-model.trim="firstName.val" @blur="clearValidity('firstName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="John"/>
+        <input type="firstName" id="firstName" v-model.trim="firstName.val" @blur="clearValidity('firstName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4 px-2" placeholder="John"/>
         <p class="text-brand-red text-md" v-if="!firstName.isValid">
           First name must not be empty
         </p>
@@ -32,7 +33,7 @@ if the user ended up here by mistake they can go back to login-->
         <!--Last name validation-->
       <div class="mb-3 xl:w-96" :class="{ invalid: !lastName.isValid }">
         <label for="lastName" class="form-label text-brand-gray text-l mr-4">Last Name:</label>
-        <input type="lastName" id="lastName" v-model.trim="lastName.val" @blur="clearValidity('lastName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4" placeholder="Doe"/>
+        <input type="lastName" id="lastName" v-model.trim="lastName.val" @blur="clearValidity('lastName')" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-4 px-2" placeholder="Doe"/>
         <p class="text-brand-red text-md" v-if="!lastName.isValid">
           Last name must not be empty
         </p>
@@ -45,6 +46,7 @@ if the user ended up here by mistake they can go back to login-->
     </div>
     </form>
   </default-card>
+</div>
 </template>
 
 <script>

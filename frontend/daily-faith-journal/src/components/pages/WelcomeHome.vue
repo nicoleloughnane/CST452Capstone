@@ -10,7 +10,7 @@
     <default-button link :to="'/sermonnotes'" text="Sermon Notes" buttonType="primary" class="m-2" />
 
     <h4 class="text-base my-6">Need help?</h4>
-    <default-button link :to="'/help'" text="Help Center" buttonType="primary" class="m-2" />
+    <default-button link :to="'/help'" text="Help Center" buttonType="primary" class="my-6" />
   </div>
 </template>
 <script>

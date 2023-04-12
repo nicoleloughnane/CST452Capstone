@@ -42,6 +42,7 @@
 <script>
 import api from '../../services/api';
 import JournalCard from './JournalCard.vue';
+const { DateTime } = require('luxon');
 
 export default {
   name: "JournalEntryResults",
@@ -71,7 +72,17 @@ export default {
         },
         })
         .then(response => {
+          //grab the journal entry response data
           this.entries = response.data;
+          //for each entry in entries
+          for(let i = 0; i < this.entries.length; i++) {
+            //sort the array of entries from newest to oldest
+            this.entries.sort(function(a,b) {
+              return DateTime.fromISO(b.entryDate) - DateTime.fromISO(a.entryDate);
+            })
+            //convert date to user friendly format from ISO to LocaleString
+            this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+          }
          //filter the entries based on search term
          this.filteredEntries = this.entries.filter(entry => {
             return entry.title.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||

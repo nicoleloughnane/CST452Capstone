@@ -81,14 +81,14 @@
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title: </label>
             <br />
             <input type="text" id="title" v-model.trim="entry.title"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder="" />
+              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" placeholder="" />
           </div>
 
           <div class="mb-3 ">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Entry Body: </label>
             <br />
             <textarea id="entryBody" v-model.trim="entry.entryBody" rows="10"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2"
+              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
               placeholder=""> </textarea>
           </div>
 

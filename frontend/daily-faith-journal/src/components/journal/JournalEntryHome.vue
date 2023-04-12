@@ -15,7 +15,7 @@
         @submit.prevent="searchForEntry">
         <Icon icon="ic:round-search" width="24" height="24" class="mx-3 my-3"/>
 
-        <div class="flex flex-1 flex-nowrap h-full text-base font-light">
+        <div class="flex flex-1 flex-nowrap h-full text-base font-light ">
           <div class="flex h-full flex-1 relative items-center pr-3 mx-3 ">
             <QueryInput placeholder="keywords" @handleQuery="updateSearchQuery" />
           </div>
@@ -33,8 +33,8 @@
     <section>
       <div class="entries">
         <div v-if="(entries.length > 0)">
-          <div class="px-10 py-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
+          <div class="px-5 py-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 mr-7">
           <journal-card v-for="entry in displayedEntries" :key="entry._id" :entry="entry" class="m-4" />
           </div>
           </div>
@@ -80,6 +80,7 @@ import { Icon } from '@iconify/vue';
 import api from '../../services/api';
 import QueryInput from '../UI/QueryInput.vue';
 import JournalCard from './JournalCard.vue';
+const { DateTime } = require('luxon');
 
 export default {
   components: {
@@ -143,15 +144,25 @@ export default {
   //load journal entries from api
   methods: {
     async loadEntries() {
-      //console.log('in Journal Entry Home, load entries, userID: ' + this.userID); 
       await api().get(`/journalentry/getByUserId/${this.userID}`, {
         headers: {
           Authorization: `Bearer ${this.userToken}`,
         },
       })
         .then(response => {
+          //grab the journal entry response data
           this.entries = response.data;
-         // console.log('entry response: ' + JSON.stringify(response.data));
+          //for each entry in entries
+          for(let i = 0; i < this.entries.length; i++) {
+            //sort the array of entries from newest to oldest
+            this.entries.sort(function(a,b) {
+              return DateTime.fromISO(b.entryDate) - DateTime.fromISO(a.entryDate);
+            })
+            //convert date to user friendly format from ISO to LocaleString
+            this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+          }
+          //console.log('entry response: ' + JSON.stringify(response.data));
+
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
@@ -160,7 +171,7 @@ export default {
     //whenever search query is updated within the text input field, this updates the users search query
     updateSearchQuery(payload) {
       this.userSearchQuery = payload;
-      //console.log(payload)
+
     }
   }
 }

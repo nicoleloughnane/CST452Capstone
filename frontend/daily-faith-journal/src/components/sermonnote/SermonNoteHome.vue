@@ -81,6 +81,7 @@ import { Icon } from '@iconify/vue';
 import api from '../../services/api';
 import QueryInput from '../UI/QueryInput.vue';
 import SermonNoteCard from './SermonNoteCard.vue';
+const { DateTime } = require('luxon');
 
 export default {
   components: {
@@ -149,7 +150,17 @@ export default {
         },
       })
         .then(response => {
+          //grab the sermon note response data
           this.entries = response.data;
+          //for each entry in entries
+          for(let i = 0; i < this.entries.length; i++) {
+            //sort the array of entries from newest to oldest
+            this.entries.sort(function(a,b) {
+              return DateTime.fromISO(b.entryDate) - DateTime.fromISO(a.entryDate);
+            })
+            //convert date to user friendly format from ISO to LocaleString
+            this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+          }
           //console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;
