@@ -54,7 +54,8 @@ export default {
       filteredEntries: [],
       userSearchQuery: this.$route.params.userSearchQuery,
       errorOccurred: null,
-      userID: this.$store.state.userId 
+      userID: this.$store.state.userId, 
+      userToken: this.$store.state.token
     }
   },
   mounted() {
@@ -64,7 +65,11 @@ export default {
     //called upon the form load.
     loadFilteredEntries() {
       //get all journal entries
-        api().get(`/journalentry/getByUserId/${this.userID}`)
+        api().get(`/journalentry/getByUserId/${this.userID}`, {
+          headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+        })
         .then(response => {
           this.entries = response.data;
          //filter the entries based on search term

@@ -28,7 +28,8 @@ import SermonNoteCard from './SermonNoteCard.vue';
         entryId: this.$route.params.id,
         errorOccurred: null,
         entry: [],
-        userID : this.$store.state.userId
+        userID : this.$store.state.userId, 
+        userToken: this.$store.state.token
       }
     },
     //when component is loaded, call loadEntry
@@ -38,7 +39,11 @@ import SermonNoteCard from './SermonNoteCard.vue';
     methods: {
       //called upon the form load
       async loadEntry() {
-        await api().get(`/sermonnote/byEntryId/${this.userID}/${this.entryId}`)
+        await api().get(`/sermonnote/byEntryId/${this.userID}/${this.entryId}`, {
+          headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+        })
           .then(response => {
             this.entry = response.data;
             //console.log('entry response: ' + JSON.stringify(response.data));

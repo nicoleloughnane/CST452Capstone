@@ -29,7 +29,8 @@ export default {
       entryId: this.$route.params._id,
       errorOccurred: null,
       entry: [],
-      userID : this.$store.state.userId
+      userID : this.$store.state.userId,
+      userToken: this.$store.state.token
     }
   },
   //when component is loaded, call loadEntry
@@ -39,7 +40,11 @@ export default {
   methods: {
     //called upon the form load
     async loadEntry() {
-      await api().get(`/journalentry/byEntryId/${this.userID}/${this.entryId}`)
+      await api().get(`/journalentry/byEntryId/${this.userID}/${this.entryId}`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
         .then(response => {
           this.entry = response.data;
           //console.log('entry response: ' + JSON.stringify(response.data));

@@ -38,7 +38,8 @@
         entryId: this.$route.params.id,
         errorOccurred: null,
         entry: [],
-        userID : this.$store.state.userId
+        userID : this.$store.state.userId,
+        userToken: this.$store.state.token
   
       }
     },
@@ -49,7 +50,11 @@
     methods: {
       //get one entry by its ID
       async loadEntry() {
-        await api().get(`/sermonnote/byEntryId/${this.userID}/${this.entryId}`)
+        await api().get(`/sermonnote/byEntryId/${this.userID}/${this.entryId}`, {
+          headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+        })
           .then(response => {
             this.entry = response.data;
             //console.log('entry response: ' + JSON.stringify(response.data));
@@ -60,7 +65,11 @@
       },
       //called when the user presses delete button, confirming they want to delete
       async deleteEntry() {
-        await api().delete(`/sermonnote/delete/${this.entryId}`)
+        await api().delete(`/sermonnote/delete/${this.entryId}`, {
+          headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+        })
           .then(response => {
             this.entry = response.data;
             //console.log('entry response: ' + JSON.stringify(response.data));
