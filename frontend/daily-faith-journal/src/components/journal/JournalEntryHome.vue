@@ -45,6 +45,9 @@
         <div v-if="errorOccurred === 'Network Error'">
           <h3>There is an error on our end. Please try again later! </h3>
         </div>
+        <div v-else-if="(errorOccurred === 'Request failed with status code 401')">
+          <h3>Your session has expired, please log out and log back in again </h3>
+        </div>
         <!--else if no entries exist-->
         <div v-else-if="(entries.length === 0)">
           <h3>No journal entries were found. How about creating one? </h3>

@@ -20,7 +20,7 @@ const api = process.env.API_URL;
 //logging with log4js
 var log4js = require("log4js");
 var logger = log4js.getLogger();
-logger.level = "info" || "error";
+logger.level = "info" || "error"; 
 
 //middleware - express, morgan
 app.use(express.json());
