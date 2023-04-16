@@ -8,6 +8,7 @@
         <!--on form submit, calls submitForm method, located in scripts-->
         <form @submit.prevent="submitForm">
           <!--select a mood: optional-->
+          <div class="flex flex-wrap justify-center">
         <!--moods: happy, content, okay, upset, sad, or distressed-->
           <div class="mood">
             <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
@@ -36,6 +37,7 @@
               <label for="distressed"><Icon icon="tabler:mood-cry" width="32" height="32" class="text-brand-darkpurple"/></label>
             </div>
            
+          </div>
           </div>
           <br/>
 

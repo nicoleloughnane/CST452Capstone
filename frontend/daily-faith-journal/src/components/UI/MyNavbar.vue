@@ -89,9 +89,10 @@ also contains a mobile menu that will conditionally render-->
     </div>
   </nav> -->
   <nav class="bg-brand-darkpurple shadow-lg">
+    <!--regular navbar-->
     <div class="mx-auto px-4">
       <div class="flex justify-between">
-        <div class="flex items-center px-2 py-3">
+        <div class="hidden md:flex items-center px-2 py-3">
 
             <router-link to="/home"
               ><img
@@ -112,7 +113,7 @@ also contains a mobile menu that will conditionally render-->
             </div>
           </div>
      
-        <div class="flex items-center">
+        <div class="hidden md:flex items-center">
           <div
             v-if="isLoggedIn"
             class="block px-2 py-4 hover:text-brand-cream transition duration-300"
@@ -122,6 +123,52 @@ also contains a mobile menu that will conditionally render-->
         </div>
       </div>
     </div>
+
+    <!--mobile navbar-->
+    <div class="md:hidden flex items-center px-4 py-5">
+      <button @click="mobileMenuOpen = !mobileMenuOpen">
+        <Icon icon="octicon:three-bars-16" width="32" height="32" class="text-brand-cream mx-3 mb-3" />
+      </button>
+    </div>
+    <div v-if="mobileMenuOpen">
+      <ul>
+        
+        <li class="active">
+          <div
+            v-if="isLoggedIn"
+            class="block text-sm px-2 py-4 ml-3 hover:text-brand-cream transition duration-300"
+          >
+            <router-link to="/home">Home</router-link>
+          </div>
+        </li>
+        <div class="justify-between">
+        <li>
+          <div
+            v-if="isLoggedIn"
+            class="block text-sm px-2 py-4 ml-3 hover:text-brand-cream transition duration-300"
+          >
+            <router-link to="/journalentries">Journal</router-link>
+          </div>
+        </li>
+        <li>
+          <div
+            v-if="isLoggedIn"
+            class="block text-sm px-2 py-4 ml-3 hover:text-brand-cream transition duration-300"
+          >
+            <router-link to="/sermonnotes">Sermon Notes</router-link>
+          </div>
+        </li>
+      </div>
+        <li>
+          <div
+            v-if="isLoggedIn"
+            class="block text-sm px-2 pt-4 ml-3 pb-6 hover:text-brand-cream transition duration-300"
+          >
+            <router-link @click="logoutUser" to="/login">Logout</router-link>
+          </div>
+        </li>
+      </ul>
+    </div>
   </nav>
   <div>
 
@@ -129,10 +176,10 @@ also contains a mobile menu that will conditionally render-->
 </template>
 
 <script>
-//import { Icon } from '@iconify/vue';
+import { Icon } from '@iconify/vue';
 export default {
   components: {
-    //Icon
+    Icon
   },
   computed: {
     isLoggedIn() {

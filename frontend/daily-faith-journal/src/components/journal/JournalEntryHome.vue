@@ -34,7 +34,7 @@
       <div class="entries">
         <div v-if="(entries.length > 0)">
           <div class="px-5 py-5">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 mr-7">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 mr-9">
           <journal-card v-for="entry in displayedEntries" :key="entry._id" :entry="entry" class="m-4" />
           </div>
           </div>
