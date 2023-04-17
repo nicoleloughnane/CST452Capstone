@@ -1,26 +1,40 @@
 <!--This component handles the deletion of an existing sermon note-->
 <template>
     <section>
-      <div class="flex flex-col items-center text-center">
+      <div class="text-center">
         <h2 class="text-xl mb-5 mt-5 ">Delete Sermon Note</h2>
       <h3 class="text-lg mb-5  ">Are you sure you want to delete?</h3>
-        <div v-if="(!!entry)">
-          <default-card class="m-4">
-            <div class="m-6">
-              <h3 class="text-xl font-bold mb-4 mt-2">{{ entry.title }}</h3>
-              <h4 class="text-sm mb-4">{{ entry.pastor }}</h4>
-              <h4 class="text-sm mb-4">{{ entry.entryDate }}</h4>
-              <h4 class="text-base">{{ entry.entryBody }}</h4>
-            </div>
-            <div>
 
-              <default-button link :to="'/sermonnotes'" text="Go Back" buttonType="secondary" class="m-2" />
-              <default-button text="Delete" buttonType="delete" class="m-2" @click="deleteEntry" />
-            </div>
-          </default-card>
+        <div v-if="(!!entry)">
+          <!--beginning of card-->
+          <div class="p-6">
+          <div class="block rounded-2xl shadow-xl bg-white w-full text-center md:max-w-lg mx-auto">
+          <div class="card-header flex items-center">
+            <h3 class="text-xl font-medium my-3 text-white text-center grow ">{{ entry.title }}</h3>
         </div>
+        
+          <!--this allows the card to be clickable to view the details of a specific entry-->
+        <div class="p-6">
+              <!--Entry properties-->
+          <h4 hidden>{{ entry._id }}</h4>
+          <h4 class="text-sm mb-4">{{ entry.pastor }}</h4>
+          <h4 class="text-base">{{ entry.entryBody }}</h4>
+        </div>
+        <h4 class="text-sm mb-4 ml-6 italic text-left">{{ entry.entryDate }}</h4>
+
+    </div>
+    <!--end of card-->
+        </div>
+      </div>
         <div v-else>
           <h3 class="text-center">An error has occurred</h3>
+        </div>
+  
+
+      <!--actions to go back or delete-->
+      <div>
+          <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="m-2" />
+          <default-button text="Delete" buttonType="delete" class="m-2" @click="deleteEntry" />
         </div>
       </div> 
     </section>
@@ -29,6 +43,7 @@
   <script>
   import api from '../../services/api';
 
+  const { DateTime } = require("luxon");
   export default {
     components: {
       
@@ -57,7 +72,10 @@
         })
           .then(response => {
             this.entry = response.data;
-            //console.log('entry response: ' + JSON.stringify(response.data));
+          //convert date to user friendly format from ISO to LocaleString
+          this.entry.entryDate = DateTime.fromISO(
+            this.entry.entryDate
+          ).toLocaleString(DateTime.DATE_FULL);
           }).catch(error => {
             this.errorOccurred = error.message;
             console.log('error has occurred: ' + this.errorOccurred)
@@ -83,3 +101,13 @@
     }
   }
   </script>
+
+  <style scoped>
+  .card-header {
+  border-radius: 16px;
+  background-color: #775dab;
+  padding-left: 6px;
+  padding-right: 6px;
+
+}
+</style>

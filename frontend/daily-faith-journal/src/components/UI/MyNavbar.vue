@@ -125,11 +125,23 @@ also contains a mobile menu that will conditionally render-->
     </div>
 
     <!--mobile navbar-->
+    <div v-if="isLoggedIn">
     <div class="md:hidden flex items-center px-4 py-5">
       <button @click="mobileMenuOpen = !mobileMenuOpen">
         <Icon icon="octicon:three-bars-16" width="32" height="32" class="text-brand-cream mx-3 mb-3" />
       </button>
     </div>
+  </div>
+  <div v-else>
+    <div class="md:hidden flex items-center px-4 py-5">
+      <router-link to="/home"
+              ><img
+                src="../../assets/dailyfaithjournallogowhitetext.png"
+                class="logo mr-2"
+            /></router-link>
+             
+    </div>
+  </div>
     <div v-if="mobileMenuOpen">
       <ul>
         
@@ -200,12 +212,6 @@ export default {
 </script>
 
 <style scoped>
-/*logo disappears once mobile menu appears*/
-/*@media screen and (max-width: 768px) {
-  .logo {
-    display: none;
-  }
-} */
 .logo {
   width: 80px;
   height: 60px;

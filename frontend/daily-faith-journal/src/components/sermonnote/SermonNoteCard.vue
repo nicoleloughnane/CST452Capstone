@@ -55,11 +55,6 @@ export default {
     
   }
 
-  .card-title {
-    flex-grow: 1;
-    text-align: center;
-  }
-
   .header-icons {
     display:flex;
   }
