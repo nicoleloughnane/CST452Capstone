@@ -10,7 +10,7 @@ const store = createStore({
     userId: null,
     errorOccurred: null,
   },
-  //actions to login, logout, and register a user - and tryLogin
+  //actions to login, logout, register a user, and tryLogin
   actions: {
     //login
     login({ commit }, user) {
@@ -104,7 +104,8 @@ const store = createStore({
       } 
     },
   },
-  //change the state: set user, token, and userId, set if they are logged in or logged out, notify if an error has occurred
+  //change the state: set user, token, and userId,
+  // set if they are logged in or logged out, notify if an error has occurred
   mutations: {
     setUser(state, user) {
       state.user = user;

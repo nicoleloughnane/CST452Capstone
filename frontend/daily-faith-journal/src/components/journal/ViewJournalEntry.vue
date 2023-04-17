@@ -1,14 +1,19 @@
 <!--displays just one journal entry-->
 <template>
-    <div class="flex flex-col items-center text-center pl-72 pr-72">
+    <div class="flex flex-col items-center text-center">
       <h2 class="text-xl my-5 ">Journal Entry</h2>
+      <div class="p-6">
+      <div class="md:max-w-lg mx-auto">
     <div v-if="(!!entry)">
       <JournalCard :key="entry._id" :entry="entry" />
     </div>
     
+    
   <div v-else>
     <h3 >An error has occurred</h3>
   </div>
+</div>
+</div>
 
 
   <!--let user go back to home page-->
@@ -20,6 +25,8 @@
 <script>
 import api from '../../services/api';
 import JournalCard from './JournalCard.vue';
+const { DateTime } = require("luxon");
+
 export default {
   components: {
     JournalCard
@@ -47,7 +54,10 @@ export default {
       })
         .then(response => {
           this.entry = response.data;
-          //console.log('entry response: ' + JSON.stringify(response.data));
+          this.entry.entryDate = DateTime.fromISO(
+            this.entry.entryDate
+          ).toLocaleString(DateTime.DATE_FULL);
+
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)

@@ -34,8 +34,8 @@
     <section>
 
         <div v-if="(entries.length > 0)">
-          <div class="px-10 py-20">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
+          <div class="px-5 py-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 mr-7">
           <sermon-note-card v-for="entry in displayedEntries" :key="entry._id" :entry="entry" class="m-4" />
             </div>
         </div>
@@ -44,6 +44,9 @@
         <!--if an error has occurred: network-->
         <div v-if="errorOccurred === 'Network Error'">
           <h3>There is an error on our end. Please try again later! </h3>
+        </div>
+        <div v-else-if="(errorOccurred === 'Request failed with status code 401')">
+          <h3>Your session has expired, please log out and log back in again </h3>
         </div>
         <!--else if no entries exist-->
         <div v-else-if="(entries.length === 0)">
@@ -81,6 +84,7 @@ import { Icon } from '@iconify/vue';
 import api from '../../services/api';
 import QueryInput from '../UI/QueryInput.vue';
 import SermonNoteCard from './SermonNoteCard.vue';
+const { DateTime } = require('luxon');
 
 export default {
   components: {
@@ -149,7 +153,17 @@ export default {
         },
       })
         .then(response => {
+          //grab the sermon note response data
           this.entries = response.data;
+          //for each entry in entries
+          for(let i = 0; i < this.entries.length; i++) {
+            //sort the array of entries from newest to oldest
+            this.entries.sort(function(a,b) {
+              return DateTime.fromISO(b.entryDate) - DateTime.fromISO(a.entryDate);
+            })
+            //convert date to user friendly format from ISO to LocaleString
+            this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+          }
           //console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;

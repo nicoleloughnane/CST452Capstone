@@ -8,6 +8,7 @@
         <!--on form submit, calls submitForm method, located in scripts-->
         <form @submit.prevent="submitForm">
           <!--select a mood: optional-->
+          <div class="flex flex-wrap justify-center">
         <!--moods: happy, content, okay, upset, sad, or distressed-->
           <div class="mood">
             <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
@@ -37,6 +38,7 @@
             </div>
            
           </div>
+          </div>
           <br/>
 
         <!--these form controls are for the user to input journal entry information
@@ -45,7 +47,7 @@
           <div class="form-control" :class="{ invalid: !title.isValid }">
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title:</label>
             <br />
-            <input type="text" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2"
+            <input type="text" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
               v-model.trim="title.val" @blur="clearValidity('title')" />
             <p class="text-brand-red text-md" v-if="!title.isValid">Title of entry must not be empty</p>
           </div>
@@ -55,7 +57,7 @@
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">My Entry:</label>
             <br />
             <textarea id="entryBody" rows="10"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" v-model.trim="entryBody.val"
+              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" v-model.trim="entryBody.val"
               @blur="clearValidity('entryBody')"></textarea>
             <p class="text-brand-red text-md" v-if="!entryBody.isValid">Body of entry must not be empty</p>
           </div>

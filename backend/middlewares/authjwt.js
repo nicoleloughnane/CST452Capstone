@@ -17,7 +17,7 @@ function createAuthJwt() {
       algorithms: ["HS256"],
       getToken: function (req) {
         if (req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {
-          logger.info("token has been found, authorization granted");
+          logger.info("token has been found");
           return req.headers.authorization.split(" ")[1];
         }
         logger.info("no token found, returning null");

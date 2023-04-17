@@ -7,88 +7,64 @@
       <!--on form submit, calls submitForm method, located in scripts-->
       <form @submit.prevent="submitForm">
         <!--these form controls are for the user to update journal entry information -->
-        <div class="mood">
-            <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
-            <br />
-            <div class="flex flex-row">
-              <!--happy-->
-              <div v-if="entry.mood == 'happy'">
-              <input type="radio" id="happy" name="emotionradio" value="happy" @change="onChange($event)" checked >
-              <label for="happy"><Icon icon="tabler:mood-happy" width="32" height="32" class="text-brand-darkpurple" /></label>
-              </div>
-              <div v-else>
-                <input type="radio" id="happy" name="emotionradio" value="happy" @change="onChange($event)" >
-              <label for="happy"><Icon icon="tabler:mood-happy" width="32" height="32" class="text-brand-darkpurple" /></label>
-              </div>
+        <div class="flex flex-wrap justify-center">
+      <div class="mood">
+    <label for="Mood" class="form-label text-brand-gray text-l mr-1 ">Mood:</label>
+    <br />
 
-              <!--content-->
-              <div v-if="entry.mood == 'content'">
-              <input type="radio" id="content" name="emotionradio" value="content" @change="onChange($event)" checked>
-              <label for="content"><Icon icon="tabler:mood-smile" width="32" height="32" class="text-brand-darkpurple" /></label>
-              </div>
-              <div v-else>
-                <input type="radio" id="content" name="emotionradio" value="content" @change="onChange($event)">
-              <label for="content"><Icon icon="tabler:mood-smile" width="32" height="32" class="text-brand-darkpurple" /></label>
-              </div>
+      <!-- First row of radio buttons and icons -->
+      <div class="flex items-center space-x-2">
+        <input type="radio" id="happy" name="emotionradio" value="happy" @change="onChange($event)" :checked="entry.mood === 'happy'"/>
+        <label for="happy">
+          <Icon icon="tabler:mood-happy" width="32" height="32" class="text-brand-darkpurple" />
+        </label>
 
-              <div v-if="entry.mood == 'okay'">
-              <!--okay-->
-              <input type="radio" id="okay" name="emotionradio" value="okay" @change="onChange($event)" checked>
-              <label for="okay"><Icon icon="uil:meh" width="32" height="32" class="text-brand-darkpurple" /></label>
-            </div>
-            <div v-else>
-              <input type="radio" id="okay" name="emotionradio" value="okay" @change="onChange($event)">
-              <label for="okay"><Icon icon="uil:meh" width="32" height="32" class="text-brand-darkpurple" /></label>
-            </div>
-            </div>
-            <br/>
-            <div class="flex">
-              <!--upset-->
-              <div v-if="entry.mood == 'upset'">
-              <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)" checked >
-              <label for="upset"><Icon icon="tabler:mood-sad-squint" width="32" height="32" class="text-brand-darkpurple"/></label>
-            </div>
-            <div v-else>
-              <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)"  >
-              <label for="upset"><Icon icon="tabler:mood-sad-squint" width="32" height="32" class="text-brand-darkpurple"/></label>
-            </div>
-              <!--sad-->
-              <div v-if="entry.mood == 'sad'">
-              <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)" checked>
-              <label for="sad"><Icon icon="tabler:mood-sad" width="32" height="32" class="text-brand-darkpurple" /></label>
-            </div>
-            <div v-else>
-              <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)">
-              <label for="sad"><Icon icon="tabler:mood-sad" width="32" height="32" class="text-brand-darkpurple" /></label>
-            </div>
-              <!--distressed-->
-              <div v-if="entry.mood == 'distressed'">
-              <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)" checked>
-              <label for="distressed"><Icon icon="tabler:mood-cry" width="32" height="32" class="text-brand-darkpurple"/></label>
-            </div>
-            <div v-else>
-              <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)">
-              <label for="distressed"><Icon icon="tabler:mood-cry" width="32" height="32" class="text-brand-darkpurple"/></label>
-            </div>
-            </div>
-           
-          </div>
+        <input type="radio" id="content" name="emotionradio" value="content" @change="onChange($event)" :checked="entry.mood === 'content'"/>
+        <label for="content">
+          <Icon icon="tabler:mood-smile" width="32" height="32" class="text-brand-darkpurple" />
+        </label>
+
+        <input type="radio" id="okay" name="emotionradio" value="okay" @change="onChange($event)" :checked="entry.mood === 'okay'"/>
+        <label for="okay">
+          <Icon icon="uil:meh" width="32" height="32" class="text-brand-darkpurple" />
+        </label>
+      </div>
+
+      <!-- Second row of radio buttons and icons -->
+      <div class="flex items-center space-x-2">
+        <input type="radio" id="upset" name="emotionradio" value="upset" @change="onChange($event)" :checked="entry.mood === 'upset'"/>
+        <label for="upset">
+          <Icon icon="tabler:mood-sad-squint" width="32" height="32" class="text-brand-darkpurple" />
+        </label>
+
+        <input type="radio" id="sad" name="emotionradio" value="sad" @change="onChange($event)" :checked="entry.mood === 'sad'"/>
+        <label for="sad">
+          <Icon icon="tabler:mood-sad" width="32" height="32" class="text-brand-darkpurple" />
+        </label>
+
+        <input type="radio" id="distressed" name="emotionradio" value="distressed" @change="onChange($event)" :checked="entry.mood === 'distressed'"/>
+        <label for="distressed">
+          <Icon icon="tabler:mood-cry" width="32" height="32" class="text-brand-darkpurple" />
+        </label>
+      </div>
+    </div>
+  </div>
           <br/>
           
       <!--v-model binds with data in return statement, trim gets rid of excess whitespace-->
 
-          <div class="mb-3">
+          <div class="  mb-3 ">
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title: </label>
             <br />
             <input type="text" id="title" v-model.trim="entry.title"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2" placeholder="" />
+              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" placeholder="" />
           </div>
 
           <div class="mb-3 ">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Entry Body: </label>
             <br />
             <textarea id="entryBody" v-model.trim="entry.entryBody" rows="10"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2"
+              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
               placeholder=""> </textarea>
           </div>
 
