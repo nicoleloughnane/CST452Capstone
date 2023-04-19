@@ -163,7 +163,9 @@ export default {
             })
             //convert date to user friendly format from ISO to LocaleString
             this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+            this.entries[i].verses = this.entries[i].verses.join(', ')
           }
+          
           //console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {
           this.errorOccurred = error.message;

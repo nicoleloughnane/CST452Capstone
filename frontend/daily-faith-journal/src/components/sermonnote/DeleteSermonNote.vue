@@ -18,6 +18,10 @@
               <!--Entry properties-->
           <h4 hidden>{{ entry._id }}</h4>
           <h4 class="text-sm mb-4">{{ entry.pastor }}</h4>
+            <!--Bible verses-->
+            <h4 v-if="entry.verses.length > 0">
+            <h4 class="text-sm mb-4">{{ entry.verses }}</h4>
+          </h4>
           <h4 class="text-base">{{ entry.entryBody }}</h4>
         </div>
         <h4 class="text-sm mb-4 ml-6 italic text-left">{{ entry.entryDate }}</h4>
@@ -33,7 +37,7 @@
 
       <!--actions to go back or delete-->
       <div>
-          <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="m-2" />
+          <default-button link :to="'/sermonnotes'" text="Go Back" buttonType="secondary" class="m-2" />
           <default-button text="Delete" buttonType="delete" class="m-2" @click="deleteEntry" />
         </div>
       </div> 
@@ -52,7 +56,7 @@
       return {
         entryId: this.$route.params.id,
         errorOccurred: null,
-        entry: [],
+        entry: null,
         userID : this.$store.state.userId,
         userToken: this.$store.state.token
   
@@ -76,6 +80,7 @@
           this.entry.entryDate = DateTime.fromISO(
             this.entry.entryDate
           ).toLocaleString(DateTime.DATE_FULL);
+          this.entry.verses = this.entry.verses.join(', ')
           }).catch(error => {
             this.errorOccurred = error.message;
             console.log('error has occurred: ' + this.errorOccurred)

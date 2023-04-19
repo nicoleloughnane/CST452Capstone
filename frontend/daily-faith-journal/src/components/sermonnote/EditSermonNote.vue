@@ -23,6 +23,15 @@
               v-model.trim="entry.pastor" />
           </div>
 
+               <!--Bible Verses-->
+               <div class="mb-3 xl:w-96">
+            <label for="verses" class="form-label text-brand-gray text-l mr-1 ">Bible Verses:</label>
+            <br />
+            <textarea rows="2" v-model.trim="entry.verses" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" > </textarea>
+            <p class="text-sm">Enter in verses separated by spaces</p>
+          </div>
+          <br />
+
           <div class="mb-3 xl:w-96">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Entry Body: </label>
             <br />
@@ -55,7 +64,8 @@ export default {
       errorOccurred: null,
       entry: [],
       userID: this.$store.state.userId,
-      userToken: this.$store.state.token
+      userToken: this.$store.state.token,
+      parsedVerses: [],
 
     }
   },
@@ -89,7 +99,6 @@ export default {
       })
         .then(response => {
           this.editResponse = response.data;
-          //console.log('edit response: ' + JSON.stringify(response.data));
           this.$router.push('/sermonnotes');
         }).catch(error => {
           this.errorMessage = error.message;
@@ -112,6 +121,7 @@ export default {
       if (this.entry.pastor.length > 25) {
         this.formIsValid = false;
       }
+    
 
     },
     //user submits the entry update form
@@ -125,7 +135,8 @@ export default {
       const formData = {
         title: this.entry.title,
         entryBody: this.entry.entryBody,
-        pastor: this.entry.pastor
+        pastor: this.entry.pastor,
+        verses: this.parsedVerses
       };
       //call method to update the entry
       this.updateEntry(formData);

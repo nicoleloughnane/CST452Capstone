@@ -29,6 +29,18 @@
             <p class="text-brand-red text-md" v-if="!pastor.isValid">Pastor name must not be more than 25 characters</p>
           </div>
 
+          
+           <!--Bible Verses-->
+           <div class="form-control" :class="{ invalid: !verses.isValid }">
+            <label for="verses" class="form-label text-brand-gray text-l mr-1 ">Bible Verses:</label>
+            <br />
+            <textarea rows="2" class="form-control outline outline-1 outline-brand-darkpurple rounded-md px-2"
+              v-model.trim="verses.val" @blur="clearValidity('verses')" > </textarea>
+            <p class="text-sm">Enter in verses separated by spaces</p>
+            <p class="text-brand-red text-md" v-if="!verses.isValid">You cannot have more than 10 Bible verses.</p>
+          </div>
+          <br />
+
           <!--Entry Body-->
           <div class="form-control" :class="{ invalid: !entryBody.isValid }">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Notes:</label>
@@ -70,6 +82,12 @@ export default {
         val: '',
         isValid: true
       },
+      verses: {
+        val: '',
+        isValid: true
+      },
+      parsedVerses: [],
+
       formIsValid: true,
       errorMessage: null,
       createResponse: null,
@@ -100,6 +118,22 @@ export default {
         this.pastor.isValid = false;
         this.formIsValid = false;
       }
+      if(this.parsedVerses.length > 10){
+        console.log('too long');
+        this.verses.isValid = false;
+        this.formIsValid = false;
+      }
+    },
+    parseBibleVerses() {
+      this.formIsValid = true;
+       // Regex to match Bible verses
+       const regex = /\b([1-3]?\s?[a-zA-Z]+\s[0-9]{1,3}(?::[0-9]{1,3})?(-[0-9]{1,3}(?::[0-9]{1,3})?)?(,\s*[0-9]{1,3}(?::[0-9]{1,3})?(-[0-9]{1,3}(?::[0-9]{1,3})?)?)*)\b/g;
+
+      // Parse the input text and extract the verses
+      const matches = this.verses.val.match(regex);
+      
+      // Update the data property with the parsed verses
+      this.parsedVerses = matches || [];
 
     },
     //called by the submitForm method to attempt a creation of an entry
@@ -123,16 +157,23 @@ export default {
     //user submits the entry creation form
     submitForm() {
       //console.log('form has been submitted ')
+        //call Bible verses method if the user entered in a value
+        if(this.verses.val) {
+        this.parseBibleVerses();
+      }
       this.validateForm();
+
       //if invalid, do a return to prevent rest of method from executing
       if (!this.formIsValid) {
         return;
       }
+
       //at this point the form should be valid
       const formData = {
         title: this.title.val,
         entryBody: this.entryBody.val,
         pastor: this.pastor.val,
+        verses: this.parsedVerses
       };
       //call sermon notes api to create sermon note
       this.createSermonNote(formData);

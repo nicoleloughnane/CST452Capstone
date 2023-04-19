@@ -107,6 +107,7 @@ router.post("/create/:id", async (req, res) => {
     entryBody: req.body.entryBody,
     entryDate: sermonNoteDate,
     pastor: req.body.pastor,
+    verses: req.body.verses
   });
   sermonNote = await sermonNote.save();
 
@@ -146,6 +147,7 @@ router.put(`/update/:userId/:entryId`, async (req, res) => {
       entryBody: req.body.entryBody,
       entryDate: req.body.entryDate,
       pastor: req.body.pastor,
+      verses: req.body.verses
     },
     { new: true }
   );

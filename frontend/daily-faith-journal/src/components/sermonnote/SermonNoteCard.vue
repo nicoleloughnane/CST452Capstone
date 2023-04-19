@@ -15,7 +15,14 @@
         <div class="card cursor-pointer p-6" @click="this.$router.push('/sermonnotes/view/' + entry._id)">
               <!--Entry properties-->
           <h4 hidden>{{ entry._id }}</h4>
+
           <h4 class="text-sm mb-4">{{ entry.pastor }}</h4>
+
+          <!--Bible verses-->
+          <h4 v-if="entry.verses.length > 0">
+            <h4 class="text-sm mb-4">{{ entry.verses }}</h4>
+          </h4>
+
           <h4 class="text-base">{{ entry.entryBody }}</h4>
         </div>
         <h4 class="text-sm mb-4 ml-6 italic text-left">{{ entry.entryDate }}</h4>
@@ -27,6 +34,7 @@
 </template>
 <script>
 import { Icon } from '@iconify/vue';
+
 export default {
   name: "SermonNoteCard",
   components: {
@@ -42,7 +50,8 @@ export default {
   data() {
     return {};
   },
-};
+}
+
 </script>
 
 <style scoped>
