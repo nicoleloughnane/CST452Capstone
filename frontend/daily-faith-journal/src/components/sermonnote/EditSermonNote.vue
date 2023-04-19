@@ -66,6 +66,7 @@ export default {
       userID: this.$store.state.userId,
       userToken: this.$store.state.token,
       parsedVerses: [],
+      alteredVerses: [],
 
     }
   },
@@ -83,7 +84,8 @@ export default {
       })
         .then(response => {
           this.entry = response.data;
-          //console.log('entry response: ' + JSON.stringify(response.data));
+     
+
         }).catch(error => {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
@@ -121,12 +123,35 @@ export default {
       if (this.entry.pastor.length > 25) {
         this.formIsValid = false;
       }
+      //there cannot be more than 10 Bible verses
+      if(this.parsedVerses.length > 10){
+        console.log('too long');
+        this.verses.isValid = false;
+        this.formIsValid = false;
+      }
     
+
+    },
+    parseBibleVerses() {
+      this.formIsValid = true;
+       // Regex to match Bible verses
+       const regex = /\b([1-3]?\s?[a-zA-Z]+\s[0-9]{1,3}(?::[0-9]{1,3})?(-[0-9]{1,3}(?::[0-9]{1,3})?)?(,\s*[0-9]{1,3}(?::[0-9]{1,3})?(-[0-9]{1,3}(?::[0-9]{1,3})?)?)*)\b/g;
+
+      // Parse the input text and extract the verses
+      const matches = this.entry.verses.match(regex);
+      
+      // Update the data property with the parsed verses
+      this.parsedVerses = matches || [];
 
     },
     //user submits the entry update form
     submitForm() {
       this.validateForm();
+
+       //call Bible verses method if the user entered in a value
+       if(this.entry.verses) {
+        this.parseBibleVerses();
+      }
       //if invalid, do a return to prevent rest of method from executing
       if (!this.formIsValid) {
         return;

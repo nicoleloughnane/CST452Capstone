@@ -5,7 +5,7 @@
         <h2 class="text-xl mb-5 mt-5 ">Delete Sermon Note</h2>
       <h3 class="text-lg mb-5  ">Are you sure you want to delete?</h3>
 
-        <div v-if="(!!entry)">
+        <div v-if="entry">
           <!--beginning of card-->
           <div class="p-6">
           <div class="block rounded-2xl shadow-xl bg-white w-full text-center md:max-w-lg mx-auto">
