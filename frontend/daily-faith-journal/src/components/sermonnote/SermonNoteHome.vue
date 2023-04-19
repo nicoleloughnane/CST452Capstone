@@ -3,7 +3,7 @@
 <template>
   <!--create button-->
   <div class="flex justify-end">
-    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
+    <default-button text="Create Note" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
   </div>
   <div class="flex flex-col items-center text-center">
     <!--introductory section with title and search bar-->
@@ -155,6 +155,8 @@ export default {
         .then(response => {
           //grab the sermon note response data
           this.entries = response.data;
+          if(this.entries.length > 0) {
+
           //for each entry in entries
           for(let i = 0; i < this.entries.length; i++) {
             //sort the array of entries from newest to oldest
@@ -163,8 +165,10 @@ export default {
             })
             //convert date to user friendly format from ISO to LocaleString
             this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+            //format verses in a user friendly format
             this.entries[i].verses = this.entries[i].verses.join(', ')
           }
+        }
           
           //console.log('entry response: ' + JSON.stringify(response.data));
         }).catch(error => {

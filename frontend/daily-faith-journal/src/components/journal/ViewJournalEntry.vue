@@ -7,8 +7,8 @@
         <div v-if="entry">
           <JournalCard :key="entry._id" :entry="entry" />
         </div>
-        <div v-else>
-          <h3>An error has occurred</h3>
+        <div v-if="errorOccurred">
+          <h3>An error has occurred: {{ errorOccurred }}. Please try again later!</h3>
         </div>
       </div>
     </div>

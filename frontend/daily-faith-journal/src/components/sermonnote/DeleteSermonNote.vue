@@ -30,11 +30,9 @@
     <!--end of card-->
         </div>
       </div>
-        <div v-else>
-          <h3 class="text-center">An error has occurred</h3>
+      <div v-if="errorOccurred">
+          <h3>An error has occurred: {{ errorOccurred }}. Please try again later!</h3>
         </div>
-  
-
       <!--actions to go back or delete-->
       <div>
           <default-button link :to="'/sermonnotes'" text="Go Back" buttonType="secondary" class="m-2" />

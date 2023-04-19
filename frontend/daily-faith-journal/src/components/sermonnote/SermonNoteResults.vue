@@ -9,12 +9,22 @@
     <section>
       <div class="entries">
         <!--if entries exist-->
-        <div v-if="(filteredEntries.length > 0)">
+        <div v-if="(filteredEntries.length > 1)">
           <h3>{{ filteredEntries.length }} results were found from your search of '{{ userSearchQuery }}'</h3>
           <div class="px-10 py-20">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
-              <SermonNoteCard v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="m-4" />
+              <SermonNoteCard v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="" />
             </div>
+          </div>
+        </div>
+
+         <!--if ONE entry found based on the users search term-->
+         <div v-else-if="(filteredEntries.length === 1)">
+          <h3>1 entry found for your search of '{{ userSearchQuery }}'</h3>
+          <div class="p-6">
+      <div class="md:max-w-lg mx-auto ">
+          <SermonNoteCard v-for="entry in filteredEntries" :key="entry._id" :entry="entry"  />
+          </div>
           </div>
         </div>
 
@@ -76,8 +86,12 @@ export default {
             })
             //convert date to user friendly format from ISO to LocaleString
             this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+
+            //format verses in a user friendly format
+            this.entries[i].verses = this.entries[i].verses.join(', ')
           }
           //console.log('entry response: ' + JSON.stringify(response.data));
+
           //filter the entries based on search term
           this.filteredEntries = this.entries.filter(entry => {
             return entry.title.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
