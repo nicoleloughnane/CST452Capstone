@@ -12,14 +12,14 @@
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title: </label>
             <br />
             <input type="text" id="title" v-model.trim="entry.title"
-              class="w-full form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" placeholder="" />
+              class="w-fit form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" placeholder="" />
           </div>
 
           <!--Pastor Name-->
           <div class="mb-3 xl:w-96">
             <label for="pastor" class="form-label text-brand-gray text-l mr-1 ">Pastor:</label>
             <br />
-            <input type="text" class="w-full form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
+            <input type="text" class="w-fit form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
               v-model.trim="entry.pastor" />
           </div>
 
@@ -27,7 +27,7 @@
                <div class="mb-3 xl:w-96">
             <label for="verses" class="form-label text-brand-gray text-l mr-1 ">Bible Verses:</label>
             <br />
-            <textarea rows="2" v-model.trim="entry.verses" class="w-full form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" > </textarea>
+            <textarea rows="2" v-model.trim="entry.verses" class="w-fit form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" > </textarea>
             <p class="text-sm">Enter in verses separated by spaces</p>
           </div>
           <br />
@@ -36,7 +36,7 @@
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Entry Body: </label>
             <br />
             <textarea id="entryBody" v-model.trim="entry.entryBody" rows="10"
-              class="w-full form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" placeholder=""> </textarea>
+              class="w-fit form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" placeholder=""> </textarea>
           </div>
 
           <!--displays if an error has occurred-->
