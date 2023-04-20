@@ -165,8 +165,12 @@ export default {
             })
             //convert date to user friendly format from ISO to LocaleString
             this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+            
             //format verses in a user friendly format
-            this.entries[i].verses = this.entries[i].verses.join(', ')
+            if( this.entries[i].verses) {
+              this.entries[i].verses = this.entries[i].verses.join(', ')
+            }
+            
           }
         }
           

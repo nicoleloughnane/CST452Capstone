@@ -5,7 +5,8 @@
     <h2 class="text-xl mb-5 mt-5">Create Sermon Note</h2>
     <h4 class="text-lg mb-8">What did you learn in church today?</h4>
     <section>
-      <default-card>
+      <default-card >
+        <div class="">
         <!--on form submit, calls submitForm method, located in scripts-->
         <form @submit.prevent="submitForm">
         <!--these form controls are for the user to input journal entry information
@@ -15,7 +16,7 @@
           <div class="form-control" :class="{ invalid: !title.isValid }">
             <label for="title" class="form-label text-brand-gray text-l mr-1 ">Title:</label>
             <br />
-            <input type="text" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
+            <input type="text" class="w-full form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
               v-model.trim="title.val" @blur="clearValidity('title')" />
             <p class="text-brand-red text-md" v-if="!title.isValid">Title of entry must not be empty</p>
           </div>
@@ -24,7 +25,7 @@
           <div class="form-control" :class="{ invalid: !pastor.isValid }">
             <label for="pastor" class="form-label text-brand-gray text-l mr-1 ">Pastor:</label>
             <br />
-            <input type="text" class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
+            <input type="text" class=" w-full form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2"
               v-model.trim="pastor.val" @blur="clearValidity('pastor')" />
             <p class="text-brand-red text-md" v-if="!pastor.isValid">Pastor name must not be more than 25 characters</p>
           </div>
@@ -34,7 +35,7 @@
            <div class="form-control" :class="{ invalid: !verses.isValid }">
             <label for="verses" class="form-label text-brand-gray text-l mr-1 ">Bible Verses:</label>
             <br />
-            <textarea rows="2" class="form-control outline outline-1 outline-brand-darkpurple rounded-md px-2"
+            <textarea rows="2" class="w-full form-control outline outline-1 outline-brand-darkpurple rounded-md px-2"
               v-model.trim="verses.val" @blur="clearValidity('verses')" > </textarea>
             <p class="text-sm">Enter in verses separated by spaces</p>
             <p class="text-brand-red text-md" v-if="!verses.isValid">You cannot have more than 10 Bible verses.</p>
@@ -46,7 +47,7 @@
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Notes:</label>
             <br />
             <textarea id="entryBody" rows="10"
-              class="form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" v-model.trim="entryBody.val"
+              class="w-full form-control outline outline-1 outline-brand-darkpurple rounded-md mb-2 px-2" v-model.trim="entryBody.val"
               @blur="clearValidity('entryBody')"></textarea>
             <p class="text-brand-red text-md" v-if="!entryBody.isValid">Notes must not be empty</p>
           </div>
@@ -54,9 +55,10 @@
           <!--Actions for user to take - go back or submit the form-->
           <div class="actions">
             <default-button link :to="'/sermonnotes'" text="Go Back" buttonType="secondary" class="m-2" />
-            <default-button text="Create" class="m-2" buttonType="create" />
+            <default-button text="Create" class="m-2 ml-6" buttonType="create" />
           </div>
         </form>
+      </div>
       </default-card>
     </section>
   </div>

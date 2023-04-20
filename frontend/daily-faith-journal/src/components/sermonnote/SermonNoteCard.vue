@@ -19,7 +19,7 @@
           <h4 class="text-sm mb-4">{{ entry.pastor }}</h4>
 
           <!--Bible verses-->
-          <h4 v-if="entry.verses.length > 0">
+          <h4 v-if="entry.verses && entry.verses.length > 0">
             <h4 class="text-sm mb-4">{{ entry.verses }}</h4>
           </h4>
 
