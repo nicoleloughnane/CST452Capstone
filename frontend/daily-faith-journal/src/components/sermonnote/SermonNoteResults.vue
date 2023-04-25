@@ -2,19 +2,26 @@
 <template>
   <div class="flex flex-col items-center text-center">
     <h2 class="text-xl mb-4 mt-6">Search Results</h2>
-    <!--go back to the main journal home-->
-    <div class="flex justify-center mb-4">
-      <default-button text="Go Back" buttonType="secondary" link :to="'/sermonnotes'" />
-    </div>
+
     <section>
       <div class="entries">
         <!--if entries exist-->
-        <div v-if="(filteredEntries.length > 0)">
+        <div v-if="(filteredEntries.length > 1)">
           <h3>{{ filteredEntries.length }} results were found from your search of '{{ userSearchQuery }}'</h3>
           <div class="px-10 py-20">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
-              <SermonNoteCard v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="m-4" />
+              <SermonNoteCard v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="" />
             </div>
+          </div>
+        </div>
+
+         <!--if ONE entry found based on the users search term-->
+         <div v-else-if="(filteredEntries.length === 1)">
+          <h3>1 entry found for your search of '{{ userSearchQuery }}'</h3>
+          <div class="p-6">
+      <div class="md:max-w-lg mx-auto ">
+          <SermonNoteCard v-for="entry in filteredEntries" :key="entry._id" :entry="entry"  />
+          </div>
           </div>
         </div>
 
@@ -27,7 +34,10 @@
         <div v-if="errorOccurred === 'Network Error'">
           <h3>There is an error on our end. Please try again later! </h3>
         </div>
-
+   <!--go back to the main home-->
+   <div class="flex justify-center mb-4 mt-4">
+      <default-button text="Go Back" buttonType="secondary" link :to="'/sermonnotes'" />
+    </div>
       </div>
     </section>
   </div>
@@ -37,7 +47,6 @@
 import api from '../../services/api';
 import SermonNoteCard from './SermonNoteCard.vue';
 const { DateTime } = require('luxon');
-
 export default {
   name: "JournalEntryResults",
   components: {
@@ -76,6 +85,7 @@ export default {
             })
             //convert date to user friendly format from ISO to LocaleString
             this.entries[i].entryDate =  DateTime.fromISO(this.entries[i].entryDate).toLocaleString(DateTime.DATE_FULL);
+
           }
           //console.log('entry response: ' + JSON.stringify(response.data));
           //filter the entries based on search term
@@ -89,9 +99,7 @@ export default {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         })
-
     }
   }
 }
-
 </script>

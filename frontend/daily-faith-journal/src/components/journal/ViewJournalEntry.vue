@@ -1,22 +1,20 @@
 <!--displays just one journal entry-->
 <template>
     <div class="flex flex-col items-center text-center">
-      <h2 class="text-xl my-5 ">Journal Entry</h2>
-      <div class="p-6">
+    <h2 class="text-xl my-5 ">Journal Entry</h2>
+    <div class="p-6">
       <div class="md:max-w-lg mx-auto">
-    <div v-if="(!!entry)">
-      <JournalCard :key="entry._id" :entry="entry" />
+        <div v-if="entry">
+          <JournalCard :key="entry._id" :entry="entry" />
+        </div>
+        <div v-else>
+          <h3>An error has occurred</h3>
+        </div>
+      </div>
     </div>
-    
-    
-  <div v-else>
-    <h3 >An error has occurred</h3>
-  </div>
-</div>
-</div>
 
 
-  <!--let user go back to home page-->
+    <!--let user go back to home page-->
     <default-button link :to="'/journalentries'" text="Go Back" buttonType="secondary" class="mt-3" />
 
   </div>
@@ -35,7 +33,7 @@ export default {
     return {
       entryId: this.$route.params._id,
       errorOccurred: null,
-      entry: [],
+      entry: null,
       userID : this.$store.state.userId,
       userToken: this.$store.state.token
     }

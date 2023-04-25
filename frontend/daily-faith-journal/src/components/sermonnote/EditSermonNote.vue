@@ -23,6 +23,17 @@
               v-model.trim="entry.pastor" />
           </div>
 
+                <!--Bible Verses-->
+                <div class="mb-3 xl:w-96" >
+            <label for="verses" class="form-label text-brand-gray text-l mr-1 ">Bible Verses:</label>
+            <br />
+            <textarea rows="2" class=" form-control outline outline-1 outline-brand-darkpurple rounded-md px-2"
+              v-model.trim="entry.verses"> </textarea>
+            <p class="text-sm">Enter in verses separated by commas</p>
+
+          </div>
+          <br />
+
           <div class="mb-3 xl:w-96">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Entry Body: </label>
             <br />
@@ -112,6 +123,10 @@ export default {
       if (this.entry.pastor.length > 25) {
         this.formIsValid = false;
       }
+      //verses cannot be longer than 50 characters
+      if(this.entry.verses.length > 50) {
+        this.formIsValid = false;
+      }
 
     },
     //user submits the entry update form
@@ -125,7 +140,8 @@ export default {
       const formData = {
         title: this.entry.title,
         entryBody: this.entry.entryBody,
-        pastor: this.entry.pastor
+        pastor: this.entry.pastor,
+        verses: this.entry.verses,
       };
       //call method to update the entry
       this.updateEntry(formData);

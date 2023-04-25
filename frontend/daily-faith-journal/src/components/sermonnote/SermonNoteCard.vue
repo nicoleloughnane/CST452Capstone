@@ -16,6 +16,7 @@
               <!--Entry properties-->
           <h4 hidden>{{ entry._id }}</h4>
           <h4 class="text-sm mb-4">{{ entry.pastor }}</h4>
+          <h4 class="text-sm mb-4">{{ entry.verses }}</h4>
           <h4 class="text-base">{{ entry.entryBody }}</h4>
         </div>
         <h4 class="text-sm mb-4 ml-6 italic text-left">{{ entry.entryDate }}</h4>

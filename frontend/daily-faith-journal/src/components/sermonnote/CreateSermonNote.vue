@@ -29,6 +29,17 @@
             <p class="text-brand-red text-md" v-if="!pastor.isValid">Pastor name must not be more than 25 characters</p>
           </div>
 
+              <!--Bible Verses-->
+              <div class="form-control" :class="{ invalid: !verses.isValid }">
+            <label for="verses" class="form-label text-brand-gray text-l mr-1 ">Bible Verses:</label>
+            <br />
+            <textarea rows="2" class=" form-control outline outline-1 outline-brand-darkpurple rounded-md px-2"
+              v-model.trim="verses.val" @blur="clearValidity('verses')" > </textarea>
+            <p class="text-sm">Enter in verses separated by commas</p>
+            <p class="text-brand-red text-md" v-if="!verses.isValid">You cannot have more than 50 characters of Bible verses.</p>
+          </div>
+          <br />
+
           <!--Entry Body-->
           <div class="form-control" :class="{ invalid: !entryBody.isValid }">
             <label for="entryBody" class="form-label text-brand-gray text-l mr-1 ">Notes:</label>
@@ -70,6 +81,10 @@ export default {
         val: '',
         isValid: true
       },
+      verses: {
+        val: '',
+        isValid: true
+      },
       formIsValid: true,
       errorMessage: null,
       createResponse: null,
@@ -98,6 +113,11 @@ export default {
       //pastor must not be greater than 25 characters if user decides to enter
       if (this.pastor.val.length > 25) {
         this.pastor.isValid = false;
+        this.formIsValid = false;
+      }
+      //validate bible verses
+      if(this.verses.val.length > 50) {
+        this.verses.isValid = false;
         this.formIsValid = false;
       }
 
@@ -133,6 +153,7 @@ export default {
         title: this.title.val,
         entryBody: this.entryBody.val,
         pastor: this.pastor.val,
+        verses: this.verses.val
       };
       //call sermon notes api to create sermon note
       this.createSermonNote(formData);
