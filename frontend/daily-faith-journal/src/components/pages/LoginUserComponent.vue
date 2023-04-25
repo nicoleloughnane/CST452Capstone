@@ -55,7 +55,20 @@ export default {
         //take user to the signup page
         return '/signup'
       },
+       //check if user is logged in already
+       isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
+    
   },
+  mounted() {
+    //if user is logged in, replace current route with home page
+    if(this.isLoggedIn) {
+      this.$router.replace('/home');
+    }
+  
+  },
+
   methods: {
     async submitForm() {
       this.validForm = true;

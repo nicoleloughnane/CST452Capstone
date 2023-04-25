@@ -3,7 +3,7 @@
 <template>
   <!--create button-->
   <div class="flex justify-end">
-    <default-button text="Create Entry" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
+    <default-button text="Create Note" buttonType="create" link :to="this.$route.path + '/create/'" class="my-3 mx-3" />
   </div>
   <div class="flex flex-col items-center text-center">
     <!--introductory section with title and search bar-->

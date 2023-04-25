@@ -2,18 +2,24 @@
 <template>
   <div class="flex flex-col items-center text-center">
     <h2 class="text-xl mb-4 mt-6">Search Results</h2>
-    <!--go back to the main journal home-->
-    <div class="flex justify-center mb-4">
-      <default-button text="Go Back" buttonType="secondary" link :to="'/journalentries'" />
-    </div>
     <section>
       <div class="entries">
         <!--if entries were found-->
-        <div v-if="(filteredEntries.length > 0)">
+        <div v-if="(filteredEntries.length > 1)">
           <h3>{{ filteredEntries.length }} results were found from your search of '{{ userSearchQuery }}'</h3>
           <div class="px-10 py-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
-          <journal-card v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="m-4" />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 ">
+          <journal-card v-for="entry in filteredEntries" :key="entry._id" :entry="entry" class="" />
+          </div>
+          </div>
+        </div>
+
+          <!--if ONE entry found based on the users search term-->
+          <div v-else-if="(filteredEntries.length === 1)">
+          <h3>1 entry found for your search of '{{ userSearchQuery }}'</h3>
+          <div class="p-6">
+      <div class="md:max-w-lg mx-auto ">
+          <journal-card v-for="entry in filteredEntries" :key="entry._id" :entry="entry"  />
           </div>
           </div>
         </div>
@@ -33,7 +39,10 @@
           <h3>No journal entries were found. How about creating one? </h3>
         </div>
 
-       
+           <!--go back to the main journal home-->
+    <div class="flex justify-center mb-4 mt-4">
+      <default-button text="Go Back" buttonType="secondary" link :to="'/journalentries'" />
+    </div>
       </div>
     </section>
   </div>
@@ -43,7 +52,6 @@
 import api from '../../services/api';
 import JournalCard from './JournalCard.vue';
 const { DateTime } = require('luxon');
-
 export default {
   name: "JournalEntryResults",
   components: {
@@ -94,9 +102,7 @@ export default {
           this.errorOccurred = error.message;
           console.log('error has occurred: ' + this.errorOccurred)
         })
-
     } 
   }
 }
-
 </script>

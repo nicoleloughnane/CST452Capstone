@@ -10,6 +10,7 @@ const sermonnoteSchema = new mongoose.Schema({
   entryBody: String,
   entryDate: String,
   pastor: String,
+  verses: String,
 });
 
 exports.SermonNote = mongoose.model(
