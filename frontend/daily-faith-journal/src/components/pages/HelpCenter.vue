@@ -1,27 +1,35 @@
 <!--this is the help center for if a user needs help using the application-->
 <template>
-  <div class="flex flex-col items-center text-center">
+  <div class="flex flex-col items-center text-center  mx-6">
     <h2 class="text-xl mt-16 font-medium">Help Center</h2>
-    <p class="text-lg mt-6 mx-6">Welcome to the help center. If you need help using Daily Faith Journal, you are in the right place. Please read below for guidance. Thanks! </p>
+    <p class="text-lg mt-6">Welcome to the help center. If you need help using Daily Faith Journal, you are in the right place. Please read below for guidance. Thanks! </p>
     <h3 class="text-lg mt-6 font-medium">Journal Entries</h3>
     <img
               src="../../assets/journalentrycard.png"
               class="card"
           />
+          <h3 class="text-base mt-6 font-medium">Create</h3>
     <p class="text-sm mt-2 mx-6">This is an example of a journal entry that you can create. It can be created using the green "create entry"
       button on the journal entry home page. Selecting a mood is optional. The title and body must not be empty. You can press the green create button to create 
-    or if at any time you want to cancel the process, you can press go back to be taken back to the home. If you made a mistake, you can press the "pencil and paper" icon
+    or if at any time you want to cancel the process, you can press go back to be taken back to the home. </p>
+
+    <h3 class="text-base mt-6 font-medium">Need to make a change?</h3>
+    <p class="text-sm mt-2 mx-6">If you made a mistake or want to update something, you can press the "pencil and paper" icon
   to edit the entry. If you no longer want to keep an entry, you can press the "trash can" icon to remove it. You will be prompted with a confirmation and options to "delete" or "go back,"
-in case you pressed the trash can by accident. The date that the journal entry was created cannot be changed. </p>
+in case you pressed the trash can by accident. The date that the journal entry was created cannot be changed at this time. </p>
+
       <h3 class="text-lg mt-6 font-medium ">Sermon Notes</h3>
     <img
               src="../../assets/sermonnotecard.png"
               class="card"
           />
+          <h3 class="text-base mt-6 font-medium">Create</h3>
           <p class="text-sm mt-2 mx-6 mb-6">This is an example of a sermon note that you can create. It can be created using the green "create entry"
-      button on the sermon note home page. The title and body must not be empty but the pastor and Bible verses are optional. The Bible verses must be entered in separated by spaces (ex: John 3:16 Luke 24:6-7). 
-      You also cannot have more than 10 Bible verses attached to a single sermon note. You can press the green create button to create 
-    or if at any time you want to cancel the process, you can press go back to be taken back to the home. If you made a mistake, you can press the "pencil and paper" icon
+      button on the sermon note home page. The title and body must not be empty but the pastor and Bible verses are optional. The Bible verses can be entered in with spaces or commas separating them. It is up to you! (ex: John 3:16, Luke 24:6-7). 
+       You can press the green create button to create 
+    or if at any time you want to cancel the process, you can press go back to be taken back to the home. </p>
+    <h3 class="text-base mt-6 font-medium">Need to make a change?</h3>
+    <p class="text-sm mt-2 mx-6 mb-6">If you made a mistake, you can press the "pencil and paper" icon
   to edit the entry. If you no longer want to keep an entry, you can press the "trash can" icon to remove it. You will be prompted with a confirmation and options to "delete" or "go back,"
 in case you pressed the trash can by accident. The date that the sermon note was created cannot be changed. </p>
   </div>

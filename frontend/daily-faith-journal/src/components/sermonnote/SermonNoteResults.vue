@@ -93,7 +93,8 @@ export default {
             return entry.title.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
               entry.entryBody.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
               entry.pastor.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
-              entry.entryDate.toLowerCase().includes(this.userSearchQuery.toLowerCase())
+              entry.entryDate.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
+              entry.verses.toLowerCase().includes(this.userSearchQuery.toLowerCase())
           })
         }).catch(error => {
           this.errorOccurred = error.message;
